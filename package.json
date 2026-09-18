@@ -6,16 +6,29 @@
   "license": "MIT",
   "author": "Avirup Ghosh (oviirup)",
   "type": "module",
+  "exports": {
+    ".": "./dist/index.css",
+    "./animate": "./dist/animate.css",
+    "./drag": "./dist/drag.css",
+    "./hocus": "./dist/hocus.css",
+    "./svg": "./dist/svg.css",
+    "./package.json": "./package.json"
+  },
   "scripts": {
+    "build": "tsdown",
     "format": "biome format --write",
-    "lint": "biome check"
+    "lint": "biome check",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.14",
-    "@changesets/changelog-github": "^1.0.1",
-    "@changesets/cli": "^3.0.3",
-    "@types/bun": "^1.4.2",
-    "@types/node": "^24.13.5"
+    "@biomejs/biome": "^2",
+    "@changesets/changelog-github": "^1",
+    "@changesets/cli": "^3",
+    "@tsdown/css": "^0",
+    "@types/bun": "^1",
+    "@types/node": "^24",
+    "tsdown": "^0",
+    "typescript": "^7"
   },
   "peerDependencies": {
     "tailwindcss": "^4"
