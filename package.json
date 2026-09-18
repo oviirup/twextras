@@ -1,48 +1,27 @@
 {
-  "name": "tailwind-extras",
-  "version": "2.0.7",
-  "description": "A collection of useful tailwind plugins in one package",
+  "name": "twextras",
+  "version": "3.0.0",
+  "description": "A collection of useful tailwind plugins and utilities in one package",
+  "repository": "oviirup/twextras",
   "license": "MIT",
-  "repository": "https://github.com/oviirup/tailwind-extras",
   "author": "Avirup Ghosh (oviirup)",
-  "exports": {
-    ".": "./index.css",
-    "./animate": "./animate.css",
-    "./drag": "./drag.css",
-    "./hocus": "./hocus.css",
-    "./scrollbar": "./scrollbar.css",
-    "./scroll": "./scrollbar.css"
-  },
-  "keywords": [
-    "shadcn",
-    "hocus",
-    "drag",
-    "accordion",
-    "animate",
-    "animation",
-    "fades",
-    "opacity",
-    "scale",
-    "scrollbar",
-    "slide",
-    "spin",
-    "tailwind",
-    "tailwind-animate",
-    "tailwind-plugins",
-    "tailwindcss",
-    "tailwindcss-animate",
-    "tailwindcss-plugins"
-  ],
+  "type": "module",
   "scripts": {
     "format": "biome format --write",
     "lint": "biome check"
   },
-  "peerDependencies": {
-    "tailwindcss": "^4.1.18"
-  },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.13",
-    "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.31.0"
+    "@biomejs/biome": "^2.5.14",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
+    "@types/bun": "^1.4.2",
+    "@types/node": "^24.13.5"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

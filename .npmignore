@@ -1,6 +1,3 @@
-.editorconfig
-.prettier*
-.vscode
-.github
-.changeset
-.husky
+# ignore all files except dist folder
+**/*
+!dist/**/*

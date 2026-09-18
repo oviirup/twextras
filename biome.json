@@ -3,22 +3,20 @@
   "vcs": {
     "enabled": true,
     "clientKind": "git",
-    "defaultBranch": "main",
     "useIgnoreFile": true
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**/*.{js,cjs,mjs,jsx,ts,tsx,json,jsonc,css}", "!*.min.*"]
+    "includes": ["**/*", "!*.min.*"]
   },
   "formatter": {
     "enabled": true,
     "useEditorconfig": true,
-    "bracketSameLine": true
+    "lineWidth": 100
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off",
         "noDuplicateCustomProperties": "off",
@@ -27,10 +25,17 @@
     }
   },
   "css": {
-    "formatter": { "lineWidth": 100 },
-    "parser": { "tailwindDirectives": true }
+    "parser": {
+      "tailwindDirectives": true
+    }
   },
   "assist": {
-    "actions": { "source": { "organizeImports": "on" } }
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedPackageJson": "on"
+      }
+    }
   }
 }
