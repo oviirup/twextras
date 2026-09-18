@@ -1,0 +1,3 @@
+@utility drag-* {
+  -webkit-user-drag: --value("none", "element", "auto");
+}
