@@ -1,12 +1,9 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
-  "changelog": [
-    "@changesets/changelog-github",
-    { "repo": "oviirup/tailwind-extras" }
-  ],
+  "$schema": "https://unpkg.com/@changesets/config@4.0.0/schema.json",
+  "changelog": ["@changesets/changelog-github", { "repo": "oviirup/twextras" }],
   "commit": false,
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "format": "auto"
 }
