@@ -14,8 +14,11 @@
     "./svg": "./dist/svg.css",
     "./package.json": "./package.json"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown ./src/**/*.* --no-fixed-extension",
     "format": "biome format --write",
     "lint": "biome check",
     "typecheck": "tsc --noEmit"
@@ -36,5 +39,13 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "tsdown": {
+    "css": {
+      "splitting": true,
+      "minify": true
+    },
+    "minify": true,
+    "exports": false
   }
 }
