@@ -12,6 +12,7 @@
     "./drag": "./dist/drag.css",
     "./hocus": "./dist/hocus.css",
     "./svg": "./dist/svg.css",
+    "./cn.config": "./dist/cn.config.js",
     "./package.json": "./package.json"
   },
   "files": [
@@ -28,13 +29,16 @@
     "@changesets/changelog-github": "^1",
     "@changesets/cli": "^3",
     "@tsdown/css": "^0",
-    "@types/bun": "^1",
-    "@types/node": "^24",
-    "tsdown": "^0",
-    "typescript": "^7"
+    "tsdown": "^0"
   },
   "peerDependencies": {
+    "cn": "^0",
     "tailwindcss": "^4"
+  },
+  "peerDependenciesMeta": {
+    "cn": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public",
