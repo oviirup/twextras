@@ -1,0 +1,23 @@
+@utility stroke-* {
+  stroke-width: --value(number, [*]);
+}
+
+@utility stroke-miter-* {
+  stroke-miterlimit: --value(number, [*]);
+}
+
+@utility stroke-linecap-* {
+  stroke-linecap: --value("round", "butt", "square", [*]);
+}
+
+@utility stroke-linejoin-* {
+  stroke-linejoin: --value("round", "bevel", "miter", [*]);
+}
+
+@utility stroke-dasharray-* {
+  stroke-dasharray: --value([*]);
+}
+
+@utility stroke-dashoffset-* {
+  stroke-dashoffset: --value([*]);
+}

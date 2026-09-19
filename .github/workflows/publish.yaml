@@ -4,21 +4,104 @@ on:
   push:
     branches: [main]
 jobs:
-  publish:
+  # select changeset mode if ci run successfully
+  mode:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      mode: ${{ steps.changesets-mode.outputs.mode }}
+      publish-plan-artifact-id: ${{ steps.changesets-mode.outputs.publish-plan-artifact-id }}
     steps:
-      - uses: actions/checkout@v6
-      - name: 🟢 Setup Bun
+      - name: 🔷 Checkout
+        uses: actions/checkout@v7
+      - name: 🟢 Setup bun
         uses: oven-sh/setup-bun@v2
-      - name: ⚙️ Install dependencies
-        run: bun install
-      - name: 🚀 Create Pull Request & Publish
-        id: changesets
-        uses: changesets/action@v1
+      - name: 📦 Install dependencies
+        run: bun install --frozen-lockfile
+      - name: 🔧 Select changesets mode
+        id: changesets-mode
+        uses: changesets/action/select-mode@v2
+  # update the version of the packages
+  version:
+    needs: mode
+    if: needs.mode.outputs.mode == 'version'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: 🔷 Checkout
+        uses: actions/checkout@v7
+      - name: 🟢 Setup bun
+        uses: oven-sh/setup-bun@v2
+      - name: 📦 Install dependencies
+        run: bun install --frozen-lockfile
+      - name: 🏷️ Update version
+        id: version
+        uses: changesets/action/version@v2
         with:
-          publish: bun changeset publish
-          commit: "✅ chore: update version"
-          title: "✅ chore: update version"
+          script: bun changeset version
+          commit-message: "✅ chore: update version"
+          pr-title: "✅ chore: update version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  # pack the package artifacts
+  pack:
+    needs: mode
+    if: needs.mode.outputs.mode == 'publish'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      pack-dir-artifact-id: ${{ steps.pack.outputs.pack-dir-artifact-id }}
+    steps:
+      - name: 🔷 Checkout
+        uses: actions/checkout@v7
+      - name: 🟢 Setup bun
+        uses: oven-sh/setup-bun@v2
+      - name: 🟡 Setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+      - name: 📦 Install dependencies & build
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+      - name: 📦 Pack artifacts
+        id: pack
+        uses: changesets/action/pack@v2
+        with:
+          publish-plan-artifact-id: ${{ needs.mode.outputs.publish-plan-artifact-id }}
+  # publish the package
+  publish:
+    needs: pack
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 🔷 Checkout
+        uses: actions/checkout@v7
+      - name: 🟢 Setup bun
+        uses: oven-sh/setup-bun@v2
+      - name: 🟡 Setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+      - name: 📦 Install dependencies & build
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+      - name: ⚙️ Publish packages
+        id: publish
+        uses: changesets/action/publish@v2
+        with:
+          pack-dir-artifact-id: ${{ needs.pack.outputs.pack-dir-artifact-id }}
+          create-github-releases: true
+          push-git-tags: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
