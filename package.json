@@ -29,7 +29,8 @@
     "@changesets/changelog-github": "^1",
     "@changesets/cli": "^3",
     "@tsdown/css": "^0",
-    "tsdown": "^0"
+    "tsdown": "^0",
+    "typescript": "^7"
   },
   "peerDependencies": {
     "cn": "^0",
@@ -49,6 +50,7 @@
       "splitting": true,
       "minify": true
     },
+    "dts": true,
     "minify": true,
     "exports": false
   }
