@@ -1,6 +1,6 @@
 {
   "name": "twextras",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A collection of useful tailwind plugins and utilities in one package",
   "repository": "oviirup/twextras",
   "license": "MIT",
