@@ -1,2 +1,0 @@
-@custom-variant hocus (&:is(:hover, :focus-visible));
-@custom-variant pressed (&:is(:active:hover));

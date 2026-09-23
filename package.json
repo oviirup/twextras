@@ -10,8 +10,8 @@
     ".": "./dist/index.css",
     "./animate": "./dist/animate.css",
     "./drag": "./dist/drag.css",
-    "./hocus": "./dist/hocus.css",
     "./svg": "./dist/svg.css",
+    "./variants": "./dist/variants.css",
     "./cn.config": "./dist/cn.config.js",
     "./package.json": "./package.json"
   },
@@ -47,11 +47,11 @@
   },
   "tsdown": {
     "css": {
-      "splitting": true,
-      "minify": true
+      "minify": true,
+      "splitting": true
     },
     "dts": true,
-    "minify": true,
-    "exports": false
+    "exports": false,
+    "minify": true
   }
 }
