@@ -10,8 +10,8 @@
     ".": "./dist/index.css",
     "./animate": "./dist/animate.css",
     "./drag": "./dist/drag.css",
-    "./hocus": "./dist/hocus.css",
     "./svg": "./dist/svg.css",
+    "./variants": "./dist/variants.css",
     "./cn.config": "./dist/cn.config.js",
     "./package.json": "./package.json"
   },
@@ -29,7 +29,9 @@
     "@changesets/changelog-github": "^1",
     "@changesets/cli": "^3",
     "@tsdown/css": "^0",
-    "tsdown": "^0"
+    "cn": "^0",
+    "tsdown": "^0",
+    "typescript": "^7"
   },
   "peerDependencies": {
     "cn": "^0",
@@ -46,10 +48,11 @@
   },
   "tsdown": {
     "css": {
-      "splitting": true,
-      "minify": true
+      "minify": true,
+      "splitting": true
     },
-    "minify": true,
-    "exports": false
+    "dts": true,
+    "exports": false,
+    "minify": true
   }
 }
