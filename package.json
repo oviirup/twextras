@@ -29,6 +29,7 @@
     "@changesets/changelog-github": "^1",
     "@changesets/cli": "^3",
     "@tsdown/css": "^0",
+    "cn": "^0",
     "tsdown": "^0",
     "typescript": "^7"
   },
