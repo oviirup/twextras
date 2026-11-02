@@ -9,7 +9,9 @@ const outDir = path.join(cwd, "dist");
 
 // clean dist ----->
 
-await fs.promises.rm(outDir, { recursive: true });
+if (fs.existsSync(outDir)) {
+  fs.rmSync(outDir, { recursive: true });
+}
 
 // build js files ----->
 
