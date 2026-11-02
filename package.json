@@ -10,6 +10,7 @@
     ".": "./dist/index.css",
     "./animate": "./dist/animate.css",
     "./drag": "./dist/drag.css",
+    "./slot": "./dist/slot.css",
     "./svg": "./dist/svg.css",
     "./variants": "./dist/variants.css",
     "./cn.config": "./dist/cn.config.js",
