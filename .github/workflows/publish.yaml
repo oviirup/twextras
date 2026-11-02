@@ -41,7 +41,9 @@ jobs:
         id: version
         uses: changesets/action/version@v2
         with:
-          script: bun changeset version
+          script: |
+            bun changeset version
+            bun run format
           commit-message: "✅ chore: update version"
           pr-title: "✅ chore: update version"
         env:
