@@ -23,7 +23,10 @@
     "build": "bun run compile.ts",
     "format": "biome format --write",
     "lint": "biome check",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "version": "bun run --sequential version:changesets version:format",
+    "version:changesets": "bun changeset version",
+    "version:format": "bun run format "
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.4",
