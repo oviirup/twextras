@@ -21,6 +21,9 @@
         "noUnknownAtRules": "off",
         "noDuplicateCustomProperties": "off",
         "noDuplicateProperties": "off"
+      },
+      "style": {
+        "useImportType": "off"
       }
     }
   },

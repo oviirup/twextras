@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
+    "checkJs": true,
     "target": "ES2020",
     "lib": ["esnext"],
     "strict": true,
     "noEmit": true,
     "module": "esnext",
     "moduleResolution": "bundler",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["bun", "node"]
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]

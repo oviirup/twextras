@@ -1,6 +1,6 @@
 import plugin from "tailwindcss/plugin";
 
-const arbitraryValueBucket = new Proxy({} as Record<string, string>, {
+const arbitraryValueBucket = new Proxy(new Object(), {
   get: (_, key) => (typeof key === "string" ? key : undefined),
   getOwnPropertyDescriptor: (_, key) =>
     typeof key === "string"
