@@ -1,5 +1,11 @@
 # twextras
 
+## 3.0.3
+
+### Patch Changes
+
+- [`1301c07`](https://github.com/oviirup/twextras/commit/1301c0763320bcb02da543b7e4445730111ebd69) Thanks [@oviirup](https://github.com/oviirup)! - 🐛 fixed missing exports file
+
 ## 3.0.2
 
 ### Patch Changes
