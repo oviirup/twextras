@@ -1,5 +1,11 @@
 # twextras
 
+## 3.0.4
+
+### Patch Changes
+
+- [`e880fd5`](https://github.com/oviirup/twextras/commit/e880fd54ea16307704cb5b65f2d3ca6eaa0ccd93) Thanks [@oviirup](https://github.com/oviirup)! - 📄 added agents.md
+
 ## 3.0.3
 
 ### Patch Changes
