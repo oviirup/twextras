@@ -1,6 +1,6 @@
 # Icons
 
-SVG icon system for `src/components`. Keep this folder to icon rendering only: no behavior, app state, layout, or composite UI.
+SVG icon system under `src/lib`. Keep this folder to icon rendering only: no behavior, app state, layout, or composite UI.
 
 ## Files
 
@@ -13,7 +13,7 @@ SVG icon system for `src/components`. Keep this folder to icon rendering only: n
 Callers import the namespace and use registry components:
 
 ```tsx
-import { Icons } from "@/components/icons";
+import { Icons } from "@/lib/icons";
 
 <Icons.ArrowUp className="size-4 text-muted" />
 <Icons.ArrowUp size={16} />
@@ -60,7 +60,7 @@ Rules:
 
 When Hugeicons does not have the mark, use `createIconNode` with `IconNodes` tuples: `[tag, attrs]` pairs such as `["path", { d: "...", stroke: "currentColor" }]`. Custom shared icons still belong in `registry.ts` and are used through `Icons.*`.
 
-For one-off custom SVGs outside the registry, import the factory from `@/components/icons/icon`; do not bypass `createIconNode` with ad hoc `<svg>` markup for shared icons.
+For one-off custom SVGs outside the registry, import the factory from `@/lib/icons/icon`; do not bypass `createIconNode` with ad hoc `<svg>` markup for shared icons.
 
 ## Do not
 
@@ -68,7 +68,7 @@ For one-off custom SVGs outside the registry, import the factory from `@/compone
 - Create per-icon files or folders; registry entries are the components.
 - Add props or behavior beyond SVG props and `size`.
 - Change `role="presentation"`, `aria-hidden`, or `data-icon` behavior without checking `icon:` utility usage.
-- Deep-import `registry.ts` or `icon.tsx` from outside this folder; use `@/components/icons` for `Icons` and `@/components/icons/icon` only for the factory.
+- Deep-import `registry.ts` or `icon.tsx` from outside this folder; use `@/lib/icons` for `Icons` and `@/lib/icons/icon` only for the factory.
 
 ## Verify
 

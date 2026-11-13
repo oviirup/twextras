@@ -1,6 +1,6 @@
-# src/hooks
+# src/lib/hooks
 
-Client hooks, one per file, named `use-*.ts`. No barrel - import direct: `import { useCopy } from "@/hooks/use-copy"`. `"use client"` on all except `use-is-mobile`, `use-is-online`, `use-media-query` (render-safe both sides). Docs live in JSDoc on each hook; this file is the map.
+Client hooks, one per file, named `use-*.ts`. No barrel - import direct: `import { useCopy } from "@/lib/hooks/use-copy"`. `"use client"` on all except `use-is-mobile`, `use-is-online`, `use-media-query` (render-safe both sides). Docs live in JSDoc on each hook; this file is the map.
 
 ## Primitives (built first, reused by rest)
 

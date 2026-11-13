@@ -1,14 +1,14 @@
 ---
 
 name: oviirup-components-guidelines
-description: Author and edit React UI components under src/components using oviirup conventions (per-component folders, index.ts barrels, baseui (@base-ui/react), export function + export namespace Props, cva/cn, data-slot, nonNative). Use when creating, wrapping, or refactoring src/components/ui, src/components/layout, or src/components/icons, or when the user mentions Button.Props, Accordion.Root, data-slot, or .module.css.
+description: Author and edit React UI components under src/components using oviirup conventions (per-component folders, index.ts barrels, baseui (@base-ui/react), export function + export namespace Props, cva/cn, data-slot, nonNative). Use when creating, wrapping, or refactoring src/components/ui, src/components/layout, or src/lib/icons, or when the user mentions Button.Props, Accordion.Root, data-slot, or .module.css.
 ---
 
 # oviirup component guidelines
 
 Match nearest sibling in `src/components`. No parallel pattern. Canonical refs: `ui/accordion/` (compound), `ui/button/` (simple + cva), `ui/checkbox/`, `ui/tabs/`, `layout/container/`.
 
-One folder per component. Implementation is never `index.ts`. Where a new component lives (`core/` vs `layout/` vs `ui/` vs `icons/` vs `graphics/`): see [structure.md](structure.md).
+One folder per component. Implementation is never `index.ts`. Where a new component lives (`core/` vs `layout/` vs `ui/` vs `src/lib/icons/` vs `graphics/`): see [structure.md](structure.md).
 
 ```
 src/components/ui/<name>/
@@ -28,7 +28,7 @@ Primitive API, parts, composition, styling, animation, TypeScript: [Base UI llms
 - Base UI from the `baseui` alias (tsconfig path for `@base-ui/react`): `baseui` / `baseui/<part>`. Never write `@base-ui/react` in imports.
 - Rename primitive `Base*`: `import { Accordion as BaseAccordion } from "baseui/accordion"`; `import { Button as BaseButton } from "baseui"`.
 - Classes: `cn`, `cx`, and `cva` from `@/lib/utils` (`src/lib/utils.ts` wraps the `cn` and `cva` packages). Variant props type: `cva.Props<typeof buttonVariants>` - the utils namespace alias for the package's `VariantProps`.
-- Registry icons: `import { Icons } from "@/components/icons"` then `Icons.ChevronDown`. New custom SVG: `createIconNode` from `@/components/icons/icon`. No `lucide-react` from UI.
+- Registry icons: `import { Icons } from "@/lib/icons"` then `Icons.ChevronDown`. New custom SVG: `createIconNode` from `@/lib/icons/icon`. No `lucide-react` from UI.
 
 ## File shape
 
@@ -230,7 +230,7 @@ Only when Tailwind/`cn` not enough (repeating decorative markup). Live in the co
 
 ## Icons
 
-Registry: `Icons.*` from `@/components/icons`. `createIconNode` builds SVG with `data-icon={name}` so `icon:` variant works. `role="presentation"` `aria-hidden`. Custom marks (checkbox check) may inline SVG via Base `render` - still presentation SVG, not Lucide.
+Registry: `Icons.*` from `@/lib/icons`. `createIconNode` builds SVG with `data-icon={name}` so `icon:` variant works. `role="presentation"` `aria-hidden`. Custom marks (checkbox check) may inline SVG via Base `render` - still presentation SVG, not Lucide.
 
 ## Do not
 
