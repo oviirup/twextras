@@ -18,13 +18,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@base-ui/react": "^1.9.0",
     "@oviirup/env": "^1.0.3",
     "@oviirup/utils": "^1.1.1",
+    "baseui": "npm:@base-ui/react@^1.9.0",
     "better-auth": "^1.7.22",
-    "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",
     "cva": "^1.0.0-beta.12",
+    "hugeicons": "npm:@hugeicons/core-free-icons@^4.4.0",
     "next": "^16.4.6",
     "next-safe-action": "^8.7.3",
     "next-zod-route": "^1.0.0",
@@ -39,6 +39,7 @@
     "@types/react": "^19.3.0",
     "babel-plugin-react-compiler": "1.0.0",
     "rimraf": "^6.1.4",
+    "shadcn": "^4.23.0",
     "tailwindcss": "4.3.5",
     "twextras": "^3.0.4",
     "typescript": "^7.0.2"
