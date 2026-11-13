@@ -10,6 +10,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- BEGIN: oviirup-component-guideline -->
 
+## Component Guidelines
+
 All components should be created using shadcn ui components only.
 
 Whenever installing or adding a shadcn component, you must follow the guidelines at `.agents/skills/oviirup-components-guidelines/SKILL.md`
