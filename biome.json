@@ -21,6 +21,18 @@
       "a11y": {
         "recommended": false
       },
+      "correctness": {
+        "useExhaustiveDependencies": {
+          "level": "warn",
+          "options": {
+            "hooks": [
+              { "name": "useSyncRef", "stableResult": true },
+              { "name": "useLazyRef", "stableResult": true }
+            ],
+            "reportMissingDependenciesArray": true
+          }
+        }
+      },
       "nursery": {
         "useTailwindSortedClasses": {
           "fix": "safe",
