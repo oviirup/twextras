@@ -1,0 +1,46 @@
+{
+  "name": "omkarnath",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#globals.css": "./src/styles/globals.css"
+  },
+  "scripts": {
+    "build": "next build",
+    "clean": "rimraf  -g .next .sprite cn.tables.js '*.tsbuildinfo'",
+    "dev": "next dev",
+    "format": "biome format --write",
+    "lint": "biome check",
+    "preview": "bun run --sequential 'build' 'start'",
+    "start": "next start",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.9.0",
+    "@oviirup/env": "^1.0.3",
+    "@oviirup/utils": "^1.1.1",
+    "better-auth": "^1.7.22",
+    "class-variance-authority": "^0.7.1",
+    "cn": "^0.5.2",
+    "cva": "^1.0.0-beta.12",
+    "next": "^16.4.6",
+    "next-safe-action": "^8.7.3",
+    "next-zod-route": "^1.0.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-hook-form": "^7.92.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.7",
+    "@tailwindcss/postcss": "4.3.5",
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.3.0",
+    "babel-plugin-react-compiler": "1.0.0",
+    "rimraf": "^6.1.4",
+    "tailwindcss": "4.3.5",
+    "twextras": "^3.0.4",
+    "typescript": "^7.0.2"
+  }
+}

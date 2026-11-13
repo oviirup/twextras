@@ -1,0 +1,25 @@
+# dependencies
+node_modules
+
+# generated files
+.vercel
+.next
+.turbo
+dist
+build
+
+# compiled files
+cn.tables.js
+
+# debug
+*-debug.log*
+*-error.log*
+
+# local env files
+.env*
+!.env.example
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+

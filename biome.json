@@ -1,0 +1,77 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": ["**/*", "!*.min.*", "!public"]
+  },
+  "formatter": {
+    "useEditorconfig": true,
+    "bracketSameLine": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "linter": {
+    "rules": {
+      "a11y": {
+        "recommended": false
+      },
+      "nursery": {
+        "useTailwindSortedClasses": {
+          "fix": "safe",
+          "level": "info"
+        },
+        "useTailwindShorthandClasses": {
+          "fix": "safe",
+          "level": "info"
+        }
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "useImportType": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off",
+        "noExplicitAny": "off",
+        "noDuplicateCustomProperties": "off",
+        "noDuplicateProperties": "off",
+        "noUnknownAtRules": "off"
+      }
+    },
+    "domains": {
+      "next": "recommended",
+      "react": "recommended"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true,
+      "cssModules": true
+    }
+  },
+  "tailwind": {
+    "stylesheet": "./src/styles/globals.css",
+    "mergeFunctions": ["clsx", "cn", "tw"],
+    "variantFunctions": ["cva", "tv"]
+  },
+  "javascript": {
+    "formatter": {
+      "quoteProperties": "preserve",
+      "quoteStyle": "double"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedPackageJson": "on",
+        "noDuplicateClasses": "on"
+      }
+    }
+  }
+}
