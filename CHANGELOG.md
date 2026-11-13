@@ -1,5 +1,11 @@
 # twextras
 
+## 3.0.5
+
+### Patch Changes
+
+- [`dd58486`](https://github.com/oviirup/twextras/commit/dd58486b22a5cb5cb81a375522439ef6305d1362) Thanks [@oviirup](https://github.com/oviirup)! - 🐛 fixed missing agents.md
+
 ## 3.0.4
 
 ### Patch Changes
