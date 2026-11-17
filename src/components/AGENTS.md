@@ -163,7 +163,7 @@ Full twextras docs: `node_modules/twextras/AGENTS.md`. Token/utility details: `s
 
 Co-locate `<name>.stories.tsx` next to `<name>.tsx`; the `stories` glob in `.storybook/main.ts` picks it up. import `Meta`/`StoryObj` types from from `@storybook/react`.
 
-- Import the component with relative path (`./button`), same as app code.
+- Import the component and sibling components via relative paths (`./button`, `../button`) - never the `@/components` alias inside stories.
 - CSF3: `meta` with `component`, `tags: ["autodocs"]`, `parameters.layout: "centered"`; expose `variant`/`size`/boolean props via `argTypes` (`control: "select"`/`"boolean"`).
 - Callbacks: `args: { onClick: fn() }` with `fn` from `storybook/test`.
 - Add one story per variant value plus a `render`-based matrix story (e.g. `Variants`, `Sizes`) showing them side by side.
