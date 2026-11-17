@@ -1,6 +1,12 @@
 import { toPascalCase } from "@oviirup/utils/string";
 import { createElement } from "react";
 
+const INHERITED_PROPS = new Set(["stroke", "strokeWidth", "strokeLinecap", "strokeLinejoin"]);
+
+export function removeSvgProps(props: IconNode[1]) {
+  return Object.fromEntries(Object.entries(props).filter(([key]) => !INHERITED_PROPS.has(key)));
+}
+
 export function createIconNode({ name, nodes, props }: IconNodeOptions) {
   // biome-ignore lint/correctness/noComponentHookFactories: false positive
   const Icon = ({ size, ...iconProps }: IconProps) => {
@@ -14,8 +20,11 @@ export function createIconNode({ name, nodes, props }: IconNodeOptions) {
         role="presentation"
         aria-hidden="true"
         data-icon={name}>
-        {nodes.map(([TAG, props], i) => {
-          return createElement(TAG, { key: `${name}:${TAG}:${i}`, ...props });
+        {nodes.map(([TAG, nodeProps], i) => {
+          return createElement(TAG, {
+            key: `${name}:${TAG}:${i}`,
+            ...removeSvgProps(nodeProps),
+          });
         })}
       </svg>
     );

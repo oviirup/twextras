@@ -21,11 +21,8 @@ Client hooks, one per file, named `use-*.ts`. No barrel - import direct: `import
 ## State / environment
 
 - `useCopy({ onSuccess, onError, timeout = 2000 })` - clipboard write via `navigator.clipboard.writeText`. State: `"ready" | "success" | "error"`, auto-resets after `timeout`. `copy(text)` takes string or `() => string`. Types namespaced under `useCopy.State/Text/Options/Result`.
-- `useIsClient` - `true` after hydration. `useSyncExternalStore`, server snapshot `false`.
-- `useIsOnline` - tracks `online`/`offline` events on `window`. Server snapshot `true`.
 - `useMediaQuery(query)` - media query matches. `useSyncExternalStore`, server snapshot `false`.
 - `useIsMobile` - `useMediaQuery("(max-width: 40rem)")` wrapper. Mobile breakpoint = ≤40rem.
-- `useIsVisible(ref, options?)` - `IntersectionObserver` visibility of the ref'd element. Boolean state, disconnects on unmount.
 
 ## Conventions
 

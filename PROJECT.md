@@ -10,15 +10,14 @@ root
 │   │   ├── account.prisma
 │   │   ├── member.prisma
 │   │   └── ...
-│   ├── migrations
-│   └── seed.ts
+│   └── migrations
 ├── src
 │   ├── assets
 │   │   ├── images
 │   │   └── icons
 │   ├── app
 │   │   ├── (public)
-│   │   │   ├── (home)
+│   │   │   ├── page.tsx
 │   │   │   ├── about
 │   │   │   ├── activities
 │   │   │   ├── events
@@ -68,9 +67,8 @@ root
 │   │   ├── auth
 │   │   ├── prisma
 │   │   ├── storage
-│   │   ├── payments
+│   │   ├── hooks
 │   │   └── utils
-│   ├── hooks
 │   ├── config
 │   └── types
 ```

@@ -7,9 +7,14 @@ node_modules
 .turbo
 dist
 build
+prisma/generated
 
 # compiled files
 cn.tables.js
+
+# supabase
+.branches
+.temp
 
 # debug
 *-debug.log*

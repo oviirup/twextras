@@ -69,3 +69,59 @@ export const Check = createIconNode({
   nodes: HugeIcons.CheckIcon,
   props: baseProps,
 });
+
+export const Close = createIconNode({
+  name: "close",
+  nodes: HugeIcons.Cancel01Icon,
+  props: baseProps,
+});
+
+export const Logout = createIconNode({
+  name: "logout",
+  nodes: HugeIcons.Logout01Icon,
+  props: baseProps,
+});
+
+export const User = createIconNode({
+  name: "user",
+  nodes: HugeIcons.UserIcon,
+  props: baseProps,
+});
+
+export const Google = createIconNode({
+  name: "google",
+  nodes: HugeIcons.GoogleIcon,
+  props: baseProps,
+});
+
+// Navigation --->
+
+export const Home = createIconNode({
+  name: "home",
+  nodes: HugeIcons.Home01Icon,
+  props: baseProps,
+});
+
+export const Dashboard = createIconNode({
+  name: "dashboard",
+  nodes: HugeIcons.DashboardSquare01Icon,
+  props: baseProps,
+});
+
+export const Settings = createIconNode({
+  name: "settings",
+  nodes: HugeIcons.SettingsIcon,
+  props: baseProps,
+});
+
+export const Shield = createIconNode({
+  name: "shield",
+  nodes: HugeIcons.ShieldIcon,
+  props: baseProps,
+});
+
+export const SidebarLeft = createIconNode({
+  name: "sidebar-left",
+  nodes: HugeIcons.SidebarLeftIcon,
+  props: baseProps,
+});

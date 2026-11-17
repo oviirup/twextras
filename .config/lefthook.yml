@@ -1,9 +1,0 @@
-pre-commit:
-  commands:
-    lint:
-      glob: "*"
-      run: bunx biome check --write --files-ignore-unknown=true -- {staged_files}
-      stage_fixed: true
-    typecheck:
-      glob: "*.{js,ts,tsx}"
-      run: bun run typecheck

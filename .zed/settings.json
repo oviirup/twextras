@@ -1,0 +1,22 @@
+{
+  "tab_size": 2,
+  "format_on_save": "on",
+  "hard_tabs": false,
+  "formatter": {
+    "language_server": { "name": "biome" }
+  },
+  "code_actions_on_format": {
+    "source.fixAll.biome": true,
+    "source.organizeImports.biome": true
+  },
+  "ensure_final_newline_on_save": true,
+  "remove_trailing_whitespace_on_save": true,
+  "languages": {
+    "CSS": {
+      "language_servers": ["tailwindcss-intellisense-css"]
+    }
+  },
+
+  "read_only_files": ["**/*.lock", "**/node_modules/**"],
+  "wrap_guides": [80, 100, 120]
+}
