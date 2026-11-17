@@ -4,8 +4,9 @@ Reusable UI under `src/components`. Match nearest sibling. One folder per compon
 
 ```
 src/components/<group>/<name>/
-  index.ts           # public barrel only
-  <name>.tsx         # implementation (+ optional <name>.module.css)
+  index.ts               # public barrel only
+  <name>.tsx             # implementation (+ optional <name>.module.css)
+  <name>.stories.tsx     # optional Storybook stories
 ```
 
 Import the folder: `@/components/ui/button`. Never deep-import `.../button/button`.
@@ -157,6 +158,16 @@ shadcn components use `ring` utilities for focus and hide the outline — do NOT
 Full twextras docs: `node_modules/twextras/AGENTS.md`. Token/utility details: `src/styles/AGENTS.md`.
 
 <!-- END: style-guideline -->
+
+## Stories (Storybook)
+
+Co-locate `<name>.stories.tsx` next to `<name>.tsx`; the `stories` glob in `.storybook/main.ts` picks it up. import `Meta`/`StoryObj` types from from `@storybook/react`.
+
+- Import the component with relative path (`./button`), same as app code.
+- CSF3: `meta` with `component`, `tags: ["autodocs"]`, `parameters.layout: "centered"`; expose `variant`/`size`/boolean props via `argTypes` (`control: "select"`/`"boolean"`).
+- Callbacks: `args: { onClick: fn() }` with `fn` from `storybook/test`.
+- Add one story per variant value plus a `render`-based matrix story (e.g. `Variants`, `Sizes`) showing them side by side.
+- Title format: `UI/Button` — `<group>/<Name>`.
 
 ## Do not
 
