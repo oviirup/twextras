@@ -88,5 +88,5 @@
 @property --tw-highlight {
   syntax: "<color>";
   inherits: false;
-  initial-value: var(--ring);
+  initial-value: gray;
 }
