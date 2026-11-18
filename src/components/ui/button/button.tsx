@@ -21,7 +21,7 @@ const buttonVariants = cva({
       lg: "h-12 px-5 text-base icon:size-5",
     },
     icon: {
-      true: "aspect-square p-0 pressed:scale-95",
+      true: "aspect-square p-0",
     },
   },
   defaultVariants: {
