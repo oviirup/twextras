@@ -2,6 +2,6 @@
   // biome-ignore format: ignore
   "words": [
     "oviirup", "omkarnath", "twextras", "baseui", "hugeicons", "lefthook",
-    "supabase", "prisma"
+    "supabase", "prisma", "autodocs"
   ]
 }
