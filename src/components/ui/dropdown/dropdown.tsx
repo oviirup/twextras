@@ -52,7 +52,7 @@ function Dropdown_Content({
         <BaseMenu.Popup
           data-slot="dropdown-content"
           className={cn(
-            "z-50 max-h-(--available-height) w-max min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-xl ring-1 shadow-black/8 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+            "z-50 max-h-(--available-height) w-max min-w-32 origin-(--transform-origin) scrollbar-none overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-xl ring-1 shadow-black/8 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
             className,
           )}
           {...props}
@@ -96,12 +96,12 @@ namespace Dropdown_Label {
 const dropdownItemVariants = cva({
   base: [
     "group/dropdown-item relative flex min-h-7 cursor-default items-center gap-2 rounded-md px-2.5 py-1 text-sm leading-none outline-none select-none data-inset:pl-7.5 icon:not-[[class*='size-']]:size-4",
-    "focus:bg-accent focus:text-accent-foreground focus:ring focus:ring-inset",
+    "focus:bg-taupe-100 focus:text-taupe-800 focus:ring focus:ring-inset",
     "data-disabled:pointer-events-none data-disabled:opacity-65",
   ],
   variants: {
     variant: {
-      default: "focus:ring-border/65 focus:**:text-accent-foreground",
+      default: "focus:ring-border/65 focus:**:text-taupe-800",
       destructive:
         "text-destructive focus:bg-destructive/8 focus:text-destructive focus:ring-destructive/4 icon:text-destructive",
     },

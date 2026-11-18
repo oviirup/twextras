@@ -10,7 +10,7 @@ const buttonVariants = cva({
   variants: {
     variant: {
       base: "bg-primary text-primary-foreground highlight-primary hocus:brightness-110",
-      secondary: "bg-secondary text-secondary-foreground hocus:bg-secondary hocus:bg-secondary/75",
+      secondary: "bg-secondary text-secondary-foreground hocus:bg-secondary/75",
       outline: "border-2 hocus:bg-secondary/35",
       ghost: "text-secondary-foreground hocus:bg-secondary/50",
     },

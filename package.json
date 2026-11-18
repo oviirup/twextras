@@ -18,11 +18,11 @@
     "format": "biome format --write",
     "lint": "biome check",
     "preview": "bun run --sequential 'build' 'start'",
-    "sb:build": "storybook build",
-    "sb:dev": "storybook dev -p 4000",
     "start": "next start",
     "test": "bun test",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ui:build": "storybook build",
+    "ui:dev": "storybook dev -p 4000"
   },
   "dependencies": {
     "@oviirup/env": "^1.0.3",

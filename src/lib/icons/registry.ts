@@ -76,6 +76,12 @@ export const Close = createIconNode({
   props: baseProps,
 });
 
+export const Ellipsis = createIconNode({
+  name: "ellipsis",
+  nodes: HugeIcons.EllipsisIcon,
+  props: baseProps,
+});
+
 export const Logout = createIconNode({
   name: "logout",
   nodes: HugeIcons.Logout01Icon,
