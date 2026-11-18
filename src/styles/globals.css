@@ -59,16 +59,28 @@
 /* variants */
 
 @custom-variant icon (svg[data-icon]);
+
 @custom-variant data-transition-style (&[data-starting-style], &[data-ending-style]);
 
 /* utilities */
 
 @utility highlight {
-  outline: 2px solid --alpha(var(--tw-highlight, var(--muted)) / 75%);
+  outline: 2px solid --alpha(var(--tw-highlight, var(--ring)) / 75%);
   outline-offset: 1px;
 }
+
 @utility highlight-* {
   --tw-highlight: --value(--color-*, [*]);
+}
+
+@utility link {
+  @apply cursor-pointer underline decoration-current/35 underline-offset-3;
+  @variant hocus {
+    @apply underline-offset-4 decoration-current/60;
+  }
+  @variant focus-visible {
+    @apply highlight;
+  }
 }
 
 /* custom properties */
@@ -76,5 +88,5 @@
 @property --tw-highlight {
   syntax: "<color>";
   inherits: false;
-  initial-value: white;
+  initial-value: gray;
 }
