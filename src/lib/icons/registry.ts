@@ -100,6 +100,62 @@ export const Google = createIconNode({
   props: baseProps,
 });
 
+// Forms --->
+
+export const Mail = createIconNode({
+  name: "mail",
+  nodes: HugeIcons.Mail01Icon,
+  props: baseProps,
+});
+
+export const Lock = createIconNode({
+  name: "lock",
+  nodes: HugeIcons.LockOpenIcon,
+  props: baseProps,
+});
+
+export const Eye = createIconNode({
+  name: "eye",
+  nodes: HugeIcons.EyeIcon,
+  props: baseProps,
+});
+
+export const EyeClose = createIconNode({
+  name: "eye-close",
+  nodes: HugeIcons.EyeOffIcon,
+  props: baseProps,
+});
+
+export const Edit = createIconNode({
+  name: "edit",
+  nodes: HugeIcons.Edit03Icon,
+  props: baseProps,
+});
+
+export const Password = createIconNode({
+  name: "password",
+  nodes: HugeIcons.SquareLockPasswordIcon,
+  props: baseProps,
+});
+
+export const Search = createIconNode({
+  name: "search",
+  nodes: HugeIcons.Search01Icon,
+  props: baseProps,
+});
+
+export const Alert = createIconNode({
+  name: "alert",
+  nodes: HugeIcons.AlertDiamondIcon,
+  props: baseProps,
+});
+
+export const Loading = createIconNode({
+  name: "loading",
+  nodes: HugeIcons.LoaderCircleIcon,
+  props: baseProps,
+});
+
 // Navigation --->
 
 export const Home = createIconNode({
@@ -129,5 +185,35 @@ export const Shield = createIconNode({
 export const SidebarLeft = createIconNode({
   name: "sidebar-left",
   nodes: HugeIcons.SidebarLeftIcon,
+  props: baseProps,
+});
+
+export const Users = createIconNode({
+  name: "users",
+  nodes: HugeIcons.UsersIcon,
+  props: baseProps,
+});
+
+export const Calendar = createIconNode({
+  name: "calendar",
+  nodes: HugeIcons.Calendar01Icon,
+  props: baseProps,
+});
+
+export const Notification = createIconNode({
+  name: "notification",
+  nodes: HugeIcons.Notification01Icon,
+  props: baseProps,
+});
+
+export const UserGroup = createIconNode({
+  name: "user-group",
+  nodes: HugeIcons.UserGroup03Icon,
+  props: baseProps,
+});
+
+export const BookOpen = createIconNode({
+  name: "book-open",
+  nodes: HugeIcons.BookOpen01Icon,
   props: baseProps,
 });
