@@ -201,8 +201,7 @@ function Sidebar_Root({
         data-side="left"
         className={cn(
           "fixed inset-y-0 left-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,width] duration-200 ease-linear group-data-[collapsible=offcanvas]:-left-(--sidebar-width) md:flex",
-          // Adjust the padding for floating and inset variants.
-          variant === "floating" || variant === "inset" ? "p-2" : "border-r",
+          variant === "sidebar" && "border-r",
           className,
         )}
         {...props}>
@@ -257,7 +256,7 @@ function Sidebar_Inset({ className, ...props }: Sidebar_Inset.Props) {
     <main
       data-slot="sidebar-inset"
       className={cn(
-        "relative flex w-full flex-1 flex-col bg-background md:peer-data-[variant=inset]:mt-2 md:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:rounded-tl-xl",
+        "relative flex w-full flex-1 flex-col bg-background transition-[margin] md:peer-data-[variant=inset]:mt-2 md:peer-data-[variant=inset]:rounded-tl-xl md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
         className,
       )}
       {...props}
@@ -339,7 +338,7 @@ function Sidebar_Content({ className, ...props }: Sidebar_Content.Props) {
     <div
       data-slot="sidebar-content"
       data-sidebar="content"
-      className={cn("no-scrollbar flex min-h-0 flex-1 flex-col gap-0 overflow-auto", className)}
+      className={cn("flex min-h-0 flex-1 scrollbar-thin flex-col gap-0 overflow-auto", className)}
       {...props}
     />
   );

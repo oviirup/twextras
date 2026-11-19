@@ -31,12 +31,13 @@ Import flow: `layout/` and `admin/` may import from `ui/`; `ui/` never imports f
 - Rename primitives with `Base` prefix.
 - `cn`, `cva` from `@/lib/utils`. Variants type: `cva.Props<typeof xVariants>`.
 - Icons: `import { Icons } from "@/lib/icons"` -> `Icons.Check`. Custom SVG: `createIconNode` from `@/lib/icons/icon`. No `lucide-react`, no other icon packages.
+- React: never `import * as React from "react"`. Import hooks/functions individually (`import { useState } from "react"`). `React` types (`React.ComponentProps`, `React.ReactNode`) resolve via the global React namespace - no import needed.
 
 <!-- BEGIN: component-guideline -->
 
 ## File shape
 
-Every part pairs `function Name` + `namespace Name` (same identifier -> `Name.Props`). NOTHING is exported inline — ALL exports go in the final `// exports --->` block. No top-level `FooProps`, no `.parts.tsx`. Compound parts use a `<Name>_` prefix internally (`Accordion_Root`) and are aliased to public names (`Root`) in that block.
+Every part pairs `function Name` + `namespace Name` (same identifier -> `Name.Props`). NOTHING is exported inline - ALL exports go in the final `// exports --->` block. No top-level `FooProps`, no `.parts.tsx`. Compound parts use a `<Name>_` prefix internally (`Accordion_Root`) and are aliased to public names (`Root`) in that block.
 
 ```tsx
 // button --->
@@ -109,7 +110,7 @@ namespace Accordion_Content {
 export { Accordion_Root as Root, Accordion_Trigger as Trigger, Accordion_Content as Content };
 ```
 
-Callers: `<Accordion.Root>`, types `Accordion.Root.Props`. ALL exports live in the `// exports --->` block — nothing exported inline.
+Callers: `<Accordion.Root>`, types `Accordion.Root.Props`. ALL exports live in the `// exports --->` block - nothing exported inline.
 
 - `"use client"` on `<name>.tsx` only when using interactive Base UI or Next client APIs. Never on `index.ts`.
 - Comment markers: `// button --->`, `// exports --->`.
@@ -147,13 +148,13 @@ Single source: `src/styles/globals.css` (Tailwind v4 + `twextras`). Theme tokens
 
 - Colors: `bg-background`, `text-foreground`, `bg-card`, `bg-popover`, `bg-primary`, `text-primary-foreground`, `bg-secondary`, `bg-muted`, `text-muted-foreground`, `bg-accent`, `text-accent-foreground`, `bg-destructive`, `border-border`, `border-input`, `ring-ring`.
 - Radii: `rounded-sm/md/lg/xl/...` from `--radius` scale. Dark mode via `.dark` class (`dark:` variant registered).
-- No `components.css`/`utilities.css` — repeated decorative CSS -> `<name>.module.css` in component folder, first line `@reference "#globals";`.
+- No `components.css`/`utilities.css` - repeated decorative CSS -> `<name>.module.css` in component folder, first line `@reference "#globals";`.
 
 ## Style guideline
 
-shadcn theme with shadcn-style Tailwind tokens (`bg-background`, `text-foreground`, `bg-primary`, `border-border`, etc. — defined in `src/styles/globals.css`).
+shadcn theme with shadcn-style Tailwind tokens (`bg-background`, `text-foreground`, `bg-primary`, `border-border`, etc. - defined in `src/styles/globals.css`).
 
-shadcn components use `ring` utilities for focus and hide the outline — do NOT copy that. Use the twextras `highlight` utility instead: `focus-visible:highlight`, tinted via `highlight-<color>` (e.g. `highlight-red-500`; `highlight-*` sets `--tw-highlight`).
+shadcn components use `ring` utilities for focus and hide the outline - do NOT copy that. Use the twextras `highlight` utility instead: `focus-visible:highlight`, tinted via `highlight-<color>` (e.g. `highlight-red-500`; `highlight-*` sets `--tw-highlight`).
 
 Target icons with the `icon:` variant (custom variant for `svg[data-icon]`, instead of raw `svg` selectors:
 `[&>svg]:` -> `icon:`,
@@ -173,14 +174,14 @@ Co-locate `<name>.stories.tsx` next to `<name>.tsx`; the `stories` glob in `.sto
 - CSF3: `meta` with `component`, `tags: ["autodocs"]`, `parameters.layout: "centered"`; expose `variant`/`size`/boolean props via `argTypes` (`control: "select"`/`"boolean"`).
 - Callbacks: `args: { onClick: fn() }` with `fn` from `storybook/test`.
 - Add one story per variant value plus a `render`-based matrix story (e.g. `Variants`, `Sizes`) showing them side by side.
-- Title format: `UI/Button` — `<group>/<Name>`.
+- Title format: `UI/Button` - `<group>/<Name>`.
 
 ## Do not
 
 - Deep-imports; flat files under `ui/`/`layout/`/`admin/` (`ui/button.tsx`).
 - `tv`, `lucide-react`, or icon packages outside `@/lib/icons`.
 - Logic in `index.ts`; leak `nativeButton` (public API is `nonNative`).
-- Inline `export` anywhere — all exports go in the `// exports --->` block.
+- Inline `export` anywhere - all exports go in the `// exports --->` block.
 - CSS module "just in case", if tailwind is not enough - start with `cn`/`cva`.
 - Hardcode colors or invent tokens not in `globals.css`.
 - Raw `svg` selectors like `[&>svg]`/`[&_svg]` for icon styling - use the `icon:` variant instead (`icon:not-[[class*='size-']]:` for the no-size guard).

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { cn, cva } from "@/lib/utils";
 
 // empty root --->
@@ -83,7 +82,7 @@ function Empty_Description({ className, ...props }: Empty_Description.Props) {
     <div
       data-slot="empty-description"
       className={cn(
-        "text-sm/relaxed text-muted-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
+        "text-sm/relaxed text-muted-foreground *:[a]:underline *:[a]:underline-offset-4 *:[a]:hover:text-primary",
         className,
       )}
       {...props}

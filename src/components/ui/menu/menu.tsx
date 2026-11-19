@@ -1,7 +1,6 @@
 "use client";
 
 import { ContextMenu as ContextMenuPrimitive } from "baseui/context-menu";
-import * as React from "react";
 import { Icons } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
