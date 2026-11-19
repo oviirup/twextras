@@ -677,7 +677,7 @@ function Sidebar_MenuSubButton({
     props: mergeProps<"a">(
       {
         className: cn(
-          "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:ring hover:ring-sidebar-border/65 hover:ring-inset focus-visible:ring focus-visible:ring-sidebar-border/65 focus-visible:ring-inset active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[size=md]:text-sm data-[size=sm]:text-sm data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground icon:size-4 [&>span:last-child]:truncate [&>svg]:text-sidebar-accent-foreground",
+          "*[span]:last:truncate flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:ring hover:ring-sidebar-border/65 hover:ring-inset focus-visible:ring focus-visible:ring-sidebar-border/65 focus-visible:ring-inset active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[size=md]:text-sm data-[size=sm]:text-sm data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground icon:size-4 icon:text-sidebar-accent-foreground",
           className,
         ),
       },
@@ -722,6 +722,4 @@ export {
   Sidebar_Root as Root,
   Sidebar_Separator as Separator,
   Sidebar_Trigger as Trigger,
-  sidebarMenuButtonVariants,
-  useSidebar,
 };
