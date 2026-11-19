@@ -155,6 +155,12 @@ shadcn theme with shadcn-style Tailwind tokens (`bg-background`, `text-foregroun
 
 shadcn components use `ring` utilities for focus and hide the outline — do NOT copy that. Use the twextras `highlight` utility instead: `focus-visible:highlight`, tinted via `highlight-<color>` (e.g. `highlight-red-500`; `highlight-*` sets `--tw-highlight`).
 
+Target icons with the `icon:` variant (custom variant for `svg[data-icon]`, instead of raw `svg` selectors:
+`[&>svg]:` -> `icon:`,
+`[&>svg:not([class*='size-'])]:` -> `icon:not-[[class*='size-']]:`.
+
+Target `data-slot` elements with twextras `slot-*` utilities instead of `data-[slot=*]` selectors: `slot-<value>:` for the element itself, `*:slot-<value>:` for direct children, `**:slot-<value>:` for descendants. Details: `src/styles/AGENTS.md`.
+
 Full twextras docs: `node_modules/twextras/AGENTS.md`. Token/utility details: `src/styles/AGENTS.md`.
 
 <!-- END: style-guideline -->
@@ -177,6 +183,8 @@ Co-locate `<name>.stories.tsx` next to `<name>.tsx`; the `stories` glob in `.sto
 - Inline `export` anywhere — all exports go in the `// exports --->` block.
 - CSS module "just in case", if tailwind is not enough - start with `cn`/`cva`.
 - Hardcode colors or invent tokens not in `globals.css`.
+- Raw `svg` selectors like `[&>svg]`/`[&_svg]` for icon styling - use the `icon:` variant instead (`icon:not-[[class*='size-']]:` for the no-size guard).
+- Verbose `data-[slot=*]` arbitrary variants - use twextras `slot-*` utilities (`slot-*`, `*:slot-*`, `**:slot-*`) instead.
 
 ## Verify
 

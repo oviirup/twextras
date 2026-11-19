@@ -166,7 +166,7 @@ function Sidebar_Root({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground *:[button]:hidden"
+          className="*:slot-sheet-close:hidden w-(--sidebar-width) border-sidebar-border bg-sidebar p-0 text-sidebar-foreground"
           style={{
             "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
           }}>
@@ -250,35 +250,6 @@ namespace Sidebar_Trigger {
   export type Props = React.ComponentProps<typeof Button>;
 }
 
-// sidebar rail --->
-
-function Sidebar_Rail({ className, ...props }: Sidebar_Rail.Props) {
-  const { toggleSidebar } = useSidebar();
-
-  return (
-    <button
-      data-sidebar="rail"
-      data-slot="sidebar-rail"
-      aria-label="Toggle Sidebar"
-      tabIndex={-1}
-      onClick={toggleSidebar}
-      title="Toggle Sidebar"
-      className={cn(
-        "absolute inset-y-0 -right-4 z-20 hidden w-4 transition-all ease-linear after:absolute after:inset-y-0 after:inset-s-1/2 after:w-0.5 hover:after:bg-sidebar-border sm:flex ltr:-translate-x-1/2 rtl:-translate-x-1/2",
-        "cursor-w-resize",
-        "in-data-[state=collapsed]:cursor-e-resize",
-        "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full hover:group-data-[collapsible=offcanvas]:bg-sidebar",
-        "in-data-[collapsible=offcanvas]:-right-2",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
-namespace Sidebar_Rail {
-  export type Props = React.ComponentProps<"button">;
-}
-
 // sidebar inset --->
 
 function Sidebar_Inset({ className, ...props }: Sidebar_Inset.Props) {
@@ -286,7 +257,7 @@ function Sidebar_Inset({ className, ...props }: Sidebar_Inset.Props) {
     <main
       data-slot="sidebar-inset"
       className={cn(
-        "relative flex w-full flex-1 flex-col bg-background md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
+        "relative flex w-full flex-1 flex-col bg-background md:peer-data-[variant=inset]:mt-2 md:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:rounded-tl-xl",
         className,
       )}
       {...props}
@@ -748,7 +719,6 @@ export {
   Sidebar_MenuSubButton as MenuSubButton,
   Sidebar_MenuSubItem as MenuSubItem,
   Sidebar_Provider as Provider,
-  Sidebar_Rail as Rail,
   Sidebar_Root as Root,
   Sidebar_Separator as Separator,
   Sidebar_Trigger as Trigger,

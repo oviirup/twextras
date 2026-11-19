@@ -65,7 +65,6 @@ function SidebarDemo({
             </Sidebar.MenuItem>
           </Sidebar.Menu>
         </Sidebar.Footer>
-        <Sidebar.Rail />
       </Sidebar.Root>
       <Sidebar.Inset className="p-6">
         <Sidebar.Trigger />

@@ -23,14 +23,14 @@
   --border: oklch(0.9 0.015 26);
   --input: oklch(0.9 0.015 26);
   --ring: oklch(0.55 0.04 26);
-  --sidebar: oklch(0.985 0.005 26);
-  --sidebar-foreground: oklch(0.2 0.03 26);
-  --sidebar-primary: oklch(36.82% 0.13 23.36);
-  --sidebar-primary-foreground: oklch(0.97 0.012 26);
-  --sidebar-accent: oklch(0.93 0.025 35);
-  --sidebar-accent-foreground: oklch(0.28 0.04 30);
-  --sidebar-border: oklch(0.9 0.015 26);
-  --sidebar-ring: oklch(0.55 0.04 26);
+  --sidebar: oklch(0.25 0.034 26);
+  --sidebar-foreground: oklch(0.94 0.014 26);
+  --sidebar-primary: oklch(0.873 0.07 87);
+  --sidebar-primary-foreground: oklch(0.25 0.034 26);
+  --sidebar-accent: oklch(0.31 0.04 26);
+  --sidebar-accent-foreground: oklch(0.97 0.012 26);
+  --sidebar-border: oklch(0.32 0.03 26);
+  --sidebar-ring: oklch(0.55 0.06 26);
 }
 
 html {
