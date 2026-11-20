@@ -1,8 +1,9 @@
 "use client";
 
 import { Avatar as AvatarPrimitive } from "baseui/avatar";
-import * as React from "react";
+import Image, { type ImageProps } from "next/image";
 import { cn } from "@/lib/utils";
+import FallbackImage from "./fallback.png";
 
 // avatar root --->
 
@@ -27,22 +28,29 @@ namespace Avatar_Root {
 
 // avatar image --->
 
-function Avatar_Image({ className, ...props }: Avatar_Image.Props) {
+function Avatar_Image({ className, src, alt = "", sizes = "40px", ...props }: Avatar_Image.Props) {
+  const imageSrc = typeof src === "string" ? src : "src" in src ? src.src : src.default.src;
+
   return (
     <AvatarPrimitive.Image
       data-slot="avatar-image"
+      keepMounted
+      src={imageSrc}
+      alt={alt}
+      sizes={sizes}
+      render={<Image fill src={src} alt={alt} />}
       className={cn("aspect-square size-full rounded-full object-cover", className)}
       {...props}
     />
   );
 }
 namespace Avatar_Image {
-  export type Props = AvatarPrimitive.Image.Props;
+  export type Props = Omit<AvatarPrimitive.Image.Props, "src"> & Pick<ImageProps, "src">;
 }
 
 // avatar fallback --->
 
-function Avatar_Fallback({ className, ...props }: Avatar_Fallback.Props) {
+function Avatar_Fallback({ className, children, ...props }: Avatar_Fallback.Props) {
   return (
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
@@ -50,8 +58,17 @@ function Avatar_Fallback({ className, ...props }: Avatar_Fallback.Props) {
         "flex size-full items-center justify-center rounded-full bg-muted text-xs text-muted-foreground group-data-[size=sm]/avatar:text-xs",
         className,
       )}
-      {...props}
-    />
+      {...props}>
+      {children ?? (
+        <Image
+          src={FallbackImage}
+          alt=""
+          width={FallbackImage.width}
+          height={FallbackImage.height}
+          className="size-full rounded-full object-cover"
+        />
+      )}
+    </AvatarPrimitive.Fallback>
   );
 }
 namespace Avatar_Fallback {

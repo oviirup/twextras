@@ -46,7 +46,7 @@ function SidebarDemo({
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton render={<a href="#" />} tooltip="Help center">
+                  <Sidebar.MenuButton render={<a href="#" />}>
                     <Icons.Shield />
                     <span>Help</span>
                   </Sidebar.MenuButton>
@@ -65,7 +65,6 @@ function SidebarDemo({
             </Sidebar.MenuItem>
           </Sidebar.Menu>
         </Sidebar.Footer>
-        <Sidebar.Rail />
       </Sidebar.Root>
       <Sidebar.Inset className="p-6">
         <Sidebar.Trigger />

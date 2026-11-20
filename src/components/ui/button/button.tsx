@@ -37,6 +37,7 @@ function Button({ className, variant, size, icon, nonNative, ...props }: Button.
     <BaseButton
       data-slot="button"
       data-variant={variant}
+      data-size={size}
       nativeButton={nonNative ? false : undefined}
       className={cn(buttonVariants({ variant, size, icon }), className)}
       {...props}

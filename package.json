@@ -25,6 +25,7 @@
     "ui:dev": "storybook dev -p 4000"
   },
   "dependencies": {
+    "@hookform/resolvers": "^7.0.7",
     "@oviirup/env": "^1.0.3",
     "@oviirup/utils": "^1.1.1",
     "@prisma/adapter-pg": "^7.10.1",
@@ -41,7 +42,8 @@
     "pg": "^8.23.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-hook-form": "^7.92.0"
+    "react-hook-form": "^7.92.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.7",

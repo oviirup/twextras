@@ -8,15 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Sheet } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tooltip } from "@/components/ui/tooltip";
 import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Icons } from "@/lib/icons";
 import { cn, cva } from "@/lib/utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "14rem";
-const SIDEBAR_WIDTH_MOBILE = "16rem";
+const SIDEBAR_WIDTH = "16rem";
+const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 type SidebarContextProps = {
@@ -166,7 +165,7 @@ function Sidebar_Root({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground *:[button]:hidden"
+          className="*:slot-sheet-close:hidden w-(--sidebar-width) border-sidebar-border bg-sidebar p-0 text-sidebar-foreground"
           style={{
             "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
           }}>
@@ -201,8 +200,7 @@ function Sidebar_Root({
         data-side="left"
         className={cn(
           "fixed inset-y-0 left-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,width] duration-200 ease-linear group-data-[collapsible=offcanvas]:-left-(--sidebar-width) md:flex",
-          // Adjust the padding for floating and inset variants.
-          variant === "floating" || variant === "inset" ? "p-2" : "border-r",
+          variant === "sidebar" && "border-r",
           className,
         )}
         {...props}>
@@ -250,35 +248,6 @@ namespace Sidebar_Trigger {
   export type Props = React.ComponentProps<typeof Button>;
 }
 
-// sidebar rail --->
-
-function Sidebar_Rail({ className, ...props }: Sidebar_Rail.Props) {
-  const { toggleSidebar } = useSidebar();
-
-  return (
-    <button
-      data-sidebar="rail"
-      data-slot="sidebar-rail"
-      aria-label="Toggle Sidebar"
-      tabIndex={-1}
-      onClick={toggleSidebar}
-      title="Toggle Sidebar"
-      className={cn(
-        "absolute inset-y-0 -right-4 z-20 hidden w-4 transition-all ease-linear after:absolute after:inset-y-0 after:inset-s-1/2 after:w-0.5 hover:after:bg-sidebar-border sm:flex ltr:-translate-x-1/2 rtl:-translate-x-1/2",
-        "cursor-w-resize",
-        "in-data-[state=collapsed]:cursor-e-resize",
-        "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full hover:group-data-[collapsible=offcanvas]:bg-sidebar",
-        "in-data-[collapsible=offcanvas]:-right-2",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
-namespace Sidebar_Rail {
-  export type Props = React.ComponentProps<"button">;
-}
-
 // sidebar inset --->
 
 function Sidebar_Inset({ className, ...props }: Sidebar_Inset.Props) {
@@ -286,7 +255,7 @@ function Sidebar_Inset({ className, ...props }: Sidebar_Inset.Props) {
     <main
       data-slot="sidebar-inset"
       className={cn(
-        "relative flex w-full flex-1 flex-col bg-background md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
+        "relative flex w-full flex-1 flex-col bg-background transition-[margin] md:peer-data-[variant=inset]:mt-2 md:peer-data-[variant=inset]:rounded-tl-xl md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
         className,
       )}
       {...props}
@@ -368,7 +337,7 @@ function Sidebar_Content({ className, ...props }: Sidebar_Content.Props) {
     <div
       data-slot="sidebar-content"
       data-sidebar="content"
-      className={cn("no-scrollbar flex min-h-0 flex-1 flex-col gap-0 overflow-auto", className)}
+      className={cn("flex min-h-0 flex-1 scrollbar-thin flex-col gap-0 overflow-auto", className)}
       {...props}
     />
   );
@@ -494,12 +463,13 @@ namespace Sidebar_MenuItem {
 // sidebar menu button variants --->
 
 const sidebarMenuButtonVariants = cva({
-  base: "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-[calc(var(--radius-sm)+2px)] p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:ring hover:ring-sidebar-border/65 hover:ring-inset focus-visible:ring focus-visible:ring-sidebar-border/65 focus-visible:ring-inset active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:font-medium data-active:text-sidebar-accent-foreground icon:size-4 [&>span:last-child]:truncate",
+  base: [
+    "peer/menu-button group/menu-button *[span]:last:truncate flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-base ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:ring hover:ring-sidebar-border/65 hover:ring-inset focus-visible:ring focus-visible:ring-sidebar-border/65 focus-visible:ring-inset active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 icon:size-4.5",
+    "data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground",
+  ],
   variants: {
     variant: {
       default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-      outline:
-        "bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
     },
     size: {
       default: "h-8 text-sm",
@@ -520,12 +490,10 @@ function Sidebar_MenuButton({
   isActive = false,
   variant = "default",
   size = "default",
-  tooltip,
   className,
   ...props
 }: Sidebar_MenuButton.Props) {
-  const { isMobile, state } = useSidebar();
-  const comp = useRender({
+  return useRender({
     defaultTagName: "button",
     props: mergeProps<"button">(
       {
@@ -533,7 +501,7 @@ function Sidebar_MenuButton({
       },
       props,
     ),
-    render: !tooltip ? render : <Tooltip.Trigger render={render} />,
+    render,
     state: {
       slot: "sidebar-menu-button",
       sidebar: "menu-button",
@@ -541,34 +509,11 @@ function Sidebar_MenuButton({
       active: isActive,
     },
   });
-
-  if (!tooltip) {
-    return comp;
-  }
-
-  if (typeof tooltip === "string") {
-    tooltip = {
-      children: tooltip,
-    };
-  }
-
-  return (
-    <Tooltip.Root>
-      {comp}
-      <Tooltip.Content
-        side="right"
-        align="center"
-        hidden={state !== "collapsed" || isMobile}
-        {...tooltip}
-      />
-    </Tooltip.Root>
-  );
 }
 namespace Sidebar_MenuButton {
   export type Props = useRender.ComponentProps<"button"> &
     React.ComponentProps<"button"> & {
       isActive?: boolean;
-      tooltip?: string | React.ComponentProps<typeof Tooltip.Content>;
     } & cva.Props<typeof sidebarMenuButtonVariants>;
 }
 
@@ -706,7 +651,7 @@ function Sidebar_MenuSubButton({
     props: mergeProps<"a">(
       {
         className: cn(
-          "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:ring hover:ring-sidebar-border/65 hover:ring-inset focus-visible:ring focus-visible:ring-sidebar-border/65 focus-visible:ring-inset active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[size=md]:text-sm data-[size=sm]:text-sm data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground icon:size-4 [&>span:last-child]:truncate [&>svg]:text-sidebar-accent-foreground",
+          "*[span]:last:truncate flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:ring hover:ring-sidebar-border/65 hover:ring-inset focus-visible:ring focus-visible:ring-sidebar-border/65 focus-visible:ring-inset active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[size=md]:text-sm data-[size=sm]:text-sm data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground icon:size-4 icon:text-sidebar-accent-foreground",
           className,
         ),
       },
@@ -748,10 +693,7 @@ export {
   Sidebar_MenuSubButton as MenuSubButton,
   Sidebar_MenuSubItem as MenuSubItem,
   Sidebar_Provider as Provider,
-  Sidebar_Rail as Rail,
   Sidebar_Root as Root,
   Sidebar_Separator as Separator,
   Sidebar_Trigger as Trigger,
-  sidebarMenuButtonVariants,
-  useSidebar,
 };
