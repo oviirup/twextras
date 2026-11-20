@@ -38,6 +38,7 @@ function Dropdown_Content({
   alignOffset = 0,
   side = "bottom",
   sideOffset = 4,
+  inline = false,
   className,
   ...props
 }: Dropdown_Content.Props) {
@@ -51,8 +52,10 @@ function Dropdown_Content({
         sideOffset={sideOffset}>
         <BaseMenu.Popup
           data-slot="dropdown-content"
+          data-inline={inline ? "" : undefined}
           className={cn(
-            "z-50 max-h-(--available-height) w-max min-w-32 origin-(--transform-origin) scrollbar-none overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-xl ring-1 shadow-black/8 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+            "z-50 max-h-(--available-height) min-w-32 origin-(--transform-origin) scrollbar-none overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-xl ring-1 shadow-black/8 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+            "w-max min-w-(--anchor-width) data-inline:w-(--anchor-width)",
             className,
           )}
           {...props}
@@ -63,7 +66,9 @@ function Dropdown_Content({
 }
 namespace Dropdown_Content {
   export type Props = BaseMenu.Popup.Props &
-    Pick<BaseMenu.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">;
+    Pick<BaseMenu.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset"> & {
+      inline?: boolean;
+    };
 }
 
 // dropdown group --->
@@ -95,7 +100,7 @@ namespace Dropdown_Label {
 
 const dropdownItemVariants = cva({
   base: [
-    "group/dropdown-item relative flex min-h-7 cursor-default items-center gap-2 rounded-md px-2.5 py-1 text-sm leading-none outline-none select-none data-inset:pl-7.5 icon:not-[[class*='size-']]:size-4",
+    "group/dropdown-item relative flex min-h-8 cursor-default items-center gap-2 rounded-md px-2.5 py-1 text-sm leading-none outline-none select-none data-inset:pl-7.5 icon:not-[[class*='size-']]:size-4",
     "focus:bg-taupe-100 focus:text-taupe-800 focus:ring focus:ring-inset",
     "data-disabled:pointer-events-none data-disabled:opacity-65",
   ],
@@ -199,7 +204,7 @@ function Dropdown_Separator({ className, ...props }: Dropdown_Separator.Props) {
   return (
     <BaseMenu.Separator
       data-slot="dropdown-separator"
-      className={cn("-mx-1 my-1 h-px bg-border/50", className)}
+      className={cn("mx-1 my-1.5 h-px bg-border/50", className)}
       {...props}
     />
   );

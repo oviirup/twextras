@@ -46,7 +46,7 @@ function SidebarDemo({
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
                 <Sidebar.MenuItem>
-                  <Sidebar.MenuButton render={<a href="#" />} tooltip="Help center">
+                  <Sidebar.MenuButton render={<a href="#" />}>
                     <Icons.Shield />
                     <span>Help</span>
                   </Sidebar.MenuButton>

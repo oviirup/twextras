@@ -54,7 +54,7 @@ export const Variants: Story = {
       <Empty.Root className="w-64">
         <Empty.Header>
           <Empty.Media variant="icon">
-            <Icons.AlertCircle />
+            <Icons.Alert />
           </Empty.Media>
           <Empty.Title>Icon media</Empty.Title>
           <Empty.Description>variant=&quot;icon&quot;</Empty.Description>

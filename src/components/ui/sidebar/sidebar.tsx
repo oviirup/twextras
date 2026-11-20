@@ -8,15 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Sheet } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tooltip } from "@/components/ui/tooltip";
 import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Icons } from "@/lib/icons";
 import { cn, cva } from "@/lib/utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "14rem";
-const SIDEBAR_WIDTH_MOBILE = "16rem";
+const SIDEBAR_WIDTH = "16rem";
+const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 type SidebarContextProps = {
@@ -464,12 +463,13 @@ namespace Sidebar_MenuItem {
 // sidebar menu button variants --->
 
 const sidebarMenuButtonVariants = cva({
-  base: "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-[calc(var(--radius-sm)+2px)] p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:ring hover:ring-sidebar-border/65 hover:ring-inset focus-visible:ring focus-visible:ring-sidebar-border/65 focus-visible:ring-inset active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:font-medium data-active:text-sidebar-accent-foreground icon:size-4 [&>span:last-child]:truncate",
+  base: [
+    "peer/menu-button group/menu-button *[span]:last:truncate flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-base ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:ring hover:ring-sidebar-border/65 hover:ring-inset focus-visible:ring focus-visible:ring-sidebar-border/65 focus-visible:ring-inset active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 icon:size-4.5",
+    "data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground",
+  ],
   variants: {
     variant: {
       default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-      outline:
-        "bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
     },
     size: {
       default: "h-8 text-sm",
@@ -490,12 +490,10 @@ function Sidebar_MenuButton({
   isActive = false,
   variant = "default",
   size = "default",
-  tooltip,
   className,
   ...props
 }: Sidebar_MenuButton.Props) {
-  const { isMobile, state } = useSidebar();
-  const comp = useRender({
+  return useRender({
     defaultTagName: "button",
     props: mergeProps<"button">(
       {
@@ -503,7 +501,7 @@ function Sidebar_MenuButton({
       },
       props,
     ),
-    render: !tooltip ? render : <Tooltip.Trigger render={render} />,
+    render,
     state: {
       slot: "sidebar-menu-button",
       sidebar: "menu-button",
@@ -511,34 +509,11 @@ function Sidebar_MenuButton({
       active: isActive,
     },
   });
-
-  if (!tooltip) {
-    return comp;
-  }
-
-  if (typeof tooltip === "string") {
-    tooltip = {
-      children: tooltip,
-    };
-  }
-
-  return (
-    <Tooltip.Root>
-      {comp}
-      <Tooltip.Content
-        side="right"
-        align="center"
-        hidden={state !== "collapsed" || isMobile}
-        {...tooltip}
-      />
-    </Tooltip.Root>
-  );
 }
 namespace Sidebar_MenuButton {
   export type Props = useRender.ComponentProps<"button"> &
     React.ComponentProps<"button"> & {
       isActive?: boolean;
-      tooltip?: string | React.ComponentProps<typeof Tooltip.Content>;
     } & cva.Props<typeof sidebarMenuButtonVariants>;
 }
 
