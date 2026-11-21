@@ -1,6 +1,6 @@
 "use client";
 
-import { Separator as SeparatorPrimitive } from "baseui/separator";
+import { Separator as BaseSeparator } from "baseui/separator";
 import { cn, cva } from "@/lib/utils";
 
 // separator variants --->
@@ -30,7 +30,7 @@ const separatorVariants = cva({
 
 function Separator({ className, orientation = "horizontal", dashed, ...props }: Separator.Props) {
   return (
-    <SeparatorPrimitive
+    <BaseSeparator
       data-slot="separator"
       orientation={orientation}
       className={cn(separatorVariants({ orientation, dashed }), className)}
@@ -39,7 +39,7 @@ function Separator({ className, orientation = "horizontal", dashed, ...props }: 
   );
 }
 namespace Separator {
-  export type Props = SeparatorPrimitive.Props & { dashed?: boolean };
+  export type Props = BaseSeparator.Props & { dashed?: boolean };
 }
 
 // exports --->

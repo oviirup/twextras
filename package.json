@@ -34,6 +34,7 @@
     "better-auth": "^1.7.25",
     "cn": "^0.5.2",
     "cva": "^1.0.0-beta.12",
+    "date-fns": "^4.4.0",
     "dotenv": "^18.0.10",
     "hugeicons": "npm:@hugeicons/core-free-icons@^4.4.0",
     "next": "^16.4.6",

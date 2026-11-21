@@ -1,6 +1,6 @@
 "use client";
 
-import { Accordion as AccordionPrimitive } from "baseui/accordion";
+import { Accordion as BaseAccordion } from "baseui/accordion";
 import { Icons } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 function Accordion_Root({ className, ...props }: Accordion_Root.Props) {
   return (
-    <AccordionPrimitive.Root
+    <BaseAccordion.Root
       data-slot="accordion"
       className={cn("flex w-full flex-col rounded-md", className)}
       {...props}
@@ -16,14 +16,14 @@ function Accordion_Root({ className, ...props }: Accordion_Root.Props) {
   );
 }
 namespace Accordion_Root {
-  export type Props = AccordionPrimitive.Root.Props;
+  export type Props = BaseAccordion.Root.Props;
 }
 
 // accordion item --->
 
 function Accordion_Item({ className, ...props }: Accordion_Item.Props) {
   return (
-    <AccordionPrimitive.Item
+    <BaseAccordion.Item
       data-slot="accordion-item"
       className={cn(
         "border highlight-ring not-last:border-b-0 first:rounded-t-inherit last:rounded-b-inherit has-focus-visible:z-1 has-focus-visible:highlight data-open:bg-muted/50",
@@ -34,15 +34,15 @@ function Accordion_Item({ className, ...props }: Accordion_Item.Props) {
   );
 }
 namespace Accordion_Item {
-  export type Props = AccordionPrimitive.Item.Props;
+  export type Props = BaseAccordion.Item.Props;
 }
 
 // accordion trigger --->
 
 function Accordion_Trigger({ className, children, ...props }: Accordion_Trigger.Props) {
   return (
-    <AccordionPrimitive.Header className="flex">
-      <AccordionPrimitive.Trigger
+    <BaseAccordion.Header className="flex">
+      <BaseAccordion.Trigger
         data-slot="accordion-trigger"
         className={cn(
           "group/accordion-trigger **:slot-accordion-trigger-icon:ml-auto **:slot-accordion-trigger-icon:size-4 **:slot-accordion-trigger-icon:text-muted-foreground relative flex flex-1 items-start justify-between gap-6 border border-transparent p-2 text-left text-sm/relaxed font-medium transition-all outline-none hover:underline aria-disabled:pointer-events-none aria-disabled:opacity-50",
@@ -58,19 +58,19 @@ function Accordion_Trigger({ className, children, ...props }: Accordion_Trigger.
           data-slot="accordion-trigger-icon"
           className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline"
         />
-      </AccordionPrimitive.Trigger>
-    </AccordionPrimitive.Header>
+      </BaseAccordion.Trigger>
+    </BaseAccordion.Header>
   );
 }
 namespace Accordion_Trigger {
-  export type Props = AccordionPrimitive.Trigger.Props;
+  export type Props = BaseAccordion.Trigger.Props;
 }
 
 // accordion content --->
 
 function Accordion_Content({ className, children, ...props }: Accordion_Content.Props) {
   return (
-    <AccordionPrimitive.Panel
+    <BaseAccordion.Panel
       data-slot="accordion-content"
       className="overflow-hidden px-2 text-sm/relaxed data-open:animate-accordion-down data-closed:animate-accordion-up"
       {...props}>
@@ -81,11 +81,11 @@ function Accordion_Content({ className, children, ...props }: Accordion_Content.
         )}>
         {children}
       </div>
-    </AccordionPrimitive.Panel>
+    </BaseAccordion.Panel>
   );
 }
 namespace Accordion_Content {
-  export type Props = AccordionPrimitive.Panel.Props;
+  export type Props = BaseAccordion.Panel.Props;
 }
 
 // exports --->

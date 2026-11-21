@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog as SheetPrimitive } from "baseui/dialog";
+import { Dialog as BaseSheet } from "baseui/dialog";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/lib/icons";
 import { cn } from "@/lib/utils";
@@ -8,44 +8,44 @@ import { cn } from "@/lib/utils";
 // sheet root --->
 
 function Sheet_Root({ ...props }: Sheet_Root.Props) {
-  return <SheetPrimitive.Root data-slot="sheet" {...props} />;
+  return <BaseSheet.Root data-slot="sheet" {...props} />;
 }
 namespace Sheet_Root {
-  export type Props = SheetPrimitive.Root.Props;
+  export type Props = BaseSheet.Root.Props;
 }
 
 // sheet trigger --->
 
 function Sheet_Trigger({ ...props }: Sheet_Trigger.Props) {
-  return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />;
+  return <BaseSheet.Trigger data-slot="sheet-trigger" {...props} />;
 }
 namespace Sheet_Trigger {
-  export type Props = SheetPrimitive.Trigger.Props;
+  export type Props = BaseSheet.Trigger.Props;
 }
 
 // sheet close --->
 
 function Sheet_Close({ ...props }: Sheet_Close.Props) {
-  return <SheetPrimitive.Close data-slot="sheet-close" {...props} />;
+  return <BaseSheet.Close data-slot="sheet-close" {...props} />;
 }
 namespace Sheet_Close {
-  export type Props = SheetPrimitive.Close.Props;
+  export type Props = BaseSheet.Close.Props;
 }
 
 // sheet portal --->
 
 function Sheet_Portal({ ...props }: Sheet_Portal.Props) {
-  return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
+  return <BaseSheet.Portal data-slot="sheet-portal" {...props} />;
 }
 namespace Sheet_Portal {
-  export type Props = SheetPrimitive.Portal.Props;
+  export type Props = BaseSheet.Portal.Props;
 }
 
 // sheet overlay --->
 
 function Sheet_Overlay({ className, ...props }: Sheet_Overlay.Props) {
   return (
-    <SheetPrimitive.Backdrop
+    <BaseSheet.Backdrop
       data-slot="sheet-overlay"
       className={cn(
         "fixed inset-0 z-50 bg-black/80 transition-opacity duration-150 supports-backdrop-filter:backdrop-blur-xs data-transition-style:opacity-0",
@@ -56,7 +56,7 @@ function Sheet_Overlay({ className, ...props }: Sheet_Overlay.Props) {
   );
 }
 namespace Sheet_Overlay {
-  export type Props = SheetPrimitive.Backdrop.Props;
+  export type Props = BaseSheet.Backdrop.Props;
 }
 
 // sheet content --->
@@ -71,7 +71,7 @@ function Sheet_Content({
   return (
     <Sheet_Portal>
       <Sheet_Overlay />
-      <SheetPrimitive.Popup
+      <BaseSheet.Popup
         data-slot="sheet-content"
         data-side={side}
         className={cn(
@@ -81,19 +81,19 @@ function Sheet_Content({
         {...props}>
         {children}
         {showCloseButton && (
-          <SheetPrimitive.Close
+          <BaseSheet.Close
             data-slot="sheet-close"
             render={<Button variant="ghost" icon size="sm" className="absolute top-4 right-4" />}>
             <Icons.Close className="size-4" />
             <span className="sr-only">Close</span>
-          </SheetPrimitive.Close>
+          </BaseSheet.Close>
         )}
-      </SheetPrimitive.Popup>
+      </BaseSheet.Popup>
     </Sheet_Portal>
   );
 }
 namespace Sheet_Content {
-  export type Props = SheetPrimitive.Popup.Props & {
+  export type Props = BaseSheet.Popup.Props & {
     side?: "left" | "right";
     showCloseButton?: boolean;
   };
@@ -133,7 +133,7 @@ namespace Sheet_Footer {
 
 function Sheet_Title({ className, ...props }: Sheet_Title.Props) {
   return (
-    <SheetPrimitive.Title
+    <BaseSheet.Title
       data-slot="sheet-title"
       className={cn("text-sm font-medium text-foreground", className)}
       {...props}
@@ -141,14 +141,14 @@ function Sheet_Title({ className, ...props }: Sheet_Title.Props) {
   );
 }
 namespace Sheet_Title {
-  export type Props = SheetPrimitive.Title.Props;
+  export type Props = BaseSheet.Title.Props;
 }
 
 // sheet description --->
 
 function Sheet_Description({ className, ...props }: Sheet_Description.Props) {
   return (
-    <SheetPrimitive.Description
+    <BaseSheet.Description
       data-slot="sheet-description"
       className={cn("text-sm/relaxed text-muted-foreground", className)}
       {...props}
@@ -156,7 +156,7 @@ function Sheet_Description({ className, ...props }: Sheet_Description.Props) {
   );
 }
 namespace Sheet_Description {
-  export type Props = SheetPrimitive.Description.Props;
+  export type Props = BaseSheet.Description.Props;
 }
 
 // exports --->

@@ -86,7 +86,7 @@ function Dropdown_Label({ className, inset, ...props }: Dropdown_Label.Props) {
   return (
     <BaseMenu.GroupLabel
       data-slot="dropdown-label"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn("px-2 py-1.5 text-sm text-muted-foreground data-inset:pl-7.5", className)}
       {...props}
     />
@@ -122,7 +122,7 @@ function Dropdown_Item({ className, inset, variant = "default", ...props }: Drop
   return (
     <BaseMenu.Item
       data-slot="dropdown-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       data-variant={variant}
       className={cn(dropdownItemVariants({ variant }), className)}
       {...props}
@@ -147,7 +147,7 @@ function Dropdown_Checkbox({
   return (
     <BaseMenu.CheckboxItem
       data-slot="dropdown-checkbox"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(dropdownItemVariants({ variant: "default" }), "w-full pr-7.5", className)}
       checked={checked}
       {...props}>
@@ -180,7 +180,7 @@ function Dropdown_Radio({ className, children, inset, ...props }: Dropdown_Radio
   return (
     <BaseMenu.RadioItem
       data-slot="dropdown-radio"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(dropdownItemVariants({ variant: "default" }), "w-full pr-8", className)}
       {...props}>
       <span

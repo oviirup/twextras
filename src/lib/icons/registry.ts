@@ -217,3 +217,11 @@ export const BookOpen = createIconNode({
   nodes: HugeIcons.BookOpen01Icon,
   props: baseProps,
 });
+
+// Uploads --->
+
+export const Upload = createIconNode({
+  name: "upload",
+  nodes: HugeIcons.CloudUploadIcon,
+  props: baseProps,
+});

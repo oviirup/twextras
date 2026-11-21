@@ -1,4 +1,4 @@
-import { Input as InputPrimitive } from "baseui/input";
+import { Input as BaseInput } from "baseui/input";
 import { cn, cva } from "@/lib/utils";
 
 // variants --->
@@ -15,7 +15,7 @@ const inputVariants = cva({
 
 function Input({ className, type, ...props }: Input.Props) {
   return (
-    <InputPrimitive
+    <BaseInput
       type={type}
       data-slot="input"
       className={cn("inline-flex h-10 w-full", inputVariants(), className)}
@@ -24,7 +24,7 @@ function Input({ className, type, ...props }: Input.Props) {
   );
 }
 namespace Input {
-  export type Props = React.ComponentProps<typeof InputPrimitive>;
+  export type Props = React.ComponentProps<typeof BaseInput>;
 }
 
 // exports --->
