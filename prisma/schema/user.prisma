@@ -1,11 +1,32 @@
+// enums --->
+
+enum Role {
+  super_admin
+  admin
+  manager
+  employee
+}
+
+enum UserStatus {
+  pending
+  active
+  suspended
+  terminated
+}
+
+// user model --->
+
 model User {
-  id            String    @id
+  id            String     @id
   name          String
   email         String
-  emailVerified Boolean   @default(false) @map("email_verified")
+  username      String     @unique @db.VarChar(32)
+  role          Role       @default(employee)
+  status        UserStatus @default(pending)
+  emailVerified Boolean    @default(false) @map("email_verified")
   image         String?
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @updatedAt @map("updated_at")
   sessions      Session[]
   accounts      Account[]
 
@@ -13,21 +34,26 @@ model User {
   @@map("user")
 }
 
+// session model --->
+
 model Session {
-  id        String   @id
-  expiresAt DateTime @map("expires_at")
-  token     String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  ipAddress String?  @map("ip_address")
-  userAgent String?  @map("user_agent")
-  userId    String   @map("user_id")
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String   @id
+  expiresAt      DateTime @map("expires_at")
+  token          String
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  ipAddress      String?  @map("ip_address")
+  userAgent      String?  @map("user_agent")
+  impersonatedBy String?  @map("impersonated_by")
+  userId         String   @map("user_id")
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
   @@index([userId])
   @@map("session")
 }
+
+// account model --->
 
 model Account {
   id                    String    @id
@@ -48,6 +74,8 @@ model Account {
   @@index([userId])
   @@map("account")
 }
+
+// verification model --->
 
 model Verification {
   id         String   @id
