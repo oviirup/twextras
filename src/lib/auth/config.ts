@@ -1,6 +1,5 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { admin } from "better-auth/plugins/admin";
 import { username } from "better-auth/plugins/username";
 import { SITE } from "@/config/app";
 import { env, isProd } from "@/config/env";
@@ -33,9 +32,6 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    admin({
-      defaultRole: "employee",
-    }),
     username({
       minUsernameLength: 6,
       maxUsernameLength: 32,

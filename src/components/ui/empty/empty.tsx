@@ -40,7 +40,7 @@ const emptyMediaVariants = cva({
   variants: {
     variant: {
       default: "bg-transparent",
-      icon: "size-9 rounded-lg border border-border/75 bg-muted icon:not-[[class*='size-']]:size-4",
+      icon: "size-14 rounded-xl border border-border bg-secondary icon:stroke-1.5 icon:not-[[class*='size-']]:size-8",
     },
   },
   defaultVariants: {

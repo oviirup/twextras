@@ -1,7 +1,11 @@
 import { redirect } from "next/navigation";
 import { getSession } from "./session";
 
-type SessionUser = { status?: string | null; role?: string | null };
+type SessionUser = {
+  id?: string;
+  status?: string | null;
+  role?: string | null;
+};
 
 export function isActiveUser(user: SessionUser | null | undefined): boolean {
   return user?.status === "active";
