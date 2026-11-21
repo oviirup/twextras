@@ -100,7 +100,7 @@ function UserMenu({ user }: UserMenu.Props) {
   function handleLogout() {
     startTransition(async () => {
       try {
-        await signOut();
+        await signOut({ callbackURL: "/dashboard/signin" });
       } finally {
         router.push("/dashboard/signin");
         router.refresh();
