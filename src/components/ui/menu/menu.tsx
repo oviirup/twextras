@@ -1,32 +1,32 @@
 "use client";
 
-import { ContextMenu as ContextMenuPrimitive } from "baseui/context-menu";
+import { ContextMenu as BaseMenu } from "baseui/context-menu";
 import { Icons } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
 // menu root --->
 
 function Menu_Root({ ...props }: Menu_Root.Props) {
-  return <ContextMenuPrimitive.Root data-slot="menu" {...props} />;
+  return <BaseMenu.Root data-slot="menu" {...props} />;
 }
 namespace Menu_Root {
-  export type Props = ContextMenuPrimitive.Root.Props;
+  export type Props = BaseMenu.Root.Props;
 }
 
 // menu portal --->
 
 function Menu_Portal({ ...props }: Menu_Portal.Props) {
-  return <ContextMenuPrimitive.Portal data-slot="menu-portal" {...props} />;
+  return <BaseMenu.Portal data-slot="menu-portal" {...props} />;
 }
 namespace Menu_Portal {
-  export type Props = ContextMenuPrimitive.Portal.Props;
+  export type Props = BaseMenu.Portal.Props;
 }
 
 // menu trigger --->
 
 function Menu_Trigger({ className, ...props }: Menu_Trigger.Props) {
   return (
-    <ContextMenuPrimitive.Trigger
+    <BaseMenu.Trigger
       data-slot="menu-trigger"
       className={cn("select-none", className)}
       {...props}
@@ -34,7 +34,7 @@ function Menu_Trigger({ className, ...props }: Menu_Trigger.Props) {
   );
 }
 namespace Menu_Trigger {
-  export type Props = ContextMenuPrimitive.Trigger.Props;
+  export type Props = BaseMenu.Trigger.Props;
 }
 
 // menu content --->
@@ -48,14 +48,14 @@ function Menu_Content({
   ...props
 }: Menu_Content.Props) {
   return (
-    <ContextMenuPrimitive.Portal>
-      <ContextMenuPrimitive.Positioner
+    <BaseMenu.Portal>
+      <BaseMenu.Positioner
         className="isolate z-50 outline-none"
         align={align}
         alignOffset={alignOffset}
         side={side}
         sideOffset={sideOffset}>
-        <ContextMenuPrimitive.Popup
+        <BaseMenu.Popup
           data-slot="menu-content"
           className={cn(
             "z-50 max-h-(--available-height) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-xl ring-1 shadow-black/8 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
@@ -63,47 +63,47 @@ function Menu_Content({
           )}
           {...props}
         />
-      </ContextMenuPrimitive.Positioner>
-    </ContextMenuPrimitive.Portal>
+      </BaseMenu.Positioner>
+    </BaseMenu.Portal>
   );
 }
 namespace Menu_Content {
-  export type Props = ContextMenuPrimitive.Popup.Props &
-    Pick<ContextMenuPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">;
+  export type Props = BaseMenu.Popup.Props &
+    Pick<BaseMenu.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">;
 }
 
 // menu group --->
 
 function Menu_Group({ ...props }: Menu_Group.Props) {
-  return <ContextMenuPrimitive.Group data-slot="menu-group" {...props} />;
+  return <BaseMenu.Group data-slot="menu-group" {...props} />;
 }
 namespace Menu_Group {
-  export type Props = ContextMenuPrimitive.Group.Props;
+  export type Props = BaseMenu.Group.Props;
 }
 
 // menu label --->
 
 function Menu_Label({ className, inset, ...props }: Menu_Label.Props) {
   return (
-    <ContextMenuPrimitive.GroupLabel
+    <BaseMenu.GroupLabel
       data-slot="menu-label"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn("px-2 py-1.5 text-sm text-muted-foreground data-inset:pl-7.5", className)}
       {...props}
     />
   );
 }
 namespace Menu_Label {
-  export type Props = ContextMenuPrimitive.GroupLabel.Props & { inset?: boolean };
+  export type Props = BaseMenu.GroupLabel.Props & { inset?: boolean };
 }
 
 // menu item --->
 
 function Menu_Item({ className, inset, variant = "default", ...props }: Menu_Item.Props) {
   return (
-    <ContextMenuPrimitive.Item
+    <BaseMenu.Item
       data-slot="menu-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       data-variant={variant}
       className={cn(
         "group/menu-item relative flex min-h-7 cursor-default items-center gap-2 rounded-md px-2 py-1 text-sm/relaxed outline-hidden select-none focus:bg-taupe-100 focus:text-taupe-800 focus:ring focus:ring-border/65 focus:ring-inset not-data-[variant=destructive]:focus:**:text-taupe-800 data-inset:pl-7.5 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/8 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:focus:ring-destructive/4 dark:data-[variant=destructive]:focus:bg-destructive/10 data-disabled:pointer-events-none data-disabled:opacity-65 icon:not-[[class*='size-']]:size-3.5 data-[variant=destructive]:*:[svg]:text-destructive",
@@ -114,7 +114,7 @@ function Menu_Item({ className, inset, variant = "default", ...props }: Menu_Ite
   );
 }
 namespace Menu_Item {
-  export type Props = ContextMenuPrimitive.Item.Props & {
+  export type Props = BaseMenu.Item.Props & {
     inset?: boolean;
     variant?: "default" | "destructive";
   };
@@ -130,9 +130,9 @@ function Menu_CheckboxItem({
   ...props
 }: Menu_CheckboxItem.Props) {
   return (
-    <ContextMenuPrimitive.CheckboxItem
+    <BaseMenu.CheckboxItem
       data-slot="menu-checkbox-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "relative flex min-h-7 w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-2 text-sm outline-hidden select-none focus:bg-taupe-100 focus:text-taupe-800 focus:ring focus:ring-border/65 focus:ring-inset focus:**:text-taupe-800 data-inset:pl-7.5 data-disabled:pointer-events-none data-disabled:opacity-65 icon:not-[[class*='size-']]:size-3.5",
         className,
@@ -140,57 +140,57 @@ function Menu_CheckboxItem({
       checked={checked}
       {...props}>
       <span className="pointer-events-none absolute right-2 flex items-center justify-center">
-        <ContextMenuPrimitive.CheckboxItemIndicator>
+        <BaseMenu.CheckboxItemIndicator>
           <Icons.Check />
-        </ContextMenuPrimitive.CheckboxItemIndicator>
+        </BaseMenu.CheckboxItemIndicator>
       </span>
       {children}
-    </ContextMenuPrimitive.CheckboxItem>
+    </BaseMenu.CheckboxItem>
   );
 }
 namespace Menu_CheckboxItem {
-  export type Props = ContextMenuPrimitive.CheckboxItem.Props & { inset?: boolean };
+  export type Props = BaseMenu.CheckboxItem.Props & { inset?: boolean };
 }
 
 // menu radio group --->
 
 function Menu_RadioGroup({ ...props }: Menu_RadioGroup.Props) {
-  return <ContextMenuPrimitive.RadioGroup data-slot="menu-radio-group" {...props} />;
+  return <BaseMenu.RadioGroup data-slot="menu-radio-group" {...props} />;
 }
 namespace Menu_RadioGroup {
-  export type Props = ContextMenuPrimitive.RadioGroup.Props;
+  export type Props = BaseMenu.RadioGroup.Props;
 }
 
 // menu radio item --->
 
 function Menu_RadioItem({ className, children, inset, ...props }: Menu_RadioItem.Props) {
   return (
-    <ContextMenuPrimitive.RadioItem
+    <BaseMenu.RadioItem
       data-slot="menu-radio-item"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "relative flex min-h-7 w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-2 text-sm outline-hidden select-none focus:bg-taupe-100 focus:text-taupe-800 focus:ring focus:ring-border/65 focus:ring-inset focus:**:text-taupe-800 data-inset:pl-7.5 data-disabled:pointer-events-none data-disabled:opacity-65 icon:not-[[class*='size-']]:size-3.5",
         className,
       )}
       {...props}>
       <span className="pointer-events-none absolute right-2 flex items-center justify-center">
-        <ContextMenuPrimitive.RadioItemIndicator>
+        <BaseMenu.RadioItemIndicator>
           <Icons.Check />
-        </ContextMenuPrimitive.RadioItemIndicator>
+        </BaseMenu.RadioItemIndicator>
       </span>
       {children}
-    </ContextMenuPrimitive.RadioItem>
+    </BaseMenu.RadioItem>
   );
 }
 namespace Menu_RadioItem {
-  export type Props = ContextMenuPrimitive.RadioItem.Props & { inset?: boolean };
+  export type Props = BaseMenu.RadioItem.Props & { inset?: boolean };
 }
 
 // menu separator --->
 
 function Menu_Separator({ className, ...props }: Menu_Separator.Props) {
   return (
-    <ContextMenuPrimitive.Separator
+    <BaseMenu.Separator
       data-slot="menu-separator"
       className={cn("-mx-1 my-1 h-px bg-border/50", className)}
       {...props}
@@ -198,7 +198,7 @@ function Menu_Separator({ className, ...props }: Menu_Separator.Props) {
   );
 }
 namespace Menu_Separator {
-  export type Props = ContextMenuPrimitive.Separator.Props;
+  export type Props = BaseMenu.Separator.Props;
 }
 
 // menu shortcut --->
@@ -222,19 +222,19 @@ namespace Menu_Shortcut {
 // menu sub --->
 
 function Menu_Sub({ ...props }: Menu_Sub.Props) {
-  return <ContextMenuPrimitive.SubmenuRoot data-slot="menu-sub" {...props} />;
+  return <BaseMenu.SubmenuRoot data-slot="menu-sub" {...props} />;
 }
 namespace Menu_Sub {
-  export type Props = ContextMenuPrimitive.SubmenuRoot.Props;
+  export type Props = BaseMenu.SubmenuRoot.Props;
 }
 
 // menu sub trigger --->
 
 function Menu_SubTrigger({ className, inset, children, ...props }: Menu_SubTrigger.Props) {
   return (
-    <ContextMenuPrimitive.SubmenuTrigger
+    <BaseMenu.SubmenuTrigger
       data-slot="menu-sub-trigger"
-      data-inset={inset}
+      data-inset={inset ? "" : undefined}
       className={cn(
         "flex min-h-7 cursor-default items-center gap-2 rounded-md px-2 py-1 text-sm outline-hidden select-none focus:bg-taupe-100 focus:text-taupe-800 focus:ring focus:ring-border/65 focus:ring-inset not-data-[variant=destructive]:focus:**:text-taupe-800 data-inset:pl-7.5 data-open:bg-taupe-100 data-open:text-taupe-800 data-open:ring data-open:ring-border/65 data-open:ring-inset icon:not-[[class*='size-']]:size-3.5",
         className,
@@ -242,11 +242,11 @@ function Menu_SubTrigger({ className, inset, children, ...props }: Menu_SubTrigg
       {...props}>
       {children}
       <Icons.ChevronRight className="ml-auto" />
-    </ContextMenuPrimitive.SubmenuTrigger>
+    </BaseMenu.SubmenuTrigger>
   );
 }
 namespace Menu_SubTrigger {
-  export type Props = ContextMenuPrimitive.SubmenuTrigger.Props & { inset?: boolean };
+  export type Props = BaseMenu.SubmenuTrigger.Props & { inset?: boolean };
 }
 
 // menu sub content --->

@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar as AvatarPrimitive } from "baseui/avatar";
+import { Avatar as BaseAvatar } from "baseui/avatar";
 import Image, { type ImageProps } from "next/image";
 import { cn } from "@/lib/utils";
 import FallbackImage from "./fallback.png";
@@ -9,7 +9,7 @@ import FallbackImage from "./fallback.png";
 
 function Avatar_Root({ className, size = "default", ...props }: Avatar_Root.Props) {
   return (
-    <AvatarPrimitive.Root
+    <BaseAvatar.Root
       data-slot="avatar"
       data-size={size}
       className={cn(
@@ -21,7 +21,7 @@ function Avatar_Root({ className, size = "default", ...props }: Avatar_Root.Prop
   );
 }
 namespace Avatar_Root {
-  export type Props = AvatarPrimitive.Root.Props & {
+  export type Props = BaseAvatar.Root.Props & {
     size?: "default" | "sm" | "lg";
   };
 }
@@ -32,7 +32,7 @@ function Avatar_Image({ className, src, alt = "", sizes = "40px", ...props }: Av
   const imageSrc = typeof src === "string" ? src : "src" in src ? src.src : src.default.src;
 
   return (
-    <AvatarPrimitive.Image
+    <BaseAvatar.Image
       data-slot="avatar-image"
       keepMounted
       src={imageSrc}
@@ -45,14 +45,14 @@ function Avatar_Image({ className, src, alt = "", sizes = "40px", ...props }: Av
   );
 }
 namespace Avatar_Image {
-  export type Props = Omit<AvatarPrimitive.Image.Props, "src"> & Pick<ImageProps, "src">;
+  export type Props = Omit<BaseAvatar.Image.Props, "src"> & Pick<ImageProps, "src">;
 }
 
 // avatar fallback --->
 
 function Avatar_Fallback({ className, children, ...props }: Avatar_Fallback.Props) {
   return (
-    <AvatarPrimitive.Fallback
+    <BaseAvatar.Fallback
       data-slot="avatar-fallback"
       className={cn(
         "flex size-full items-center justify-center rounded-full bg-muted text-xs text-muted-foreground group-data-[size=sm]/avatar:text-xs",
@@ -68,11 +68,11 @@ function Avatar_Fallback({ className, children, ...props }: Avatar_Fallback.Prop
           className="size-full rounded-full object-cover"
         />
       )}
-    </AvatarPrimitive.Fallback>
+    </BaseAvatar.Fallback>
   );
 }
 namespace Avatar_Fallback {
-  export type Props = AvatarPrimitive.Fallback.Props;
+  export type Props = BaseAvatar.Fallback.Props;
 }
 
 // avatar badge --->

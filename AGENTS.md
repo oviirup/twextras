@@ -1,3 +1,7 @@
+## Package Manager
+
+Always use `bun` or `bunx` to run scripts and package binaries. Do not use `npm` or `pnpm` for commands in this repository.
+
 <!-- BEGIN: env-usage -->
 
 ## Environment Variables

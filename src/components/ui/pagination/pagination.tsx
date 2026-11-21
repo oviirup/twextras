@@ -60,7 +60,7 @@ function Pagination_Link({
       className={cn(className, "border-primary data-active:text-primary")}
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
-      data-active={isActive}
+      data-active={isActive ? "" : undefined}
       render={<a {...props} />}
       nonNative
     />

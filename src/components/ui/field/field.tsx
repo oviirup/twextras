@@ -173,7 +173,7 @@ function Field_Separator({ children, className, ...props }: Field_Separator.Prop
   return (
     <div
       data-slot="field-separator"
-      data-content={!!children}
+      data-content={children ? "" : undefined}
       className={cn(
         "relative -my-2 h-5 text-sm/relaxed group-data-[variant=outline]/field-group:-mb-2",
         className,

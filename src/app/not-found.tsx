@@ -14,7 +14,7 @@ export default function NotFound() {
       <Empty.Root className="max-w-md">
         <Empty.Header>
           <Empty.Media variant="icon">
-            <Icons.AlertCircle />
+            <Icons.Alert />
           </Empty.Media>
           <Empty.Title>Page not found</Empty.Title>
           <Empty.Description>

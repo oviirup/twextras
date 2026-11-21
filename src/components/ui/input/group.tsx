@@ -27,7 +27,7 @@ namespace InputGroup_Root {
 // input group addon variants --->
 
 const inputGroupAddonVariants = cva({
-  base: "**:slot-kbd:rounded-[calc(var(--radius-sm)-2px)] **:slot-kbd:bg-muted-foreground/10 **:slot-kbd:px-1 **:slot-kbd:text-[0.625rem] flex h-auto cursor-text items-center justify-center gap-1.5 py-2 text-sm/relaxed font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 icon:not-[[class*='size-']]:size-4",
+  base: "**:slot-kbd:rounded-[calc(var(--radius-sm)-2px)] **:slot-kbd:bg-muted-foreground/10 **:slot-kbd:px-1 **:slot-kbd:text-[0.625rem] flex h-auto items-center justify-center gap-1.5 py-2 text-sm/relaxed font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 icon:not-[[class*='size-']]:size-4",
   variants: {
     align: {
       "inline-start": "order-first pl-2 has-[>button]:ml-[-0.275rem] has-[>kbd]:ml-[-0.275rem]",

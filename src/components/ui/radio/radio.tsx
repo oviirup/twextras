@@ -1,14 +1,14 @@
 "use client";
 
-import { Radio as RadioPrimitive } from "baseui/radio";
-import { RadioGroup as RadioGroupPrimitive } from "baseui/radio-group";
+import { Radio as BaseRadio } from "baseui/radio";
+import { RadioGroup as BaseRadioGroup } from "baseui/radio-group";
 import { cn } from "@/lib/utils";
 
 // radio root --->
 
 function Radio_Root({ className, ...props }: Radio_Root.Props) {
   return (
-    <RadioGroupPrimitive
+    <BaseRadioGroup
       data-slot="radio-group"
       className={cn("grid w-full gap-3", className)}
       {...props}
@@ -16,30 +16,30 @@ function Radio_Root({ className, ...props }: Radio_Root.Props) {
   );
 }
 namespace Radio_Root {
-  export type Props = RadioGroupPrimitive.Props;
+  export type Props = BaseRadioGroup.Props;
 }
 
 // radio item --->
 
 function Radio_Item({ className, ...props }: Radio_Item.Props) {
   return (
-    <RadioPrimitive.Root
+    <BaseRadio.Root
       data-slot="radio-item"
       className={cn(
         "group/radio-item peer relative flex aspect-square size-4 shrink-0 rounded-full border border-input outline-none group-has-focus-visible/field-label:ring-0 group-has-focus-visible/field-label:not-data-checked:border-input after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground group-has-focus-visible/field-label:data-checked:border-primary dark:data-checked:bg-primary",
         className,
       )}
       {...props}>
-      <RadioPrimitive.Indicator
+      <BaseRadio.Indicator
         data-slot="radio-group-indicator"
         className="flex size-4 items-center justify-center">
         <span className="absolute top-1/2 left-1/2 size-2 -translate-1/2 rounded-full bg-primary-foreground" />
-      </RadioPrimitive.Indicator>
-    </RadioPrimitive.Root>
+      </BaseRadio.Indicator>
+    </BaseRadio.Root>
   );
 }
 namespace Radio_Item {
-  export type Props = RadioPrimitive.Root.Props;
+  export type Props = BaseRadio.Root.Props;
 }
 
 // exports --->
