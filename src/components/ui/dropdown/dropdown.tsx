@@ -35,9 +35,8 @@ namespace Dropdown_Trigger {
 
 function Dropdown_Content({
   align = "start",
-  alignOffset = 0,
   side = "bottom",
-  sideOffset = 4,
+  anchor,
   inline = false,
   className,
   ...props
@@ -47,14 +46,15 @@ function Dropdown_Content({
       <BaseMenu.Positioner
         className="isolate z-50 outline-none"
         align={align}
-        alignOffset={alignOffset}
+        alignOffset={0}
         side={side}
-        sideOffset={sideOffset}>
+        sideOffset={4}
+        anchor={anchor}>
         <BaseMenu.Popup
           data-slot="dropdown-content"
           data-inline={inline ? "" : undefined}
           className={cn(
-            "z-50 max-h-(--available-height) min-w-32 origin-(--transform-origin) scrollbar-none overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-xl ring-1 shadow-black/8 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+            "z-50 max-h-(--available-height) min-w-32 origin-(--transform-origin) scrollbar-none overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-lg ring-1 shadow-black/8 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
             "w-max min-w-(--anchor-width) data-inline:w-(--anchor-width)",
             className,
           )}
@@ -66,7 +66,7 @@ function Dropdown_Content({
 }
 namespace Dropdown_Content {
   export type Props = BaseMenu.Popup.Props &
-    Pick<BaseMenu.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset"> & {
+    Pick<BaseMenu.Positioner.Props, "align" | "anchor" | "side"> & {
       inline?: boolean;
     };
 }

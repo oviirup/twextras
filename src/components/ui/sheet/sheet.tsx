@@ -75,7 +75,7 @@ function Sheet_Content({
         data-slot="sheet-content"
         data-side={side}
         className={cn(
-          "fixed z-50 flex flex-col bg-popover bg-clip-padding text-sm/relaxed text-popover-foreground shadow-xl shadow-black/8 transition duration-200 ease-in-out data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm data-transition-style:opacity-0 data-[side=left]:data-transition-style:-translate-x-10 data-[side=right]:data-transition-style:translate-x-10",
+          "fixed z-50 flex flex-col bg-popover bg-clip-padding text-sm/relaxed text-popover-foreground shadow-lg shadow-black/8 transition duration-200 ease-in-out data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm data-transition-style:opacity-0 data-[side=left]:data-transition-style:-translate-x-10 data-[side=right]:data-transition-style:translate-x-10",
           className,
         )}
         {...props}>

@@ -56,7 +56,7 @@ function Date({
         <BasePopover.Positioner side="bottom" sideOffset={4} align="start" className="isolate z-50">
           <BasePopover.Popup
             data-slot="date-content"
-            className="z-50 rounded-lg bg-popover p-3 text-popover-foreground shadow-xl ring-1 shadow-black/8 ring-foreground/10 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95">
+            className="z-50 rounded-lg bg-popover p-3 text-popover-foreground shadow-lg ring-1 shadow-black/8 ring-foreground/10 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95">
             <Calendar
               selected={value}
               onSelect={(day) => {

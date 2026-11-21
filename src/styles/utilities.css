@@ -1,0 +1,38 @@
+@utility highlight {
+  outline: 2px solid --alpha(var(--tw-highlight, var(--ring)) / 75%);
+  outline-offset: 1px;
+}
+
+@utility highlight-* {
+  --tw-highlight: --value(--color-*, [*]);
+}
+
+@utility absolute-center {
+  @apply absolute top-1/2 left-1/2 -translate-1/2;
+}
+
+@utility link {
+  @apply cursor-pointer underline decoration-current/35 underline-offset-3;
+  @variant hocus {
+    @apply underline-offset-4 decoration-current/60;
+  }
+  @variant focus-visible {
+    @apply highlight;
+  }
+}
+
+@utility icon-hidden {
+  @apply opacity-0 blur-xs scale-25;
+}
+
+@utility icon-visible {
+  @apply opacity-100 blur-none scale-100;
+}
+
+/* custom properties */
+
+@property --tw-highlight {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: gray;
+}

@@ -35,9 +35,8 @@ namespace Tooltip_Trigger {
 function Tooltip_Content({
   className,
   side = "top",
-  sideOffset = 4,
   align = "center",
-  alignOffset = 0,
+  anchor,
   children,
   ...props
 }: Tooltip_Content.Props) {
@@ -45,9 +44,10 @@ function Tooltip_Content({
     <BaseTooltip.Portal>
       <BaseTooltip.Positioner
         align={align}
-        alignOffset={alignOffset}
+        alignOffset={0}
         side={side}
-        sideOffset={sideOffset}
+        sideOffset={4}
+        anchor={anchor}
         className="isolate z-50">
         <BaseTooltip.Popup
           data-slot="tooltip-content"
@@ -65,7 +65,7 @@ function Tooltip_Content({
 }
 namespace Tooltip_Content {
   export type Props = BaseTooltip.Popup.Props &
-    Pick<BaseTooltip.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">;
+    Pick<BaseTooltip.Positioner.Props, "align" | "anchor" | "side">;
 }
 
 // exports --->
