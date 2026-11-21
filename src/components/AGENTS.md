@@ -11,6 +11,8 @@ src/components/<group>/<name>/
 
 Import the folder: `@/components/ui/button`. Never deep-import `.../button/button`.
 
+Component docs (parts, props, usage examples) live in `src/components/README.md` - keep it updated when adding or changing components.
+
 ## Folder placement
 
 This project has two surfaces: client-facing pages and the admin dashboard. Components are grouped by surface, not by primitive/composite.

@@ -43,3 +43,13 @@ _PostgreSQL_ via _Prisma ORM v7_. Local dev database is Supabase running on loca
 - Naming: all table and column names in the database must be `lower_snake_case`. Tables use `@@map("snake_name")`, columns use `@map("snake_name")` - add `@map` ONLY when the default column name is not already snake_case (e.g. map `emailVerified` -> `email_verified`, but do NOT map `id`, `email`, `token`). Keep Prisma field names camelCase; `@map` only affects the database column.
 
 <!-- END: database -->
+
+
+## Nested Agent Rules
+
+Scoped `AGENTS.md` files exist deeper in the repo. Read the one covering the area you touch:
+
+- `src/components/AGENTS.md` - component folder structure, file shape, imports, cva variants, markup/style conventions, Storybook rules.
+- `src/lib/hooks/AGENTS.md` - client hook conventions (`use-*.ts`, latest-callback pattern, cleanup rules).
+- `src/lib/icons/AGENTS.md` - icon registry system (`createIconNode`, `Icons.*` namespace, no other icon packages).
+- `src/styles/AGENTS.md` - twextras/Tailwind v4 utilities and theme tokens (points to `node_modules/twextras/AGENTS.md`).

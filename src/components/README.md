@@ -226,32 +226,65 @@ Empty.Root
 </Empty.Root>;
 ```
 
-## Field
+## Form
 
-Form field layout system (label, description, error, orientation).
+Form layout system + React Hook Form integration (label, description, error, orientation).
 
 ```text
-Field.Root (orientation: vertical | horizontal | responsive)
-├── Field.Label / Field.Title
-├── Field.Content
-├── Field.Description
-└── Field.Error (errors={[{ message }]})
+Form.Root (form={useForm() instance})   — <form> wrapped in FormProvider
+└── Form.Group                          — stacked fields container
+    └── Form.Control (name, render)     — RHF Controller; render gets { field, fieldState }
+        └── Form.Field (orientation: vertical | horizontal | responsive)
+            ├── Form.Label 
+            ├── Form.Content
+            ├── Form.Description
+            └── Form.Error
 
-Field.Set + Field.Legend   — group related fields
-Field.Group                — stacked fields container
-Field.Separator            — labeled divider
+Form.Set + Form.Legend   — group related fields
 ```
 
 ```tsx
-<Field.Root>
-  <Field.Label htmlFor="email">Email</Field.Label>
-  <Field.Content>
-    <Input id="email" type="email" />
-  </Field.Content>
-  <Field.Description>We never share your email.</Field.Description>
-  <Field.Error errors={errors} />
-</Field.Root>;
+<Form.Root form={form} onSubmit={form.handleSubmit(onSubmit)}>
+  <Form.Group>
+    <Form.Control
+      name="email"
+      render={({ field, fieldState }) => (
+        <Form.Field>
+          <Form.Label>Email</Form.Label>
+          <Input id={field.name} {...field} aria-invalid={fieldState.invalid} />
+          <Form.Error />
+        </Form.Field>
+      )}
+    />
+  </Form.Group>
+</Form.Root>;
 ```
+
+Without `Form.Control`, `Form.Field`/`Form.Label`/`Form.Error` work standalone (`Form.Error` takes `errors={[{ message }]}`).
+
+## Glance
+
+Hover preview card (wraps `baseui` PreviewCard). `Glance.Content` takes an `anchor` render function for custom positioning; `Glance.Trigger` supports `delay`/`closeDelay`.
+
+```text
+Glance.Root
+├── Glance.Trigger (render={<Button />})
+└── Glance.Portal
+    └── Glance.Content (anchor, side, align)
+```
+
+```tsx
+<Glance.Root>
+  <Glance.Trigger delay={0} closeDelay={0} render={<InputGroup.Button icon />}>
+    <Icons.Alert />
+  </Glance.Trigger>
+  <Glance.Content anchor={() => rootRef.current}>
+    ...
+  </Glance.Content>
+</Glance.Root>;
+```
+
+Used by `Password.Hover` for the ruleset popover.
 
 ## Input
 
@@ -363,6 +396,30 @@ Pagination.Root
     </Pagination.Item>
   </Pagination.Content>
 </Pagination.Root>;
+```
+
+## Password
+
+Password input with reveal toggle, optional ruleset popover, and compose-safe `onChange`/`onBlur` (blur hides the revealed text). Must be used inside `Password.Root`.
+
+```text
+Password.Root (ruleset=[{ label, rule }])
+├── InputGroup.Addon           — leading icon slot
+├── Password.Input             — type toggles text/password
+├── Password.Hover             — rules popover (Glance) anchored to the root
+├── Password.Reveal            — show/hide button
+└── Password.Ruleset           — standalone rule checklist
+```
+
+```tsx
+<Password.Root ruleset={RULES}>
+  <InputGroup.Addon>
+    <Icons.Lock />
+  </InputGroup.Addon>
+  <Password.Input autoComplete="new-password" placeholder="Create a secure password" />
+  <Password.Hover />
+  <Password.Reveal />
+</Password.Root>;
 ```
 
 ## Radio
