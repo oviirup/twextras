@@ -35,6 +35,7 @@ namespace Glance_Portal {
 function Glance_Content({
   align = "center",
   side = "bottom",
+  inline = true,
   anchor,
   className,
   ...props
@@ -50,8 +51,9 @@ function Glance_Content({
         anchor={anchor}>
         <BasePreviewCard.Popup
           data-slot="glance-content"
+          data-inline={inline ? "" : undefined}
           className={cn(
-            "z-50 max-h-(--available-height) w-72 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-4 text-popover-foreground shadow-lg ring-1 shadow-black/8 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            "z-50 max-h-(--available-height) w-72 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-4 text-popover-foreground shadow-lg ring-1 shadow-black/8 ring-foreground/10 duration-100 outline-none data-inline:w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
             className,
           )}
           {...props}
@@ -61,8 +63,9 @@ function Glance_Content({
   );
 }
 namespace Glance_Content {
-  export type Props = BasePreviewCard.Popup.Props &
-    Pick<BasePreviewCard.Positioner.Props, "align" | "anchor" | "side">;
+  export type Props = BasePreviewCard.Popup.Props & {
+    inline?: boolean;
+  } & Pick<BasePreviewCard.Positioner.Props, "align" | "anchor" | "side">;
 }
 
 // exports --->
