@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { hasAnyRole, isActiveUser } from "@/lib/auth/guard";
+import { hasAnyRole, isActiveUser } from "@/modules/auth/utils";
 
 describe("isActiveUser", () => {
   test("only active status passes", () => {

@@ -4,6 +4,7 @@ import { username } from "better-auth/plugins/username";
 import { SITE } from "@/config/app";
 import { env, isProd } from "@/config/env";
 import { prisma } from "@/lib/db/prisma";
+import { blockInactiveSignIn } from "@/modules/auth/hooks";
 
 export const auth = betterAuth({
   appName: "Omkarnath Mission",
@@ -30,6 +31,9 @@ export const auth = betterAuth({
       disableSignUp: true,
       display: "popup", // or "redirect", to be determined
     },
+  },
+  hooks: {
+    before: blockInactiveSignIn,
   },
   plugins: [
     username({

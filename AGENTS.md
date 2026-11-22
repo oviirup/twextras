@@ -45,6 +45,10 @@ _PostgreSQL_ via _Prisma ORM v7_. Local dev database is Supabase running on loca
 <!-- END: database -->
 
 
+## Modules
+
+All business logic lives in `src/modules/`. Auth logic in `src/modules/auth`, user-related logic in `src/modules/users`.
+
 ## Nested Agent Rules
 
 Scoped `AGENTS.md` files exist deeper in the repo. Read the one covering the area you touch:
