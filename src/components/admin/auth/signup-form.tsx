@@ -24,22 +24,33 @@ const PASSWORD_RULES: Password.Ruleset.Rule[] = [
 
 const signupSchema = z
   .object({
-    username: z.string().min(1, "Username is required"),
-    email: z.email("Enter a valid email"),
+    name: z.string().trim().min(1, "Full name is required"),
+    username: z.string().trim().min(1, "Username is required"),
+    email: z.email("Enter a valid email").trim(),
     password: z
       .string()
+      .trim()
       .min(8, "At least 8 characters")
       .regex(/\d/, "Contains a number")
       .regex(/[a-z]/, "Contains a lowercase letter")
       .regex(/[A-Z]/, "Contains an uppercase letter")
       .regex(/[^a-zA-Z0-9]/, "Contains a symbol"),
-    confirmPassword: z.string().min(1, "Confirm your password"),
+    confirm_password: z.string().trim().min(1, "Confirm your password"),
   })
-  .refine((v) => v.password === v.confirmPassword, {
+  .refine((v) => v.password === v.confirm_password, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
 type SignupValues = z.infer<typeof signupSchema>;
+
+const baseSignupValues: SignupValues = {
+  name: "",
+  username: "",
+  email: "",
+  password: "",
+  confirm_password: "",
+};
 
 // signup-form --->
 
@@ -48,14 +59,14 @@ function SignupForm() {
   const [error, setError] = useState<string | null>(null);
   const form = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
-    defaultValues: { username: "", email: "", password: "", confirmPassword: "" },
+    defaultValues: baseSignupValues,
   });
   const { isSubmitting } = form.formState;
 
   async function onSubmit(values: SignupValues) {
     setError(null);
     const { error } = await signUp.email({
-      name: values.username,
+      name: values.name,
       username: values.username,
       email: values.email,
       password: values.password,
@@ -64,7 +75,7 @@ function SignupForm() {
       setError(error.message ?? "Sign up failed");
       return;
     }
-    router.push("/dashboard");
+    router.push("/dashboard/profile");
     router.refresh();
   }
 
@@ -77,6 +88,27 @@ function SignupForm() {
       <Card.Content className="px-8">
         <Form.Root formContext={form} id="signup-form" onSubmit={form.handleSubmit(onSubmit)}>
           <Form.Group>
+            <Form.Control
+              name="name"
+              render={({ field, fieldState }) => (
+                <Form.Field>
+                  <Form.Label>Full name</Form.Label>
+                  <InputGroup.Root>
+                    <InputGroup.Addon>
+                      <Icons.User />
+                    </InputGroup.Addon>
+                    <InputGroup.Input
+                      {...field}
+                      id={field.name}
+                      autoComplete="name"
+                      placeholder="John Doe"
+                      aria-invalid={fieldState.invalid}
+                    />
+                  </InputGroup.Root>
+                  <Form.Error />
+                </Form.Field>
+              )}
+            />
             <Form.Control
               name="username"
               render={({ field, fieldState }) => (

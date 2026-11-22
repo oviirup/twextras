@@ -16,8 +16,8 @@ import { signIn } from "@/lib/auth/client";
 import { Icons } from "@/lib/icons";
 
 const signinSchema = z.object({
-  email: z.email("Enter a valid email"),
-  password: z.string().min(1, "Password is required"),
+  email: z.string().trim().email("Enter a valid email"),
+  password: z.string().trim().min(1, "Password is required"),
 });
 type SigninValues = z.infer<typeof signinSchema>;
 
