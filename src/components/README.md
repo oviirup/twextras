@@ -278,9 +278,7 @@ Glance.Root
   <Glance.Trigger delay={0} closeDelay={0} render={<InputGroup.Button icon />}>
     <Icons.Alert />
   </Glance.Trigger>
-  <Glance.Content anchor={() => rootRef.current}>
-    ...
-  </Glance.Content>
+  <Glance.Content anchor={() => rootRef.current}>...</Glance.Content>
 </Glance.Root>;
 ```
 
