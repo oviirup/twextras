@@ -2,12 +2,13 @@
 
 import { mergeProps } from "baseui/merge-props";
 import { useRender } from "baseui/use-render";
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Sheet } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
+import { createBaseContext } from "@/lib/context";
 import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Icons } from "@/lib/icons";
 import { cn, cva } from "@/lib/utils";
@@ -28,13 +29,10 @@ type SidebarContextProps = {
   toggleSidebar: () => void;
 };
 
-const SidebarContext = createContext<SidebarContextProps | null>(null);
-
-function useSidebar() {
-  const ctx = useContext(SidebarContext);
-  if (!ctx) throw new Error("useSidebar must be used within a SidebarProvider.");
-  return ctx;
-}
+const [SidebarContext, useSidebar] = createBaseContext<SidebarContextProps>({
+  name: "sidebar",
+  error: "useSidebar must be used within a SidebarProvider.",
+});
 
 // sidebar provider --->
 

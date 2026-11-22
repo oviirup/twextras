@@ -1,14 +1,17 @@
 "use client";
 
-import { createContext, use, useMemo } from "react";
+import { use, useMemo } from "react";
 import type * as RHF from "react-hook-form";
 import { Controller, FormProvider, useFormContext } from "react-hook-form";
 import { Label } from "@/components/ui/label";
+import { createBaseContext } from "@/lib/context";
 import { cn, cva } from "@/lib/utils";
 
 // form form context --->
 
-const FormFieldContext = createContext<FormFieldContextValue | null>(null);
+const [FormContext] = createBaseContext<FormFieldContextValue>({
+  name: "form-field",
+});
 
 type FormFieldContextValue = {
   field: RHF.ControllerRenderProps<any, any>;
@@ -115,13 +118,13 @@ const formVariants = cva({
 // form field --->
 
 function Form_Field({ className, orientation = "vertical", ...props }: Form_Field.Props) {
-  const fieldForm = use(FormFieldContext);
+  const form = use(FormContext);
   return (
     <div
       role="group"
       data-slot="field"
       data-orientation={orientation}
-      data-invalid={fieldForm?.fieldState.invalid ? "" : undefined}
+      data-invalid={form?.fieldState.invalid ? "" : undefined}
       className={cn(formVariants({ orientation }), className)}
       {...props}
     />
@@ -150,9 +153,7 @@ function Form_Control<TFieldValues extends RHF.FieldValues = RHF.FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <FormFieldContext value={{ field, fieldState }}>
-          {render({ field, fieldState })}
-        </FormFieldContext>
+        <FormContext value={{ field, fieldState }}>{render({ field, fieldState })}</FormContext>
       )}
     />
   );
@@ -183,11 +184,11 @@ namespace Form_Content {
 // form label --->
 
 function Form_Label({ className, htmlFor, ...props }: Form_Label.Props) {
-  const fieldForm = use(FormFieldContext);
+  const form = use(FormContext);
   return (
     <Label
       data-slot="field-label"
-      htmlFor={htmlFor ?? fieldForm?.field.name}
+      htmlFor={htmlFor ?? form?.field.name}
       className={cn(
         "group/field-label peer/field-label *:slot-field:p-2 flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-input/40 has-[>[data-slot=field]]:has-focus-visible:border-ring has-[>[data-slot=field]]:has-focus-visible:ring-2 has-[>[data-slot=field]]:has-focus-visible:ring-ring/30 dark:has-data-checked:bg-primary/10",
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
@@ -242,13 +243,13 @@ namespace Form_Description {
 // form error --->
 
 function Form_Error({ className, children, errors, ...props }: Form_Error.Props) {
-  const fieldForm = use(FormFieldContext);
+  const form = use(FormContext);
   const content = useMemo(() => {
     if (children) {
       return children;
     }
 
-    const fieldErrors = errors ?? (fieldForm ? [fieldForm.fieldState.error] : undefined);
+    const fieldErrors = errors ?? (form ? [form.fieldState.error] : undefined);
     if (!fieldErrors?.length) {
       return null;
     }
@@ -264,7 +265,7 @@ function Form_Error({ className, children, errors, ...props }: Form_Error.Props)
         {uniqueErrors.map((error, index) => error?.message && <li key={index}>{error.message}</li>)}
       </ul>
     );
-  }, [children, errors, fieldForm]);
+  }, [children, errors, form]);
 
   if (!content) {
     return null;
