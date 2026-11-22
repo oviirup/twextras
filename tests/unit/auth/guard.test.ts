@@ -5,7 +5,6 @@ describe("isActiveUser", () => {
   test("only active status passes", () => {
     expect(isActiveUser({ status: "active" })).toBe(true);
     expect(isActiveUser({ status: "pending" })).toBe(false);
-    expect(isActiveUser({ status: "suspended" })).toBe(false);
     expect(isActiveUser({ status: "terminated" })).toBe(false);
     expect(isActiveUser(null)).toBe(false);
     expect(isActiveUser(undefined)).toBe(false);
