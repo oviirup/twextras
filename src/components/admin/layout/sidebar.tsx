@@ -12,7 +12,7 @@ import { SIDEBAR_NAV } from "./data";
 
 // app-sidebar --->
 
-function AppSidebar({ user }: AppSidebar.Props) {
+function AppSidebar({ user, locked = false }: AppSidebar.Props) {
   const pathname = usePathname();
 
   return (
@@ -21,13 +21,15 @@ function AppSidebar({ user }: AppSidebar.Props) {
         <Sidebar.GroupLabel className="text-base">Omkarnath Mission</Sidebar.GroupLabel>
       </Sidebar.Header>
       <Sidebar.Content className="gap-1">
-        <NavMenu pathname={pathname} />
+        <NavMenu pathname={pathname} locked={locked} />
       </Sidebar.Content>
       <Sidebar.Footer>
         <Sidebar.Menu>
           <Sidebar.MenuItem>
             <Sidebar.MenuButton
               isActive={pathname === "/dashboard/settings"}
+              aria-disabled={locked || undefined}
+              tabIndex={locked ? -1 : undefined}
               render={<Link href="/dashboard/settings" />}>
               <Icons.Settings />
               <span>Settings</span>
@@ -48,12 +50,13 @@ namespace AppSidebar {
       email: string;
       image?: string | null;
     };
+    locked?: boolean;
   };
 }
 
 // nav-menu --->
 
-function NavMenu({ pathname }: NavMenu.Props) {
+function NavMenu({ pathname, locked = false }: NavMenu.Props) {
   return SIDEBAR_NAV.map((group) => (
     <Sidebar.Group key={group.label}>
       <Sidebar.GroupLabel className="text-xs uppercase">
@@ -62,16 +65,21 @@ function NavMenu({ pathname }: NavMenu.Props) {
       </Sidebar.GroupLabel>
       <Sidebar.GroupContent>
         <Sidebar.Menu>
-          {group.items.map((item) => (
-            <Sidebar.MenuItem key={item.href}>
-              <Sidebar.MenuButton
-                isActive={pathname === item.href}
-                render={<Link href={item.href} />}>
-                <item.icon />
-                <span>{item.title}</span>
-              </Sidebar.MenuButton>
-            </Sidebar.MenuItem>
-          ))}
+          {group.items.map((item) => {
+            const disabled = locked && item.href !== "/dashboard/profile";
+            return (
+              <Sidebar.MenuItem key={item.href}>
+                <Sidebar.MenuButton
+                  isActive={pathname === item.href}
+                  aria-disabled={disabled || undefined}
+                  tabIndex={disabled ? -1 : undefined}
+                  render={<Link href={item.href} />}>
+                  <item.icon />
+                  <span>{item.title}</span>
+                </Sidebar.MenuButton>
+              </Sidebar.MenuItem>
+            );
+          })}
         </Sidebar.Menu>
       </Sidebar.GroupContent>
     </Sidebar.Group>
@@ -80,6 +88,7 @@ function NavMenu({ pathname }: NavMenu.Props) {
 namespace NavMenu {
   export type Props = {
     pathname: string;
+    locked?: boolean;
   };
 }
 
@@ -129,13 +138,13 @@ function UserMenu({ user }: UserMenu.Props) {
             </Avatar.Root>
             <span className="truncate font-medium">{user.name || displayName}</span>
             {user.username ? (
-              <span className="truncate text-xs text-muted-foreground">@{user.username}</span>
+              <span className="truncate text-xs text-muted-foreground">{user.username}</span>
             ) : null}
             <span className="truncate text-xs text-muted-foreground">{user.email}</span>
           </div>
           <Dropdown.Separator />
           <Dropdown.Group>
-            <Dropdown.Item>
+            <Dropdown.Item render={<Link href="/dashboard/profile" />}>
               <Icons.User />
               Profile
             </Dropdown.Item>

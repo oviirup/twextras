@@ -17,4 +17,8 @@ export const SIDEBAR_NAV = [
       { title: "Users", href: "/dashboard/users", icon: Icons.Users },
     ],
   },
+  {
+    label: "Account",
+    items: [{ title: "Profile", href: "/dashboard/profile", icon: Icons.User }],
+  },
 ] as const;

@@ -28,7 +28,14 @@ namespace Avatar_Root {
 
 // avatar image --->
 
-function Avatar_Image({ className, src, alt = "", sizes = "40px", ...props }: Avatar_Image.Props) {
+function Avatar_Image({
+  className,
+  src,
+  alt = "",
+  sizes = "40px",
+  quality,
+  ...props
+}: Avatar_Image.Props) {
   const imageSrc = typeof src === "string" ? src : "src" in src ? src.src : src.default.src;
 
   return (
@@ -38,14 +45,14 @@ function Avatar_Image({ className, src, alt = "", sizes = "40px", ...props }: Av
       src={imageSrc}
       alt={alt}
       sizes={sizes}
-      render={<Image fill src={src} alt={alt} />}
+      render={<Image fill src={src} alt={alt} quality={quality} />}
       className={cn("aspect-square size-full rounded-full object-cover", className)}
       {...props}
     />
   );
 }
 namespace Avatar_Image {
-  export type Props = Omit<BaseAvatar.Image.Props, "src"> & Pick<ImageProps, "src">;
+  export type Props = Omit<BaseAvatar.Image.Props, "src"> & Pick<ImageProps, "src" | "quality">;
 }
 
 // avatar fallback --->
