@@ -152,7 +152,7 @@ function Sheet_Title({ className, ...props }: Sheet_Title.Props) {
   return (
     <BaseSheet.Title
       data-slot="sheet-title"
-      className={cn("text-sm font-medium text-foreground", className)}
+      className={cn("text-lg font-medium text-foreground", className)}
       {...props}
     />
   );

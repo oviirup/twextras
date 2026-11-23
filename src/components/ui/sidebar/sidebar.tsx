@@ -253,7 +253,7 @@ function Sidebar_Inset({ className, ...props }: Sidebar_Inset.Props) {
     <main
       data-slot="sidebar-inset"
       className={cn(
-        "relative flex w-full flex-1 flex-col bg-background transition-[margin] md:peer-data-[variant=inset]:mt-2 md:peer-data-[variant=inset]:rounded-tl-xl md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
+        "relative flex w-full min-w-0 flex-1 flex-col bg-background transition-[margin] md:peer-data-[variant=inset]:mt-2 md:peer-data-[variant=inset]:rounded-tl-xl md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
         className,
       )}
       {...props}

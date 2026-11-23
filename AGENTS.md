@@ -57,3 +57,19 @@ Scoped `AGENTS.md` files exist deeper in the repo. Read the one covering the are
 - `src/lib/hooks/AGENTS.md` - client hook conventions (`use-*.ts`, latest-callback pattern, cleanup rules).
 - `src/lib/icons/AGENTS.md` - icon registry system (`createIconNode`, `Icons.*` namespace, no other icon packages).
 - `src/styles/AGENTS.md` - twextras/Tailwind v4 utilities and theme tokens (points to `node_modules/twextras/AGENTS.md`).
+
+## React Conventions
+
+- Inside components and hooks, use arrow functions (`const fn = () => {}` / `const fn = async () => {}`). No named `function` declarations for inner helpers, handlers, or effects callbacks.
+
+## Documentation
+
+Machine-readable docs indexes (append `.md` to page URLs for clean Markdown where supported):
+
+- Next.js: https://nextjs.org/docs/llms.txt
+- React: https://react.dev/llms.txt
+- Base UI: https://base-ui.com/llms.txt
+- shadcn/ui: https://ui.shadcn.com/llms.txt
+- Better Auth: https://better-auth.com/docs/llms.txt
+- Tailwind CSS: https://tailwindcss.com/docs
+- Prisma: https://www.prisma.io/docs/llms/orm-v7.txt
