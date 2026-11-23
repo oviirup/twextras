@@ -5,7 +5,7 @@ import { z } from "zod";
 import { requireRole } from "@/modules/auth/guards";
 import { Prisma } from "@/prisma/generated/client";
 import { UserRole, UserStatus } from "@/prisma/generated/enums";
-import { getUserById, updateUser } from "./service";
+import { deleteUser, getUserById, updateUser } from "./service";
 
 const updateUserSchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
@@ -37,6 +37,24 @@ export async function updateUserAction(userId: string, data: unknown) {
     }
     throw error;
   }
+
+  revalidatePath("/dashboard/users");
+  return { success: true };
+}
+
+export async function deleteUserAction(userId: string) {
+  const actor = await requireRole(["super_admin", "admin"]);
+
+  const target = await getUserById(userId);
+  if (!target) return { error: "User not found" };
+  if (target.role === UserRole.super_admin) {
+    return { error: "Super admin accounts cannot be deleted" };
+  }
+  if (target.id === actor.id) {
+    return { error: "You cannot delete your own account" };
+  }
+
+  await deleteUser(userId);
 
   revalidatePath("/dashboard/users");
   return { success: true };

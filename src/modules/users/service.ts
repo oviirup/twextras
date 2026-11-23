@@ -47,3 +47,7 @@ export async function updateUser(
 
   return prisma.user.update({ where: { id }, data: { ...data, email, role, status } });
 }
+
+export async function deleteUser(id: string) {
+  return prisma.user.delete({ where: { id } });
+}

@@ -26,8 +26,8 @@ function UsersTable({ users }: UsersTable.Props) {
           <Table.Head className="min-w-32">Username</Table.Head>
           <Table.Head className="min-w-48">Email</Table.Head>
           <Table.Head className="min-w-32">Role</Table.Head>
-          <Table.Head className="min-w-24">Status</Table.Head>
-          <Table.Head className="min-w-28">Joined</Table.Head>
+          <Table.Head className="min-w-32">Status</Table.Head>
+          <Table.Head className="min-w-32">Joined</Table.Head>
           <Table.Head />
         </Table.Row>
       </Table.Header>

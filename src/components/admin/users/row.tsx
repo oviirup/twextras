@@ -34,7 +34,7 @@ function UserTableRow() {
       </Table.Cell>
       <Table.Cell className="tabular-nums">{formatDate(user.createdAt)}</Table.Cell>
       <Table.Cell className="sticky right-0 text-right">
-        <div className="absolute inset-0 -left-4 bg-linear-to-l from-card from-85% to-transparent" />
+        <div className="absolute inset-0 -left-4 bg-linear-to-l from-card from-80% to-transparent" />
         <ModifyUser />
       </Table.Cell>
     </Table.Row>
