@@ -16,7 +16,7 @@ function Table_Root({ className, children, ...props }: Table_Root.Props) {
 
   return (
     <div data-slot="table-container" className="w-full">
-      <div className="overflow-x-auto rounded-md border">
+      <div className="scrollbar-thin overflow-x-auto rounded-md border">
         <table
           data-slot="table"
           className={cn("w-full caption-bottom text-sm/relaxed", className)}
@@ -38,10 +38,7 @@ function Table_Header({ className, ...props }: Table_Header.Props) {
   return (
     <thead
       data-slot="table-header"
-      className={cn(
-        "bg-sidebar text-sidebar-foreground [&_tr]:border-b [&_tr]:border-sidebar-border [&_tr]:hover:bg-transparent",
-        className,
-      )}
+      className={cn("**:[tr]:border-b **:[tr]:bg-transparent", className)}
       {...props}
     />
   );
@@ -54,11 +51,7 @@ namespace Table_Header {
 
 function Table_Body({ className, ...props }: Table_Body.Props) {
   return (
-    <tbody
-      data-slot="table-body"
-      className={cn("[&_tr:last-child]:border-0", className)}
-      {...props}
-    />
+    <tbody data-slot="table-body" className={cn("**:[tr]:last:border-0", className)} {...props} />
   );
 }
 namespace Table_Body {
@@ -71,7 +64,7 @@ function Table_Footer({ className, ...props }: Table_Footer.Props) {
   return (
     <tfoot
       data-slot="table-footer"
-      className={cn("border-t bg-muted/50 font-medium [&>tr]:last:border-b-0", className)}
+      className={cn("border-t bg-muted/50 font-medium *:[tr]:last:border-b-0", className)}
       {...props}
     />
   );
@@ -105,7 +98,7 @@ function Table_Head({ className, ...props }: Table_Head.Props) {
     <th
       data-slot="table-head"
       className={cn(
-        "h-10 px-3 text-left align-middle font-medium whitespace-nowrap text-sidebar-foreground/70 has-[[role=checkbox]]:pr-0",
+        "h-10 px-3 text-left align-middle font-medium whitespace-nowrap text-foreground/75 underline decoration-current/35 underline-offset-4 has-[[role=checkbox]]:pr-0",
         className,
       )}
       {...props}

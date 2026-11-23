@@ -1,14 +1,13 @@
 import { describe, expect, test } from "bun:test";
-import { hasAnyRole, isActiveUser } from "@/lib/auth/guard";
+import { hasAnyRole, isUserActive } from "@/modules/auth/utils";
 
 describe("isActiveUser", () => {
   test("only active status passes", () => {
-    expect(isActiveUser({ status: "active" })).toBe(true);
-    expect(isActiveUser({ status: "pending" })).toBe(false);
-    expect(isActiveUser({ status: "suspended" })).toBe(false);
-    expect(isActiveUser({ status: "terminated" })).toBe(false);
-    expect(isActiveUser(null)).toBe(false);
-    expect(isActiveUser(undefined)).toBe(false);
+    expect(isUserActive({ status: "active" })).toBe(true);
+    expect(isUserActive({ status: "pending" })).toBe(false);
+    expect(isUserActive({ status: "terminated" })).toBe(false);
+    expect(isUserActive(null)).toBe(false);
+    expect(isUserActive(undefined)).toBe(false);
   });
 });
 

@@ -24,22 +24,33 @@ const PASSWORD_RULES: Password.Ruleset.Rule[] = [
 
 const signupSchema = z
   .object({
-    username: z.string().min(1, "Username is required"),
-    email: z.email("Enter a valid email"),
+    name: z.string().trim().min(1, "Full name is required"),
+    username: z.string().trim().min(1, "Username is required"),
+    email: z.email("Enter a valid email").trim(),
     password: z
       .string()
+      .trim()
       .min(8, "At least 8 characters")
       .regex(/\d/, "Contains a number")
       .regex(/[a-z]/, "Contains a lowercase letter")
       .regex(/[A-Z]/, "Contains an uppercase letter")
       .regex(/[^a-zA-Z0-9]/, "Contains a symbol"),
-    confirmPassword: z.string().min(1, "Confirm your password"),
+    confirm_password: z.string().trim().min(1, "Confirm your password"),
   })
-  .refine((v) => v.password === v.confirmPassword, {
+  .refine((v) => v.password === v.confirm_password, {
     message: "Passwords do not match",
-    path: ["confirmPassword"],
+    path: ["confirm_password"],
   });
+
 type SignupValues = z.infer<typeof signupSchema>;
+
+const baseSignupValues: SignupValues = {
+  name: "",
+  username: "",
+  email: "",
+  password: "",
+  confirm_password: "",
+};
 
 // signup-form --->
 
@@ -48,14 +59,14 @@ function SignupForm() {
   const [error, setError] = useState<string | null>(null);
   const form = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
-    defaultValues: { username: "", email: "", password: "", confirmPassword: "" },
+    defaultValues: baseSignupValues,
   });
   const { isSubmitting } = form.formState;
 
-  async function onSubmit(values: SignupValues) {
+  const onSubmit = form.handleSubmit(async (values) => {
     setError(null);
     const { error } = await signUp.email({
-      name: values.username,
+      name: values.name,
       username: values.username,
       email: values.email,
       password: values.password,
@@ -64,9 +75,9 @@ function SignupForm() {
       setError(error.message ?? "Sign up failed");
       return;
     }
-    router.push("/dashboard");
+    router.push("/dashboard/profile");
     router.refresh();
-  }
+  });
 
   return (
     <Card.Root className="w-full max-w-sm gap-6 py-8 shadow-2xl">
@@ -75,10 +86,33 @@ function SignupForm() {
         <Card.Description>Register for the admin dashboard</Card.Description>
       </Card.Header>
       <Card.Content className="px-8">
-        <Form.Root formContext={form} id="signup-form" onSubmit={form.handleSubmit(onSubmit)}>
+        <Form.Root formContext={form} id="signup-form" onSubmit={onSubmit}>
           <Form.Group>
             <Form.Control
+              name="name"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Form.Field>
+                  <Form.Label>Full name</Form.Label>
+                  <InputGroup.Root>
+                    <InputGroup.Addon>
+                      <Icons.User />
+                    </InputGroup.Addon>
+                    <InputGroup.Input
+                      {...field}
+                      id={field.name}
+                      autoComplete="name"
+                      placeholder="Enter your full name"
+                      aria-invalid={fieldState.invalid}
+                    />
+                  </InputGroup.Root>
+                  <Form.Error />
+                </Form.Field>
+              )}
+            />
+            <Form.Control
               name="username"
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Form.Field>
                   <Form.Label>Username</Form.Label>
@@ -89,8 +123,8 @@ function SignupForm() {
                     <InputGroup.Input
                       {...field}
                       id={field.name}
-                      autoComplete="username"
-                      placeholder="johndoe"
+                      autoComplete="off"
+                      placeholder="Choose a username"
                       aria-invalid={fieldState.invalid}
                     />
                   </InputGroup.Root>
@@ -100,6 +134,7 @@ function SignupForm() {
             />
             <Form.Control
               name="email"
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Form.Field>
                   <Form.Label>Email</Form.Label>
@@ -112,7 +147,7 @@ function SignupForm() {
                       id={field.name}
                       type="email"
                       autoComplete="email"
-                      placeholder="you@example.com"
+                      placeholder="Enter your email"
                       aria-invalid={fieldState.invalid}
                     />
                   </InputGroup.Root>
@@ -122,6 +157,7 @@ function SignupForm() {
             />
             <Form.Control
               name="password"
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Form.Field>
                   <Form.Label>Password</Form.Label>
@@ -133,7 +169,7 @@ function SignupForm() {
                       {...field}
                       id={field.name}
                       autoComplete="new-password"
-                      placeholder="Create a secure password"
+                      placeholder="Enter a password"
                       aria-invalid={fieldState.invalid}
                     />
                     <Password.Hover />
@@ -144,7 +180,8 @@ function SignupForm() {
               )}
             />
             <Form.Control
-              name="confirmPassword"
+              name="confirm_password"
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Form.Field>
                   <Form.Label>Confirm password</Form.Label>

@@ -1,6 +1,6 @@
 // enums --->
 
-enum Role {
+enum UserRole {
   super_admin
   admin
   manager
@@ -10,7 +10,6 @@ enum Role {
 enum UserStatus {
   pending
   active
-  suspended
   terminated
 }
 
@@ -21,7 +20,7 @@ model User {
   name          String
   email         String
   username      String     @unique @db.VarChar(32)
-  role          Role       @default(employee)
+  role          UserRole   @default(employee)
   status        UserStatus @default(pending)
   emailVerified Boolean    @default(false) @map("email_verified")
   image         String?

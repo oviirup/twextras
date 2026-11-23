@@ -1,8 +1,9 @@
 "use client";
 
-import { createContext, use, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Glance } from "@/components/ui/glance";
 import { InputGroup } from "@/components/ui/input";
+import { createBaseContext } from "@/lib/context";
 import { useComposeEvent, useComposeRefs } from "@/lib/hooks";
 import { Icons } from "@/lib/icons";
 import { cn } from "@/lib/utils";
@@ -24,13 +25,10 @@ type PasswordContextValue = {
   rootRef: React.RefObject<HTMLDivElement | null>;
 };
 
-const PassContext = createContext<PasswordContextValue | null>(null);
-
-function usePass() {
-  const ctx = use(PassContext);
-  if (!ctx) throw new Error("Password parts must be used inside <Password.Root>");
-  return ctx;
-}
+const [PassContext, usePass] = createBaseContext<PasswordContextValue>({
+  name: "password",
+  error: "Password parts must be used inside <Password.Root>",
+});
 
 // password root --->
 

@@ -2,12 +2,13 @@
 
 import { mergeProps } from "baseui/merge-props";
 import { useRender } from "baseui/use-render";
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Sheet } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
+import { createBaseContext } from "@/lib/context";
 import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Icons } from "@/lib/icons";
 import { cn, cva } from "@/lib/utils";
@@ -28,13 +29,10 @@ type SidebarContextProps = {
   toggleSidebar: () => void;
 };
 
-const SidebarContext = createContext<SidebarContextProps | null>(null);
-
-function useSidebar() {
-  const ctx = useContext(SidebarContext);
-  if (!ctx) throw new Error("useSidebar must be used within a SidebarProvider.");
-  return ctx;
-}
+const [SidebarContext, useSidebar] = createBaseContext<SidebarContextProps>({
+  name: "sidebar",
+  error: "useSidebar must be used within a SidebarProvider.",
+});
 
 // sidebar provider --->
 
@@ -255,7 +253,7 @@ function Sidebar_Inset({ className, ...props }: Sidebar_Inset.Props) {
     <main
       data-slot="sidebar-inset"
       className={cn(
-        "relative flex w-full flex-1 flex-col bg-background transition-[margin] md:peer-data-[variant=inset]:mt-2 md:peer-data-[variant=inset]:rounded-tl-xl md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
+        "relative flex w-full min-w-0 flex-1 flex-col bg-background transition-[margin] md:peer-data-[variant=inset]:mt-2 md:peer-data-[variant=inset]:rounded-tl-xl md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
         className,
       )}
       {...props}
