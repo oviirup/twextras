@@ -8,6 +8,7 @@ import { Link } from "@/components/ui/link";
 import { Sidebar } from "@/components/ui/sidebar";
 import { signOut } from "@/lib/auth/client";
 import { Icons } from "@/lib/icons";
+import type { UserRole } from "@/prisma/generated/enums";
 import { SIDEBAR_NAV } from "./data";
 
 // app-sidebar --->
@@ -21,7 +22,7 @@ function AppSidebar({ user, locked = false }: AppSidebar.Props) {
         <Sidebar.GroupLabel className="text-base">Omkarnath Mission</Sidebar.GroupLabel>
       </Sidebar.Header>
       <Sidebar.Content className="gap-1">
-        <NavMenu pathname={pathname} locked={locked} />
+        <NavMenu pathname={pathname} role={user.role} locked={locked} />
       </Sidebar.Content>
       <Sidebar.Footer>
         <Sidebar.Menu>
@@ -30,6 +31,7 @@ function AppSidebar({ user, locked = false }: AppSidebar.Props) {
               isActive={pathname === "/dashboard/settings"}
               aria-disabled={locked || undefined}
               tabIndex={locked ? -1 : undefined}
+              className={locked ? "pointer-events-none opacity-60" : undefined}
               render={<Link href="/dashboard/settings" />}>
               <Icons.Settings />
               <span>Settings</span>
@@ -49,6 +51,7 @@ namespace AppSidebar {
       username?: string | null;
       email: string;
       image?: string | null;
+      role?: UserRole | null;
     };
     locked?: boolean;
   };
@@ -56,8 +59,13 @@ namespace AppSidebar {
 
 // nav-menu --->
 
-function NavMenu({ pathname, locked = false }: NavMenu.Props) {
-  return SIDEBAR_NAV.map((group) => (
+function NavMenu({ pathname, role, locked = false }: NavMenu.Props) {
+  const groups = SIDEBAR_NAV.map((group) => ({
+    ...group,
+    items: group.items.filter((item) => !item.roles || (role != null && item.roles.includes(role))),
+  })).filter((group) => group.items.length > 0);
+
+  return groups.map((group) => (
     <Sidebar.Group key={group.label}>
       <Sidebar.GroupLabel className="text-xs uppercase">
         <span>{group.label}</span>
@@ -73,6 +81,7 @@ function NavMenu({ pathname, locked = false }: NavMenu.Props) {
                   isActive={pathname === item.href}
                   aria-disabled={disabled || undefined}
                   tabIndex={disabled ? -1 : undefined}
+                  className={disabled ? "pointer-events-none opacity-60" : undefined}
                   render={<Link href={item.href} />}>
                   <item.icon />
                   <span>{item.title}</span>
@@ -88,6 +97,7 @@ function NavMenu({ pathname, locked = false }: NavMenu.Props) {
 namespace NavMenu {
   export type Props = {
     pathname: string;
+    role?: UserRole | null;
     locked?: boolean;
   };
 }
