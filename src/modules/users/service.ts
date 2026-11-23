@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db/prisma";
-import type { UserStatus } from "@/prisma/generated/enums";
+import type { UserRole, UserStatus } from "@/prisma/generated/enums";
 
 const USER_SELECT = {
   id: true,
@@ -30,6 +30,9 @@ export async function listUsers() {
   });
 }
 
-export async function setUserStatus(id: string, status: UserStatus) {
-  return prisma.user.update({ where: { id }, data: { status } });
+export async function updateUser(
+  id: string,
+  data: { name: string; username: string; email: string; role: UserRole; status: UserStatus },
+) {
+  return prisma.user.update({ where: { id }, data });
 }

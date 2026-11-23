@@ -2,8 +2,6 @@ import { APIError, createAuthMiddleware } from "better-auth/api";
 import { prisma } from "@/lib/db/prisma";
 import { UserStatus } from "@/prisma/generated/enums";
 
-const BLOCKED_STATUSES: UserStatus[] = [UserStatus.suspended, UserStatus.terminated];
-
 export const blockInactiveSignIn = createAuthMiddleware(async (ctx) => {
   if (ctx.path !== "/sign-in/email") return;
 
@@ -15,7 +13,7 @@ export const blockInactiveSignIn = createAuthMiddleware(async (ctx) => {
     select: { status: true },
   });
 
-  if (user && BLOCKED_STATUSES.includes(user.status)) {
+  if (user && UserStatus.terminated === user.status) {
     throw new APIError("FORBIDDEN", {
       message: "Your account has been deactivated. Contact an administrator.",
     });
