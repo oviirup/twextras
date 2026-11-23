@@ -218,6 +218,14 @@ export const BookOpen = createIconNode({
   props: baseProps,
 });
 
+// Devices --->
+
+export const Computer = createIconNode({
+  name: "computer",
+  nodes: HugeIcons.ComputerIcon,
+  props: baseProps,
+});
+
 // Uploads --->
 
 export const Upload = createIconNode({

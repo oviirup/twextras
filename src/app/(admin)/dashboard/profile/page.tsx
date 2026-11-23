@@ -2,17 +2,20 @@ import { format } from "date-fns";
 import { redirect } from "next/navigation";
 import { ProfileDetails } from "@/components/admin/profile/details";
 import { ProfileSecurity } from "@/components/admin/profile/security";
+import { ProfileSessions } from "@/components/admin/profile/sessions";
 import { Avatar } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Icons } from "@/lib/icons";
-import { requireUser } from "@/modules/auth/guards";
+import { getSession, getUserSessions } from "@/modules/auth/session";
 import { getUserWithAccounts } from "@/modules/users/service";
 import { UserStatus } from "@/prisma/generated/enums";
 
 export default async function ProfilePage() {
-  const sessionUser = await requireUser();
-  const user = await getUserWithAccounts(sessionUser.id);
+  const session = await getSession();
+  if (!session?.user) redirect("/dashboard/signin");
+  const user = await getUserWithAccounts(session.user.id);
   if (!user) redirect("/dashboard/signin");
+  const sessions = await getUserSessions();
 
   const googleLinked = user.accounts.some((account) => account.providerId === "google");
 
@@ -72,6 +75,16 @@ export default async function ProfilePage() {
           </Card.Header>
           <Card.Content>
             <ProfileSecurity googleLinked={googleLinked} />
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>Active sessions</Card.Title>
+            <Card.Description>Devices currently signed in to your account.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <ProfileSessions sessions={sessions} currentToken={session.session.token} />
           </Card.Content>
         </Card.Root>
       </div>

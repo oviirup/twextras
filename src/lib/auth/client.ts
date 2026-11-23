@@ -18,4 +18,7 @@ export const {
   deleteUser,
   linkSocial,
   listAccounts,
+  listSessions,
+  revokeSession,
+  revokeOtherSessions,
 } = client;
