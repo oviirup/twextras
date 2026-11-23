@@ -5,7 +5,7 @@ import { z } from "zod";
 import { requireRole } from "@/modules/auth/guards";
 import { Prisma } from "@/prisma/generated/client";
 import { UserRole, UserStatus } from "@/prisma/generated/enums";
-import { updateUser } from "./service";
+import { getUserById, updateUser } from "./service";
 
 const updateUserSchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
@@ -16,7 +16,13 @@ const updateUserSchema = z.object({
 });
 
 export async function updateUserAction(userId: string, data: unknown) {
-  await requireRole(["super_admin", "admin"]);
+  const actor = await requireRole(["super_admin", "admin"]);
+
+  const target = await getUserById(userId);
+  if (!target) return { error: "User not found" };
+  if (target.role === UserRole.super_admin && target.id !== actor.id) {
+    return { error: "Super admin accounts cannot be modified" };
+  }
 
   const parsed = updateUserSchema.safeParse(data);
   if (!parsed.success) {

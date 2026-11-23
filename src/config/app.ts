@@ -4,6 +4,8 @@ const BASE_DOMAIN = "omkarnath.vercel.app";
 const SITE_DOMAIN = isDev ? `localhost:${env.PORT}` : isPreview ? env.VERCEL_URL! : BASE_DOMAIN;
 const SITE_URL = isDev ? `http://${SITE_DOMAIN}/` : `https://${SITE_DOMAIN}/`;
 
+export const SUPER_ADMIN_EMAILS = ["oviirup@gmail.com"];
+
 export const SITE = {
   NAME: "Omkarnath Mission",
   TITLE: "Omkarnath Mission | Spirituality, Devotion & Selfless Service",

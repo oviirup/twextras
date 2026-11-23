@@ -1,5 +1,6 @@
+import { SUPER_ADMIN_EMAILS } from "@/config/app";
 import { prisma } from "@/lib/db/prisma";
-import type { UserRole, UserStatus } from "@/prisma/generated/enums";
+import { UserRole, UserStatus } from "@/prisma/generated/enums";
 
 const USER_SELECT = {
   id: true,
@@ -34,5 +35,15 @@ export async function updateUser(
   id: string,
   data: { name: string; username: string; email: string; role: UserRole; status: UserStatus },
 ) {
-  return prisma.user.update({ where: { id }, data });
+  const existing = await prisma.user.findUnique({
+    where: { id },
+    select: { email: true, role: true },
+  });
+
+  const isSuperAdmin = !!existing?.email && SUPER_ADMIN_EMAILS.includes(existing.email);
+  const role = isSuperAdmin ? UserRole.super_admin : data.role;
+  const status = isSuperAdmin ? UserStatus.active : data.status;
+  const email = isSuperAdmin ? existing!.email : data.email;
+
+  return prisma.user.update({ where: { id }, data: { ...data, email, role, status } });
 }
