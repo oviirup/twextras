@@ -24,6 +24,10 @@ export async function getUserWithAccounts(id: string) {
   });
 }
 
+export async function updateProfile(id: string, data: { name: string }) {
+  return prisma.user.update({ where: { id }, data });
+}
+
 export async function listUsers() {
   return prisma.user.findMany({
     orderBy: { createdAt: "desc" },

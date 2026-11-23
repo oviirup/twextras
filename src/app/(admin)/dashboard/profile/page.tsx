@@ -1,5 +1,7 @@
+import { format } from "date-fns";
 import { redirect } from "next/navigation";
-import { ProfileActions } from "@/components/admin/profile/actions";
+import { ProfileDetails } from "@/components/admin/profile/details";
+import { ProfileSecurity } from "@/components/admin/profile/security";
 import { Avatar } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Icons } from "@/lib/icons";
@@ -48,17 +50,28 @@ export default async function ProfilePage() {
               </div>
               <span>{user.email}</span>
               <span>{user.username}</span>
+              <span>Member since {format(new Date(user.createdAt), "dd/MM/yyyy")}</span>
             </div>
           </Card.Content>
         </Card.Root>
 
         <Card.Root>
           <Card.Header>
-            <Card.Title>Account security</Card.Title>
+            <Card.Title>Profile details</Card.Title>
+            <Card.Description>Update your name and username.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <ProfileDetails user={{ name: user.name, username: user.username }} />
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>Profile security</Card.Title>
             <Card.Description>Manage sign-in methods and password.</Card.Description>
           </Card.Header>
           <Card.Content>
-            <ProfileActions googleLinked={googleLinked} />
+            <ProfileSecurity googleLinked={googleLinked} />
           </Card.Content>
         </Card.Root>
       </div>

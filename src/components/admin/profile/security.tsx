@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { linkSocial } from "@/lib/auth/client";
 import { Icons } from "@/lib/icons";
 
-// profile-actions --->
+// profile-security --->
 
-function ProfileActions({ googleLinked }: ProfileActions.Props) {
+function ProfileSecurity({ googleLinked }: ProfileSecurity.Props) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,10 +61,10 @@ function ProfileActions({ googleLinked }: ProfileActions.Props) {
     </div>
   );
 }
-namespace ProfileActions {
+namespace ProfileSecurity {
   export type Props = { googleLinked: boolean };
 }
 
 // exports --->
 
-export { ProfileActions };
+export { ProfileSecurity };

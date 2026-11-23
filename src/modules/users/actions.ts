@@ -2,10 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { requireRole } from "@/modules/auth/guards";
+import { requireRole, requireUser } from "@/modules/auth/guards";
 import { Prisma } from "@/prisma/generated/client";
 import { UserRole, UserStatus } from "@/prisma/generated/enums";
-import { deleteUser, getUserById, updateUser } from "./service";
+import { deleteUser, getUserById, updateProfile, updateUser } from "./service";
 
 const updateUserSchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
@@ -14,6 +14,24 @@ const updateUserSchema = z.object({
   role: z.enum(UserRole),
   status: z.enum(UserStatus),
 });
+
+const updateProfileSchema = z.object({
+  name: z.string().trim().min(1, "Name is required"),
+});
+
+export async function updateProfileAction(data: unknown) {
+  const sessionUser = await requireUser();
+
+  const parsed = updateProfileSchema.safeParse(data);
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? "Invalid input" };
+  }
+
+  await updateProfile(sessionUser.id, parsed.data);
+
+  revalidatePath("/dashboard/profile");
+  return { success: true };
+}
 
 export async function updateUserAction(userId: string, data: unknown) {
   const actor = await requireRole(["super_admin", "admin"]);
