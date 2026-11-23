@@ -48,7 +48,7 @@ function Sheet_Overlay({ className, ...props }: Sheet_Overlay.Props) {
     <BaseSheet.Backdrop
       data-slot="sheet-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-black/80 transition-opacity duration-150 data-transition-style:opacity-0",
+        "fixed inset-0 z-50 bg-black/50 transition-opacity duration-150 data-transition-style:opacity-0",
         className,
       )}
       {...props}
