@@ -46,7 +46,7 @@ function Avatar_Image({
       alt={alt}
       sizes={sizes}
       render={<Image fill src={src} alt={alt} quality={quality} />}
-      className={cn("aspect-square size-full rounded-full object-cover", className)}
+      className={cn("z-2 aspect-square size-full rounded-full object-cover", className)}
       {...props}
     />
   );
@@ -62,7 +62,7 @@ function Avatar_Fallback({ className, children, ...props }: Avatar_Fallback.Prop
     <BaseAvatar.Fallback
       data-slot="avatar-fallback"
       className={cn(
-        "flex size-full items-center justify-center rounded-full bg-muted text-xs text-muted-foreground group-data-[size=sm]/avatar:text-xs",
+        "z-1 flex size-full items-center justify-center rounded-full bg-muted text-xs text-muted-foreground group-data-[size=sm]/avatar:text-xs",
         className,
       )}
       {...props}>

@@ -2,6 +2,7 @@
 
 import { toSentenceCase } from "@oviirup/utils/string";
 import { format } from "date-fns";
+import { Avatar } from "@/components/ui/avatar";
 import { Table } from "@/components/ui/table";
 import { cn, cva } from "@/lib/utils";
 import type { UserStatus } from "@/prisma/generated/enums";
@@ -19,6 +20,12 @@ function UserTableRow() {
 
   return (
     <Table.Row className="*:[td]:shrink-0">
+      <Table.Cell>
+        <Avatar.Root className="-my-1 -mr-4 size-8">
+          {user.image ? <Avatar.Image src={user.image} alt={user.name} /> : null}
+          <Avatar.Fallback className="z-0 opacity-75" />
+        </Avatar.Root>
+      </Table.Cell>
       <Table.Cell className="font-medium">
         <span className="line-clamp-1 w-full">{user.name}</span>
       </Table.Cell>

@@ -10,6 +10,7 @@ export type UserRow = {
   name: string;
   username: string;
   email: string;
+  image: string | null;
   role: UserRole;
   status: UserStatus;
   createdAt: string;
@@ -22,6 +23,7 @@ function UsersTable({ users }: UsersTable.Props) {
     <Table.Root>
       <Table.Header>
         <Table.Row>
+          <Table.Head />
           <Table.Head className="min-w-40">Name</Table.Head>
           <Table.Head className="min-w-32">Username</Table.Head>
           <Table.Head className="min-w-48">Email</Table.Head>
