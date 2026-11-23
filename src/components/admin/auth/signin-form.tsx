@@ -16,40 +16,49 @@ import { signIn } from "@/lib/auth/client";
 import { Icons } from "@/lib/icons";
 
 const signinSchema = z.object({
-  email: z.string().trim().email("Enter a valid email"),
+  username: z.string().trim().min(1, "Username is required"),
   password: z.string().trim().min(1, "Password is required"),
 });
+
 type SigninValues = z.infer<typeof signinSchema>;
+
+const baseSigninValues: SigninValues = {
+  username: "",
+  password: "",
+};
 
 // signin-form --->
 
-function SigninForm() {
+function SigninForm({ redirectTo }: SigninForm.Props) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const form = useForm<SigninValues>({
     resolver: zodResolver(signinSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: baseSigninValues,
   });
   const { isSubmitting } = form.formState;
 
-  async function onSubmit(values: SigninValues) {
+  const onSubmit = form.handleSubmit(async (values) => {
     setError(null);
-    const { error } = await signIn.email(values);
+    const { error } = await signIn.username({
+      username: values.username,
+      password: values.password,
+    });
     if (error) {
       setError(error.message ?? "Sign in failed");
       return;
     }
-    router.push("/dashboard");
+    router.push(redirectTo);
     router.refresh();
-  }
+  });
 
-  async function handleGoogle() {
+  const onGoogleSignin = async () => {
     setPending(true);
     setError(null);
     await signIn.social({ provider: "google", callbackURL: "/dashboard" });
     setPending(false);
-  }
+  };
 
   return (
     <Card.Root className="w-full max-w-sm gap-6 py-8 shadow-2xl">
@@ -61,24 +70,24 @@ function SigninForm() {
         <Form.Root
           formContext={form}
           id="signin-form"
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={onSubmit}
           className="flex flex-col gap-4">
           <Form.Group>
             <Form.Control
-              name="email"
+              name="username"
               render={({ field, fieldState }) => (
                 <Form.Field>
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>Username</Form.Label>
                   <InputGroup.Root>
                     <InputGroup.Addon>
-                      <Icons.Mail />
+                      <Icons.User />
                     </InputGroup.Addon>
                     <InputGroup.Input
                       {...field}
                       id={field.name}
-                      type="email"
-                      autoComplete="email"
-                      placeholder="you@example.com"
+                      type="text"
+                      autoComplete="username"
+                      placeholder="Enter your username"
                       aria-invalid={fieldState.invalid}
                     />
                   </InputGroup.Root>
@@ -127,7 +136,7 @@ function SigninForm() {
           variant="outline"
           className="w-full"
           disabled={pending}
-          onClick={handleGoogle}>
+          onClick={onGoogleSignin}>
           <Icons.Google />
           Login with Google
         </Button>
@@ -141,7 +150,9 @@ function SigninForm() {
     </Card.Root>
   );
 }
-namespace SigninForm {}
+namespace SigninForm {
+  export type Props = { redirectTo: string };
+}
 
 // exports --->
 
