@@ -1,20 +1,66 @@
 import { Icons } from "@/lib/icons";
+import type { UserRole } from "@/prisma/generated/enums";
 
-export const SIDEBAR_NAV = [
+export type SidebarNavIcon = (typeof Icons)[keyof typeof Icons];
+
+export type SidebarNavItem = {
+  title: string;
+  href: string;
+  icon: SidebarNavIcon;
+  roles?: UserRole[];
+};
+
+export type SidebarNavGroup = {
+  label: string;
+  items: SidebarNavItem[];
+};
+
+export const SIDEBAR_NAV: SidebarNavGroup[] = [
   {
     label: "Platform",
     items: [
-      { title: "Dashboard", href: "/dashboard", icon: Icons.Dashboard },
-      { title: "Events", href: "/dashboard/events", icon: Icons.Calendar },
-      { title: "Notifications", href: "/dashboard/notifications", icon: Icons.Notification },
-      { title: "Books", href: "/dashboard/books", icon: Icons.BookOpen },
+      {
+        title: "Dashboard",
+        href: "/dashboard",
+        icon: Icons.Dashboard,
+      },
+      {
+        title: "Events",
+        href: "/dashboard/events",
+        icon: Icons.Calendar,
+      },
+      {
+        title: "Books",
+        href: "/dashboard/books",
+        icon: Icons.BookOpen,
+      },
     ],
   },
   {
     label: "Administration",
     items: [
-      { title: "Members", href: "/dashboard/members", icon: Icons.UserGroup },
-      { title: "Users", href: "/dashboard/users", icon: Icons.Users },
+      {
+        title: "Members",
+        href: "/dashboard/members",
+        icon: Icons.UserGroup,
+        roles: ["super_admin", "admin"],
+      },
+      {
+        title: "Users",
+        href: "/dashboard/users",
+        icon: Icons.Users,
+        roles: ["super_admin", "admin"],
+      },
     ],
   },
-] as const;
+  {
+    label: "Account",
+    items: [
+      {
+        title: "Profile",
+        href: "/dashboard/profile",
+        icon: Icons.User,
+      },
+    ],
+  },
+];

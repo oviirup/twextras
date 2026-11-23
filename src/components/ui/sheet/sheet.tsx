@@ -3,7 +3,7 @@
 import { Dialog as BaseSheet } from "baseui/dialog";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/lib/icons";
-import { cn } from "@/lib/utils";
+import { cn, cva } from "@/lib/utils";
 
 // sheet root --->
 
@@ -48,7 +48,7 @@ function Sheet_Overlay({ className, ...props }: Sheet_Overlay.Props) {
     <BaseSheet.Backdrop
       data-slot="sheet-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-black/80 transition-opacity duration-150 supports-backdrop-filter:backdrop-blur-xs data-transition-style:opacity-0",
+        "fixed inset-0 z-50 bg-black/50 transition-opacity duration-150 data-transition-style:opacity-0",
         className,
       )}
       {...props}
@@ -61,10 +61,31 @@ namespace Sheet_Overlay {
 
 // sheet content --->
 
+const sheetContentVariants = cva({
+  base: "fixed z-50 flex w-4/5 flex-col bg-popover bg-clip-padding text-sm/relaxed text-popover-foreground shadow-lg shadow-black/8 transition duration-200 ease-in-out md:max-w-sm data-transition-style:opacity-0",
+  variants: {
+    side: {
+      left: "inset-y-0 left-0 h-full border-r data-transition-style:-translate-x-10",
+      right: "inset-y-0 right-0 h-full border-l sm:max-w-sm data-transition-style:translate-x-10",
+    },
+    inset: {
+      true: "md:top-2",
+    },
+  },
+  compoundVariants: [
+    { side: "left", inset: true, className: "md:rounded-tr-xl" },
+    { side: "right", inset: true, className: "md:rounded-tl-xl" },
+  ],
+  defaultVariants: {
+    side: "right",
+  },
+});
+
 function Sheet_Content({
   className,
   children,
   side = "right",
+  inset = true,
   showCloseButton = true,
   ...props
 }: Sheet_Content.Props) {
@@ -74,10 +95,7 @@ function Sheet_Content({
       <BaseSheet.Popup
         data-slot="sheet-content"
         data-side={side}
-        className={cn(
-          "fixed z-50 flex flex-col bg-popover bg-clip-padding text-sm/relaxed text-popover-foreground shadow-lg shadow-black/8 transition duration-200 ease-in-out data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm data-transition-style:opacity-0 data-[side=left]:data-transition-style:-translate-x-10 data-[side=right]:data-transition-style:translate-x-10",
-          className,
-        )}
+        className={cn(sheetContentVariants({ side, inset }), className)}
         {...props}>
         {children}
         {showCloseButton && (
@@ -94,9 +112,8 @@ function Sheet_Content({
 }
 namespace Sheet_Content {
   export type Props = BaseSheet.Popup.Props & {
-    side?: "left" | "right";
     showCloseButton?: boolean;
-  };
+  } & cva.Props<typeof sheetContentVariants>;
 }
 
 // sheet header --->
@@ -135,7 +152,7 @@ function Sheet_Title({ className, ...props }: Sheet_Title.Props) {
   return (
     <BaseSheet.Title
       data-slot="sheet-title"
-      className={cn("text-sm font-medium text-foreground", className)}
+      className={cn("text-lg font-medium text-foreground", className)}
       {...props}
     />
   );

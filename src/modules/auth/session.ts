@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { auth } from "./config";
+import { auth } from "@/lib/auth/config";
 
 export async function getSession() {
   const nextHeaders = await headers();

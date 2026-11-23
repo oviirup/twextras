@@ -31,6 +31,38 @@ Accordion.Root
 </Accordion.Root>;
 ```
 
+## Alert
+
+Confirmation dialog for destructive or irreversible actions (wraps `baseui` AlertDialog). Overlay and content use `z-60` so it layers above `Sheet`/`Dialog` (`z-50`); the backdrop is `forceRender`ed so it also appears when nested inside another popup.
+
+```text
+Alert.Root (open, onOpenChange)
+└── Alert.Content
+    ├── Alert.Header
+    │   ├── Alert.Title
+    │   └── Alert.Description
+    ├── Alert.Footer (showCloseButton)
+    └── Alert.Close / Alert.Trigger / Alert.Overlay / Alert.Portal
+```
+
+```tsx
+const [open, setOpen] = useState(false);
+<Alert.Root open={open} onOpenChange={setOpen}>
+  <Alert.Content>
+    <Alert.Header>
+      <Alert.Title>Delete user</Alert.Title>
+      <Alert.Description>This action cannot be undone.</Alert.Description>
+    </Alert.Header>
+    <Alert.Footer>
+      <Alert.Close render={<Button variant="outline" />}>Cancel</Alert.Close>
+      <Button variant="outline" className="text-destructive" onClick={onDelete}>
+        Delete permanently
+      </Button>
+    </Alert.Footer>
+  </Alert.Content>
+</Alert.Root>;
+```
+
 ## Avatar
 
 User avatar with image, fallback, and status badge. `size`: `sm` | `default` | `lg`.
@@ -278,9 +310,7 @@ Glance.Root
   <Glance.Trigger delay={0} closeDelay={0} render={<InputGroup.Button icon />}>
     <Icons.Alert />
   </Glance.Trigger>
-  <Glance.Content anchor={() => rootRef.current}>
-    ...
-  </Glance.Content>
+  <Glance.Content anchor={() => rootRef.current}>...</Glance.Content>
 </Glance.Root>;
 ```
 

@@ -8,11 +8,12 @@ import { Link } from "@/components/ui/link";
 import { Sidebar } from "@/components/ui/sidebar";
 import { signOut } from "@/lib/auth/client";
 import { Icons } from "@/lib/icons";
+import type { UserRole } from "@/prisma/generated/enums";
 import { SIDEBAR_NAV } from "./data";
 
 // app-sidebar --->
 
-function AppSidebar({ user }: AppSidebar.Props) {
+function AppSidebar({ user, locked = false }: AppSidebar.Props) {
   const pathname = usePathname();
 
   return (
@@ -21,13 +22,16 @@ function AppSidebar({ user }: AppSidebar.Props) {
         <Sidebar.GroupLabel className="text-base">Omkarnath Mission</Sidebar.GroupLabel>
       </Sidebar.Header>
       <Sidebar.Content className="gap-1">
-        <NavMenu pathname={pathname} />
+        <NavMenu pathname={pathname} role={user.role} locked={locked} />
       </Sidebar.Content>
       <Sidebar.Footer>
         <Sidebar.Menu>
           <Sidebar.MenuItem>
             <Sidebar.MenuButton
               isActive={pathname === "/dashboard/settings"}
+              aria-disabled={locked || undefined}
+              tabIndex={locked ? -1 : undefined}
+              className={locked ? "pointer-events-none opacity-60" : undefined}
               render={<Link href="/dashboard/settings" />}>
               <Icons.Settings />
               <span>Settings</span>
@@ -47,14 +51,21 @@ namespace AppSidebar {
       username?: string | null;
       email: string;
       image?: string | null;
+      role?: UserRole | null;
     };
+    locked?: boolean;
   };
 }
 
 // nav-menu --->
 
-function NavMenu({ pathname }: NavMenu.Props) {
-  return SIDEBAR_NAV.map((group) => (
+function NavMenu({ pathname, role, locked = false }: NavMenu.Props) {
+  const groups = SIDEBAR_NAV.map((group) => ({
+    ...group,
+    items: group.items.filter((item) => !item.roles || (role != null && item.roles.includes(role))),
+  })).filter((group) => group.items.length > 0);
+
+  return groups.map((group) => (
     <Sidebar.Group key={group.label}>
       <Sidebar.GroupLabel className="text-xs uppercase">
         <span>{group.label}</span>
@@ -62,16 +73,22 @@ function NavMenu({ pathname }: NavMenu.Props) {
       </Sidebar.GroupLabel>
       <Sidebar.GroupContent>
         <Sidebar.Menu>
-          {group.items.map((item) => (
-            <Sidebar.MenuItem key={item.href}>
-              <Sidebar.MenuButton
-                isActive={pathname === item.href}
-                render={<Link href={item.href} />}>
-                <item.icon />
-                <span>{item.title}</span>
-              </Sidebar.MenuButton>
-            </Sidebar.MenuItem>
-          ))}
+          {group.items.map((item) => {
+            const disabled = locked && item.href !== "/dashboard/profile";
+            return (
+              <Sidebar.MenuItem key={item.href}>
+                <Sidebar.MenuButton
+                  isActive={pathname === item.href}
+                  aria-disabled={disabled || undefined}
+                  tabIndex={disabled ? -1 : undefined}
+                  className={disabled ? "pointer-events-none opacity-60" : undefined}
+                  render={<Link href={item.href} />}>
+                  <item.icon />
+                  <span>{item.title}</span>
+                </Sidebar.MenuButton>
+              </Sidebar.MenuItem>
+            );
+          })}
         </Sidebar.Menu>
       </Sidebar.GroupContent>
     </Sidebar.Group>
@@ -80,6 +97,8 @@ function NavMenu({ pathname }: NavMenu.Props) {
 namespace NavMenu {
   export type Props = {
     pathname: string;
+    role?: UserRole | null;
+    locked?: boolean;
   };
 }
 
@@ -129,13 +148,13 @@ function UserMenu({ user }: UserMenu.Props) {
             </Avatar.Root>
             <span className="truncate font-medium">{user.name || displayName}</span>
             {user.username ? (
-              <span className="truncate text-xs text-muted-foreground">@{user.username}</span>
+              <span className="truncate text-xs text-muted-foreground">{user.username}</span>
             ) : null}
             <span className="truncate text-xs text-muted-foreground">{user.email}</span>
           </div>
           <Dropdown.Separator />
           <Dropdown.Group>
-            <Dropdown.Item>
+            <Dropdown.Item render={<Link href="/dashboard/profile" />}>
               <Icons.User />
               Profile
             </Dropdown.Item>

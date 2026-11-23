@@ -48,7 +48,7 @@ function Dialog_Overlay({ className, ...props }: Dialog_Overlay.Props) {
     <BaseDialog.Backdrop
       data-slot="dialog-overlay"
       className={cn(
-        "fixed inset-0 isolate z-50 bg-black/80 transition-opacity supports-backdrop-filter:backdrop-blur-xs data-transition-style:opacity-0",
+        "fixed inset-0 isolate z-50 bg-black/50 transition-opacity data-transition-style:opacity-0",
         className,
       )}
       {...props}
