@@ -39,7 +39,7 @@ const signupSchema = z
   })
   .refine((v) => v.password === v.confirm_password, {
     message: "Passwords do not match",
-    path: ["confirmPassword"],
+    path: ["confirm_password"],
   });
 
 type SignupValues = z.infer<typeof signupSchema>;
@@ -63,7 +63,7 @@ function SignupForm() {
   });
   const { isSubmitting } = form.formState;
 
-  async function onSubmit(values: SignupValues) {
+  const onSubmit = form.handleSubmit(async (values) => {
     setError(null);
     const { error } = await signUp.email({
       name: values.name,
@@ -77,7 +77,7 @@ function SignupForm() {
     }
     router.push("/dashboard/profile");
     router.refresh();
-  }
+  });
 
   return (
     <Card.Root className="w-full max-w-sm gap-6 py-8 shadow-2xl">
@@ -86,10 +86,11 @@ function SignupForm() {
         <Card.Description>Register for the admin dashboard</Card.Description>
       </Card.Header>
       <Card.Content className="px-8">
-        <Form.Root formContext={form} id="signup-form" onSubmit={form.handleSubmit(onSubmit)}>
+        <Form.Root formContext={form} id="signup-form" onSubmit={onSubmit}>
           <Form.Group>
             <Form.Control
               name="name"
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Form.Field>
                   <Form.Label>Full name</Form.Label>
@@ -101,7 +102,7 @@ function SignupForm() {
                       {...field}
                       id={field.name}
                       autoComplete="name"
-                      placeholder="John Doe"
+                      placeholder="Enter your full name"
                       aria-invalid={fieldState.invalid}
                     />
                   </InputGroup.Root>
@@ -111,6 +112,7 @@ function SignupForm() {
             />
             <Form.Control
               name="username"
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Form.Field>
                   <Form.Label>Username</Form.Label>
@@ -121,8 +123,8 @@ function SignupForm() {
                     <InputGroup.Input
                       {...field}
                       id={field.name}
-                      autoComplete="username"
-                      placeholder="johndoe"
+                      autoComplete="off"
+                      placeholder="Choose a username"
                       aria-invalid={fieldState.invalid}
                     />
                   </InputGroup.Root>
@@ -132,6 +134,7 @@ function SignupForm() {
             />
             <Form.Control
               name="email"
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Form.Field>
                   <Form.Label>Email</Form.Label>
@@ -144,7 +147,7 @@ function SignupForm() {
                       id={field.name}
                       type="email"
                       autoComplete="email"
-                      placeholder="you@example.com"
+                      placeholder="Enter your email"
                       aria-invalid={fieldState.invalid}
                     />
                   </InputGroup.Root>
@@ -154,6 +157,7 @@ function SignupForm() {
             />
             <Form.Control
               name="password"
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Form.Field>
                   <Form.Label>Password</Form.Label>
@@ -165,7 +169,7 @@ function SignupForm() {
                       {...field}
                       id={field.name}
                       autoComplete="new-password"
-                      placeholder="Create a secure password"
+                      placeholder="Enter a password"
                       aria-invalid={fieldState.invalid}
                     />
                     <Password.Hover />
@@ -176,7 +180,8 @@ function SignupForm() {
               )}
             />
             <Form.Control
-              name="confirmPassword"
+              name="confirm_password"
+              control={form.control}
               render={({ field, fieldState }) => (
                 <Form.Field>
                   <Form.Label>Confirm password</Form.Label>
