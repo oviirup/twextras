@@ -2,11 +2,11 @@ import { AppSidebar } from "@/components/admin/layout/sidebar";
 import { Sidebar } from "@/components/ui/sidebar";
 import { SITE } from "@/config/app";
 import { requireUserProfile } from "@/modules/auth/guards";
-import { isActiveUser } from "@/modules/auth/utils";
+import { isUserActive } from "@/modules/auth/utils";
 
 export default async function DashboardLayout({ children }: LayoutProps<"/dashboard">) {
   const user = await requireUserProfile();
-  const isActive = isActiveUser(user);
+  const isActive = isUserActive(user);
 
   return (
     <Sidebar.Provider>

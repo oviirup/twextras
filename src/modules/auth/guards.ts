@@ -2,7 +2,7 @@ import { forbidden, redirect } from "next/navigation";
 import { getUserById } from "@/modules/users/service";
 import { UserRole } from "@/prisma/generated/enums";
 import { getSession } from "./session";
-import { hasAnyRole, isActiveUser } from "./utils";
+import { hasAnyRole, isUserActive } from "./utils";
 
 export async function requireUser() {
   const session = await getSession();
@@ -19,7 +19,7 @@ export async function requireUserProfile() {
 
 export async function requireActiveUser() {
   const user = await requireUserProfile();
-  if (!isActiveUser(user)) forbidden();
+  if (!isUserActive(user)) forbidden();
   return user;
 }
 

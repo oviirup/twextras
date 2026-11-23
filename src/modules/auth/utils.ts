@@ -6,8 +6,12 @@ type SessionUser = {
   role?: UserRole | null;
 };
 
-export function isActiveUser(user: SessionUser | null | undefined): boolean {
+export function isUserActive(user: SessionUser | null | undefined): boolean {
   return !!user && user.status === UserStatus.active;
+}
+
+export function isUserTerminated(user: SessionUser | null | undefined): boolean {
+  return !!user && user.status === UserStatus.terminated;
 }
 
 export function hasAnyRole(user: SessionUser | null | undefined, roles: UserRole[]): boolean {
