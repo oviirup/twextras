@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { AppSidebar } from "@/components/admin/layout/sidebar";
 import { Sidebar } from "@/components/ui/sidebar";
 import { SITE } from "@/config/app";
@@ -8,10 +7,6 @@ import { isActiveUser } from "@/modules/auth/utils";
 export default async function DashboardLayout({ children }: LayoutProps<"/dashboard">) {
   const user = await requireUserProfile();
   const isActive = isActiveUser(user);
-
-  if (!isActive) {
-    redirect("/dashboard/signin");
-  }
 
   return (
     <Sidebar.Provider>
