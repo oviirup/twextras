@@ -3,15 +3,15 @@ import { EventsTable } from "@/components/admin/events/table";
 import { Empty } from "@/components/ui/empty";
 import { Icons } from "@/lib/icons";
 import { requireActiveUser } from "@/modules/auth/guards";
+import { hasAnyRole } from "@/modules/auth/utils";
 import { listEvents } from "@/modules/events/service";
-import { UserRole } from "@/prisma/generated/enums";
 
 export default async function EventsPage() {
   const user = await requireActiveUser();
   const events = await listEvents();
 
   const isEmptyEvents = events.length === 0;
-  const canPublish = user.role === UserRole.super_admin || user.role === UserRole.admin;
+  const canPublish = hasAnyRole(user, ["super_admin", "admin", "manager"]);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-6">

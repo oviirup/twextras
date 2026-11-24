@@ -6,9 +6,9 @@ import { requireRole } from "@/modules/auth/guards";
 import { EventStatus, UserRole } from "@/prisma/generated/enums";
 import { createEvent, deleteEvent, getEventById, updateEvent } from "./service";
 
-const MANAGE_ROLES = [UserRole.super_admin, UserRole.admin, UserRole.manager, UserRole.employee];
-
-const PUBLISH_ROLES: UserRole[] = [UserRole.super_admin, UserRole.admin];
+const MANAGE_ROLES: UserRole[] = ["super_admin", "admin", "manager", "employee"];
+const EDIT_ROLES: UserRole[] = ["super_admin", "admin", "manager"];
+const PUBLISH_ROLES: UserRole[] = ["super_admin", "admin", "manager"];
 
 const eventSchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
@@ -69,7 +69,7 @@ export async function updateEventAction(eventId: string, data: unknown) {
 }
 
 export async function deleteEventAction(eventId: string) {
-  await requireRole(MANAGE_ROLES);
+  await requireRole(EDIT_ROLES);
 
   const target = await getEventById(eventId);
   if (!target) return { error: "Event not found" };

@@ -232,7 +232,7 @@ function ManageEvent({ event, canPublish, title, trigger }: ManageEvent.Props) {
           </Form.Root>
 
           <div>
-            {event ? (
+            {event && canPublish ? (
               <Button
                 type="button"
                 variant="ghost"
