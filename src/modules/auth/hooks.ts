@@ -1,5 +1,6 @@
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { SUPER_ADMIN_EMAILS } from "@/config/app";
+import { isDev } from "@/config/env";
 import { prisma } from "@/lib/db/prisma";
 import { UserRole, UserStatus } from "@/prisma/generated/enums";
 
@@ -19,6 +20,7 @@ export const blockInactiveSignIn = createAuthMiddleware(async (ctx) => {
   if (!user) return;
 
   if (
+    isDev &&
     SUPER_ADMIN_EMAILS.includes(user.email) &&
     (user.role !== UserRole.super_admin || user.status !== UserStatus.active)
   ) {

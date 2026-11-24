@@ -1,11 +1,10 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { username } from "better-auth/plugins/username";
-import { SITE, SUPER_ADMIN_EMAILS } from "@/config/app";
+import { SITE } from "@/config/app";
 import { env, isProd } from "@/config/env";
 import { prisma } from "@/lib/db/prisma";
 import { blockInactiveSignIn } from "@/modules/auth/hooks";
-import { UserRole, UserStatus } from "@/prisma/generated/enums";
 
 export const auth = betterAuth({
   appName: "Omkarnath Mission",
@@ -41,19 +40,6 @@ export const auth = betterAuth({
   },
   hooks: {
     before: blockInactiveSignIn,
-  },
-  databaseHooks: {
-    user: {
-      create: {
-        before: async (user) => {
-          // auto-assign super_admin role to predefined emails
-          if (!user.email || !SUPER_ADMIN_EMAILS.includes(user.email)) return;
-          return {
-            data: { ...user, role: UserRole.super_admin, status: UserStatus.active },
-          };
-        },
-      },
-    },
   },
   plugins: [
     username({
