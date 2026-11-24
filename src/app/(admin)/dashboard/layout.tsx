@@ -9,10 +9,10 @@ export default async function DashboardLayout({ children }: LayoutProps<"/dashbo
   const isActive = isUserActive(user);
 
   return (
-    <Sidebar.Provider>
+    <Sidebar.Provider className="h-dvh overflow-hidden">
       <AppSidebar user={user} locked={!isActive} />
-      <Sidebar.Inset>
-        <header className="flex h-12 shrink-0 items-center gap-3 border-b px-4">
+      <Sidebar.Inset className="min-h-0 overflow-y-auto">
+        <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center gap-3 border-b bg-background px-4">
           <Sidebar.Trigger />
           <span className="text-sm font-medium">{SITE.NAME}</span>
         </header>

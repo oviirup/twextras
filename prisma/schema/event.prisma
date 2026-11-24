@@ -1,0 +1,24 @@
+// enums --->
+
+enum EventStatus {
+  draft
+  published
+}
+
+// event model --->
+
+model Event {
+  id               String      @id
+  name             String
+  venue            String
+  eventDate        DateTime    @db.Date @map("event_date")
+  eventTime        String      @db.VarChar(5) @map("event_time")
+  organizerName    String?     @map("organizer_name")
+  organizerContact String?     @map("organizer_contact")
+  status           EventStatus @default(draft)
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  @@index([eventDate])
+  @@map("event")
+}

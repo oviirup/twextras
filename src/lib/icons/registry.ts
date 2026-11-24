@@ -132,6 +132,12 @@ export const Edit = createIconNode({
   props: baseProps,
 });
 
+export const Plus = createIconNode({
+  name: "plus",
+  nodes: HugeIcons.Add01Icon,
+  props: baseProps,
+});
+
 export const Password = createIconNode({
   name: "password",
   nodes: HugeIcons.SquareLockPasswordIcon,
