@@ -31,7 +31,7 @@ const STATUS_OPTIONS = Object.values(UserStatus).map((value) => ({
 
 const modifySchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
-  username: z.string().trim().min(1, "Username is required").max(32),
+  username: z.string().trim().min(6, "At least 6 characters").max(32),
   email: z.email("Enter a valid email").trim(),
   role: z.enum(Object.values(UserRole)),
   status: z.enum(Object.values(UserStatus)),

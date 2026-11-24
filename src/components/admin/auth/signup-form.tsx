@@ -25,7 +25,7 @@ const PASSWORD_RULES: Password.Ruleset.Rule[] = [
 const signupSchema = z
   .object({
     name: z.string().trim().min(1, "Full name is required"),
-    username: z.string().trim().min(1, "Username is required"),
+    username: z.string().trim().min(6, "At least 6 characters").max(32),
     email: z.email("Enter a valid email").trim(),
     password: z
       .string()
