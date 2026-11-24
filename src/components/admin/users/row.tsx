@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { Avatar } from "@/components/ui/avatar";
 import { Table } from "@/components/ui/table";
 import { cn, cva } from "@/lib/utils";
-import type { UserRole, UserStatus } from "@/prisma/generated/enums";
+import { UserRole, UserStatus } from "@/prisma/generated/enums";
 import { useUserRow } from "./context";
 import { ManageUser } from "./manage.modal";
 

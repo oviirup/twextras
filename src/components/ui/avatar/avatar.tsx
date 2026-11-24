@@ -46,7 +46,11 @@ function Avatar_Image({
       alt={alt}
       sizes={sizes}
       render={<Image fill src={src} alt={alt} quality={quality} />}
+<<<<<<< HEAD
       className={cn("z-2 aspect-square size-full rounded-full object-cover", className)}
+=======
+      className={cn("aspect-square size-full rounded-full object-cover", className)}
+>>>>>>> origin/main
       {...props}
     />
   );
