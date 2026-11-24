@@ -48,14 +48,7 @@ const EMPTY_VALUES: EventFormValues = {
 
 // event-form-sheet --->
 
-function EventFormSheet({
-  event,
-  canPublish,
-  title,
-  trigger,
-  triggerVariant,
-  triggerSize,
-}: EventFormSheet.Props) {
+function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Props) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -106,9 +99,7 @@ function EventFormSheet({
 
   return (
     <Sheet.Root open={open} onOpenChange={setOpen}>
-      <Sheet.Trigger render={<Button variant={triggerVariant} size={triggerSize ?? "sm"} />}>
-        {trigger}
-      </Sheet.Trigger>
+      <Sheet.Trigger render={trigger} />
       <Sheet.Content>
         <Sheet.Header>
           <Sheet.Title>{title}</Sheet.Title>
@@ -261,34 +252,33 @@ namespace EventFormSheet {
     event?: EventRow;
     canPublish: boolean;
     title: string;
-    trigger: React.ReactNode;
-    triggerVariant?: Button.Props["variant"];
-    triggerSize?: Button.Props["size"];
+    trigger: Sheet.Trigger.Props["render"];
   };
 }
 
 // add-event --->
 
-function AddEvent({ canPublish, trigger }: AddEvent.Props) {
+function CreateEvent({ canPublish, title = "Add Event", ...props }: CreateEvent.Props) {
   return (
     <EventFormSheet
       canPublish={canPublish}
-      title="Add Event"
+      title={title}
       trigger={
-        trigger ?? (
-          <>
-            <Icons.Plus />
-            Add event
-          </>
-        )
+        <Button variant="base" size="sm" {...props}>
+          <Icons.Plus />
+          {title}
+        </Button>
       }
     />
   );
 }
-namespace AddEvent {
-  export type Props = { canPublish: boolean; trigger?: React.ReactNode };
+namespace CreateEvent {
+  export type Props = Button.Props & {
+    title?: string;
+    canPublish: boolean;
+  };
 }
 
 // exports --->
 
-export { AddEvent, EventFormSheet };
+export { CreateEvent, EventFormSheet };

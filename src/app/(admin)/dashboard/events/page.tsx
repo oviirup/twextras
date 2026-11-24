@@ -1,4 +1,4 @@
-import { AddEvent } from "@/components/admin/events/modify";
+import { CreateEvent } from "@/components/admin/events/modify";
 import { EventsTable } from "@/components/admin/events/table";
 import { Empty } from "@/components/ui/empty";
 import { Icons } from "@/lib/icons";
@@ -9,6 +9,8 @@ import { UserRole } from "@/prisma/generated/enums";
 export default async function EventsPage() {
   const user = await requireActiveUser();
   const events = await listEvents();
+
+  const isEmptyEvents = events.length === 0;
   const canPublish = user.role === UserRole.super_admin || user.role === UserRole.admin;
 
   return (
@@ -20,7 +22,11 @@ export default async function EventsPage() {
             Create and manage upcoming events, workshops, and community gatherings.
           </p>
         </div>
-        <AddEvent canPublish={canPublish} />
+        <CreateEvent
+          canPublish={canPublish}
+          className="aria-hidden:hidden"
+          aria-hidden={isEmptyEvents}
+        />
       </div>
       {events.length === 0 ? (
         <Empty.Root>
@@ -34,15 +40,7 @@ export default async function EventsPage() {
             </Empty.Description>
           </Empty.Header>
           <Empty.Content>
-            <AddEvent
-              canPublish={canPublish}
-              trigger={
-                <>
-                  <Icons.Plus />
-                  Create New Event
-                </>
-              }
-            />
+            <CreateEvent canPublish={canPublish} title="Create new Event" size="base" />
           </Empty.Content>
         </Empty.Root>
       ) : (

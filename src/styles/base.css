@@ -51,6 +51,7 @@ html {
   outline-offset: 2px;
   border-style: solid;
   border-color: var(--border);
+  scrollbar-width: thin;
 }
 
 * {

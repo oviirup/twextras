@@ -16,7 +16,7 @@ function Table_Root({ className, children, ...props }: Table_Root.Props) {
 
   return (
     <div data-slot="table-container" className="w-full">
-      <div className="scrollbar-thin overflow-x-auto rounded-md border">
+      <div className="overflow-x-auto rounded-md border">
         <table
           data-slot="table"
           className={cn("w-full caption-bottom text-sm/relaxed", className)}

@@ -335,7 +335,7 @@ function Sidebar_Content({ className, ...props }: Sidebar_Content.Props) {
     <div
       data-slot="sidebar-content"
       data-sidebar="content"
-      className={cn("flex min-h-0 flex-1 scrollbar-thin flex-col gap-0 overflow-auto", className)}
+      className={cn("flex min-h-0 flex-1 flex-col gap-0 overflow-auto", className)}
       {...props}
     />
   );

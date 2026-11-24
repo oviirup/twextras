@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { pick } from "@oviirup/utils/object";
 import { toSentenceCase } from "@oviirup/utils/string";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,7 @@ type ModifyValues = z.infer<typeof modifySchema>;
 
 // modify-user --->
 
-function ModifyUser() {
+function ModifyUser({ trigger }: ModifyUser.Props) {
   const user = useUserRow();
   const router = useRouter();
 
@@ -76,17 +76,25 @@ function ModifyUser() {
     },
   });
 
+  const triggerButton = useMemo(
+    () =>
+      trigger ?? (
+        <Button variant="ghost" size="sm">
+          <Icons.Edit />
+          Modify
+        </Button>
+      ),
+    [trigger],
+  );
+
   return (
     <Sheet.Root open={open} onOpenChange={setOpen}>
-      <Sheet.Trigger render={<Button variant="ghost" size="sm" />}>
-        <Icons.Edit />
-        Modify
-      </Sheet.Trigger>
+      <Sheet.Trigger render={triggerButton} />
       <Sheet.Content>
         <Sheet.Header>
           <Sheet.Title>Modify User</Sheet.Title>
         </Sheet.Header>
-        <div className="flex scrollbar-thin flex-col gap-6 overflow-y-auto px-6">
+        <div className="flex flex-col gap-6 overflow-y-auto px-6">
           <Form.Root
             formContext={form}
             id="modify-user-form"
@@ -227,6 +235,10 @@ function ModifyUser() {
       </Sheet.Content>
     </Sheet.Root>
   );
+}
+
+namespace ModifyUser {
+  export type Props = { trigger?: Sheet.Trigger.Props["render"] };
 }
 
 // exports --->

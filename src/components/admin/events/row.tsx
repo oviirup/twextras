@@ -2,6 +2,7 @@
 
 import { toSentenceCase } from "@oviirup/utils/string";
 import { format, parseISO } from "date-fns";
+import { Button } from "@/components/ui/button";
 import { Table } from "@/components/ui/table";
 import { Icons } from "@/lib/icons";
 import { cn, cva } from "@/lib/utils";
@@ -43,12 +44,11 @@ function EventTableRow({ canPublish }: EventTableRow.Props) {
           event={event}
           canPublish={canPublish}
           title="Modify Event"
-          triggerVariant="ghost"
           trigger={
-            <>
+            <Button variant="ghost" size="sm">
               <Icons.Edit />
               Modify
-            </>
+            </Button>
           }
         />
       </Table.Cell>
