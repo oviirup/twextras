@@ -1,4 +1,4 @@
-import { CreateEvent } from "@/components/admin/events/modify";
+import { CreateEvent } from "@/components/admin/events/manage.modal";
 import { EventsTable } from "@/components/admin/events/table";
 import { Empty } from "@/components/ui/empty";
 import { Icons } from "@/lib/icons";

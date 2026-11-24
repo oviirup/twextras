@@ -4,16 +4,15 @@ import { toSentenceCase } from "@oviirup/utils/string";
 import { useState, useTransition } from "react";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Icons } from "@/lib/icons";
 import { UserRow } from "./table";
 
 // delete-user-modal --->
 
-function DeleteUserModal({ user, open, onOpenChange, onSubmit }: DeleteUserModal.Props) {
+function RemoveUser_Modal({ user, open, onOpenChange, onSubmit }: RemoveUser_Modal.Props) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
-  const handleDelete = () => {
+  const onRemove = () => {
     setError(null);
     startTransition(async () => {
       const result = await onSubmit();
@@ -57,8 +56,7 @@ function DeleteUserModal({ user, open, onOpenChange, onSubmit }: DeleteUserModal
             variant="outline"
             className="text-destructive"
             disabled={isPending}
-            onClick={handleDelete}>
-            {isPending ? <Icons.Loading className="size-4 motion-safe:animate-spin" /> : null}
+            onClick={onRemove}>
             Delete permanently
           </Button>
         </Alert.Footer>
@@ -66,7 +64,7 @@ function DeleteUserModal({ user, open, onOpenChange, onSubmit }: DeleteUserModal
     </Alert.Root>
   );
 }
-namespace DeleteUserModal {
+namespace RemoveUser_Modal {
   export type Props = {
     user: UserRow;
     open: boolean;
@@ -75,19 +73,24 @@ namespace DeleteUserModal {
   };
 }
 
-type UseConfirmDeleteUserProps = {
-  user: UserRow;
-  onSubmit: DeleteUserModal.Props["onSubmit"];
-};
-
-export function useConfirmDeleteUser({ user, onSubmit }: UseConfirmDeleteUserProps) {
+function useRemoveUser({ user, onSubmit }: useRemoveUser.Options) {
   const [open, setOpen] = useState(false);
   const openModal = () => setOpen(true);
 
   // biome-ignore lint/correctness/noComponentHookFactories: confirmation modal factory pattern
   const Modal = () => (
-    <DeleteUserModal user={user} open={open} onOpenChange={setOpen} onSubmit={onSubmit} />
+    <RemoveUser_Modal user={user} open={open} onOpenChange={setOpen} onSubmit={onSubmit} />
   );
 
   return { Modal, open: openModal };
 }
+namespace useRemoveUser {
+  export type Options = {
+    user: UserRow;
+    onSubmit: RemoveUser_Modal.Props["onSubmit"];
+  };
+}
+
+// exports --->
+
+export { useRemoveUser };

@@ -15,8 +15,8 @@ import { Sheet } from "@/components/ui/sheet";
 import { Icons } from "@/lib/icons";
 import { deleteUserAction, updateUserAction } from "@/modules/users/actions";
 import { UserRole, UserStatus } from "@/prisma/generated/enums";
-import { useConfirmDeleteUser } from "./confirm-delete-modal";
-import { useUserRow } from "./context";
+import { useRemoveUser } from "./remove.modal";
+import { UserRow } from "./table";
 
 const ROLE_OPTIONS = Object.values(UserRole).map((value) => ({
   value: value,
@@ -37,10 +37,11 @@ const modifySchema = z.object({
 });
 type ModifyValues = z.infer<typeof modifySchema>;
 
-// modify-user --->
+// manage-user-handle --->
 
-function ModifyUser({ trigger }: ModifyUser.Props) {
-  const user = useUserRow();
+// manage-user --->
+
+function ManageUser({ user, trigger }: ManageUser.Props) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -65,15 +66,17 @@ function ModifyUser({ trigger }: ModifyUser.Props) {
     });
   });
 
-  const { Modal: DeleteUserModal, open: openDeleteModal } = useConfirmDeleteUser({
+  const onRemove = async () => {
+    const result = await deleteUserAction(user.id);
+    if ("error" in result && result.error) return result.error;
+    setOpen(false);
+    router.refresh();
+    return null;
+  };
+
+  const RemoveUser = useRemoveUser({
     user,
-    onSubmit: async () => {
-      const result = await deleteUserAction(user.id);
-      if ("error" in result && result.error) return result.error;
-      setOpen(false);
-      router.refresh();
-      return null;
-    },
+    onSubmit: onRemove,
   });
 
   const triggerButton = useMemo(
@@ -206,7 +209,7 @@ function ModifyUser({ trigger }: ModifyUser.Props) {
             <button
               type="button"
               className="-mx-1 mt-3 rounded-sm px-1 py-0.5 font-medium text-destructive link"
-              onClick={openDeleteModal}
+              onClick={RemoveUser.open}
               tabIndex={-1}>
               Delete user
             </button>
@@ -231,16 +234,19 @@ function ModifyUser({ trigger }: ModifyUser.Props) {
             </Button>
           </div>
         </Sheet.Footer>
-        <DeleteUserModal />
+        <RemoveUser.Modal />
       </Sheet.Content>
     </Sheet.Root>
   );
 }
 
-namespace ModifyUser {
-  export type Props = { trigger?: Sheet.Trigger.Props["render"] };
+namespace ManageUser {
+  export type Props = {
+    user: UserRow;
+    trigger?: Sheet.Trigger.Props["render"];
+  };
 }
 
 // exports --->
 
-export { ModifyUser };
+export { ManageUser };

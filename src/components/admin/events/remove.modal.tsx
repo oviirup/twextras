@@ -3,12 +3,11 @@
 import { useState, useTransition } from "react";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Icons } from "@/lib/icons";
 import type { EventRow } from "./table";
 
 // delete-event-modal --->
 
-function DeleteEventModal({ event, open, onOpenChange, onSubmit }: DeleteEventModal.Props) {
+function RemoveEvent_Modal({ event, open, onOpenChange, onSubmit }: RemoveEvent_Modal.Props) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -53,7 +52,6 @@ function DeleteEventModal({ event, open, onOpenChange, onSubmit }: DeleteEventMo
             className="text-destructive"
             disabled={isPending}
             onClick={handleDelete}>
-            {isPending ? <Icons.Loading className="size-4 motion-safe:animate-spin" /> : null}
             Delete permanently
           </Button>
         </Alert.Footer>
@@ -61,7 +59,7 @@ function DeleteEventModal({ event, open, onOpenChange, onSubmit }: DeleteEventMo
     </Alert.Root>
   );
 }
-namespace DeleteEventModal {
+namespace RemoveEvent_Modal {
   export type Props = {
     event: EventRow;
     open: boolean;
@@ -70,24 +68,25 @@ namespace DeleteEventModal {
   };
 }
 
-type UseConfirmDeleteEventProps = {
-  event?: EventRow;
-  onSubmit: DeleteEventModal.Props["onSubmit"];
-};
-
-function useConfirmDeleteEvent({ event, onSubmit }: UseConfirmDeleteEventProps) {
+function useRemoveEvent({ event, onSubmit }: useRemoveEvent.Options) {
   const [open, setOpen] = useState(false);
   const openModal = () => setOpen(true);
 
   // biome-ignore lint/correctness/noComponentHookFactories: confirmation modal factory pattern
   const Modal = () =>
     event ? (
-      <DeleteEventModal event={event} open={open} onOpenChange={setOpen} onSubmit={onSubmit} />
+      <RemoveEvent_Modal event={event} open={open} onOpenChange={setOpen} onSubmit={onSubmit} />
     ) : null;
 
   return { Modal, open: openModal };
 }
+namespace useRemoveEvent {
+  export type Options = {
+    event?: EventRow;
+    onSubmit: RemoveEvent_Modal.Props["onSubmit"];
+  };
+}
 
 // exports --->
 
-export { useConfirmDeleteEvent };
+export { useRemoveEvent };

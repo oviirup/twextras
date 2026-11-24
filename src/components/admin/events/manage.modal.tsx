@@ -17,7 +17,7 @@ import { Sheet } from "@/components/ui/sheet";
 import { Icons } from "@/lib/icons";
 import { createEventAction, deleteEventAction, updateEventAction } from "@/modules/events/actions";
 import { EventStatus } from "@/prisma/generated/enums";
-import { useConfirmDeleteEvent } from "./confirm-delete-modal";
+import { useRemoveEvent } from "./remove.modal";
 import type { EventRow } from "./table";
 
 const STATUS_OPTIONS = Object.values(EventStatus).map((value) => ({
@@ -48,7 +48,7 @@ const EMPTY_VALUES: EventFormValues = {
 
 // event-form-sheet --->
 
-function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Props) {
+function ManageEvent({ event, canPublish, title, trigger }: ManageEvent.Props) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -85,16 +85,18 @@ function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Pr
     });
   });
 
-  const { Modal: DeleteEventModal, open: openDeleteModal } = useConfirmDeleteEvent({
+  const onRemove = async () => {
+    if (!event) return "Event not found";
+    const result = await deleteEventAction(event.id);
+    if ("error" in result && result.error) return result.error;
+    setOpen(false);
+    router.refresh();
+    return null;
+  };
+
+  const RemoveEvent = useRemoveEvent({
     event,
-    onSubmit: async () => {
-      if (!event) return "Event not found";
-      const result = await deleteEventAction(event.id);
-      if ("error" in result && result.error) return result.error;
-      setOpen(false);
-      router.refresh();
-      return null;
-    },
+    onSubmit: onRemove,
   });
 
   return (
@@ -104,7 +106,7 @@ function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Pr
         <Sheet.Header>
           <Sheet.Title>{title}</Sheet.Title>
         </Sheet.Header>
-        <div className="scrollbar-thinflex-col flex gap-6 overflow-y-auto px-6">
+        <div className="flex w-full flex-col gap-6 overflow-y-auto px-6">
           <Form.Root
             formContext={form}
             id="event-form"
@@ -117,7 +119,11 @@ function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Pr
                 render={({ field, fieldState }) => (
                   <Form.Field>
                     <Form.Label>Event name</Form.Label>
-                    <Input {...field} aria-invalid={fieldState.invalid} />
+                    <Input
+                      {...field}
+                      placeholder="Omkarnath Annual Meetup"
+                      aria-invalid={fieldState.invalid}
+                    />
                     <Form.Error />
                   </Form.Field>
                 )}
@@ -128,7 +134,11 @@ function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Pr
                 render={({ field, fieldState }) => (
                   <Form.Field>
                     <Form.Label>Venue</Form.Label>
-                    <Input {...field} aria-invalid={fieldState.invalid} />
+                    <Input
+                      {...field}
+                      placeholder="e.g. Community Hall, Mahamilan Math"
+                      aria-invalid={fieldState.invalid}
+                    />
                     <Form.Error />
                   </Form.Field>
                 )}
@@ -143,6 +153,7 @@ function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Pr
                       <DatePicker
                         value={field.value ? parseISO(field.value) : null}
                         onChange={(day) => field.onChange(format(day, "yyyy-MM-dd"))}
+                        placeholder="Pick a date"
                         aria-invalid={fieldState.invalid}
                       />
                       <Form.Error />
@@ -166,9 +177,14 @@ function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Pr
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Form.Field>
-                    <Form.Label>Organizer name</Form.Label>
-                    <Input {...field} aria-invalid={fieldState.invalid} />
-                    <Form.Description>Optional</Form.Description>
+                    <Form.Label>
+                      Organizer <small>(optional)</small>
+                    </Form.Label>
+                    <Input
+                      {...field}
+                      placeholder="Omkarnath Trust"
+                      aria-invalid={fieldState.invalid}
+                    />
                     <Form.Error />
                   </Form.Field>
                 )}
@@ -178,9 +194,14 @@ function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Pr
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Form.Field>
-                    <Form.Label>Organizer contact</Form.Label>
-                    <Input {...field} aria-invalid={fieldState.invalid} />
-                    <Form.Description>Optional, for further notices</Form.Description>
+                    <Form.Label>
+                      Contact <small>(optional)</small>
+                    </Form.Label>
+                    <Input
+                      {...field}
+                      placeholder="+91 98765 43210"
+                      aria-invalid={fieldState.invalid}
+                    />
                     <Form.Error />
                   </Form.Field>
                 )}
@@ -217,7 +238,7 @@ function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Pr
                 variant="ghost"
                 size="lg"
                 className="border border-destructive/25 text-destructive"
-                onClick={openDeleteModal}>
+                onClick={RemoveEvent.open}>
                 Delete event
               </Button>
             ) : null}
@@ -242,12 +263,12 @@ function EventFormSheet({ event, canPublish, title, trigger }: EventFormSheet.Pr
             </Button>
           </div>
         </Sheet.Footer>
-        <DeleteEventModal />
+        <RemoveEvent.Modal />
       </Sheet.Content>
     </Sheet.Root>
   );
 }
-namespace EventFormSheet {
+namespace ManageEvent {
   export type Props = {
     event?: EventRow;
     canPublish: boolean;
@@ -260,7 +281,7 @@ namespace EventFormSheet {
 
 function CreateEvent({ canPublish, title = "Add Event", ...props }: CreateEvent.Props) {
   return (
-    <EventFormSheet
+    <ManageEvent
       canPublish={canPublish}
       title={title}
       trigger={
@@ -281,4 +302,4 @@ namespace CreateEvent {
 
 // exports --->
 
-export { CreateEvent, EventFormSheet };
+export { CreateEvent, ManageEvent as EventFormSheet };

@@ -8,7 +8,7 @@ import { Icons } from "@/lib/icons";
 import { cn, cva } from "@/lib/utils";
 import type { EventStatus } from "@/prisma/generated/enums";
 import { useEventRow } from "./context";
-import { EventFormSheet } from "./modify";
+import { EventFormSheet } from "./manage.modal";
 
 // event-table-row --->
 
