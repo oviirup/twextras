@@ -18,7 +18,7 @@ export type UserRow = {
 
 // users-table --->
 
-function UsersTable({ users }: UsersTable.Props) {
+function UsersTable({ actorId, actorRole, users }: UsersTable.Props) {
   return (
     <Table.Root>
       <Table.Header>
@@ -36,7 +36,7 @@ function UsersTable({ users }: UsersTable.Props) {
       <Table.Body className="**:[td]:wrap-anywhere">
         {users.map((user) => (
           <UserRowContext.Provider key={user.id} value={user}>
-            <UserTableRow />
+            <UserTableRow isOwnProfile={user.id === actorId} actorRole={actorRole} />
           </UserRowContext.Provider>
         ))}
       </Table.Body>
@@ -44,7 +44,7 @@ function UsersTable({ users }: UsersTable.Props) {
   );
 }
 namespace UsersTable {
-  export type Props = { users: UserRow[] };
+  export type Props = { actorId: string; actorRole: UserRole; users: UserRow[] };
 }
 
 // exports --->

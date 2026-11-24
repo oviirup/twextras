@@ -6,6 +6,7 @@ import { requireRole, requireUser } from "@/modules/auth/guards";
 import { Prisma } from "@/prisma/generated/client";
 import { UserRole, UserStatus } from "@/prisma/generated/enums";
 import { deleteUser, getUserById, updateProfile, updateUser } from "./service";
+import { getUserRank } from "./utils";
 
 const updateUserSchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
@@ -38,17 +39,28 @@ export async function updateUserAction(userId: string, data: unknown) {
 
   const target = await getUserById(userId);
   if (!target) return { error: "User not found" };
-  if (target.role === UserRole.super_admin && target.id !== actor.id) {
-    return { error: "Super admin accounts cannot be modified" };
-  }
 
   const parsed = updateUserSchema.safeParse(data);
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Invalid input" };
   }
 
+  const actorRank = getUserRank(actor.role);
+  if (getUserRank(target.role) < actorRank) {
+    return { error: "You cannot modify a user with a higher role than yours" };
+  }
+  if (getUserRank(parsed.data.role) < actorRank) {
+    return { error: "You cannot assign a role above your own" };
+  }
+
+  const isSelf = target.id === actor.id;
+
   try {
-    await updateUser(userId, parsed.data);
+    await updateUser(userId, {
+      ...parsed.data,
+      role: isSelf ? target.role : parsed.data.role,
+      status: isSelf ? target.status : parsed.data.status,
+    });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       return { error: "Username or email is already taken" };

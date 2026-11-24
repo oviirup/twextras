@@ -14,6 +14,7 @@ import { Select } from "@/components/ui/select";
 import { Sheet } from "@/components/ui/sheet";
 import { Icons } from "@/lib/icons";
 import { deleteUserAction, updateUserAction } from "@/modules/users/actions";
+import { getUserRank } from "@/modules/users/utils";
 import { UserRole, UserStatus } from "@/prisma/generated/enums";
 import { useRemoveUser } from "./remove.modal";
 import { UserRow } from "./table";
@@ -41,8 +42,12 @@ type ModifyValues = z.infer<typeof modifySchema>;
 
 // manage-user --->
 
-function ManageUser({ user, trigger }: ManageUser.Props) {
+function ManageUser({ user, trigger, isOwnProfile, actorRole }: ManageUser.Props) {
   const router = useRouter();
+
+  const actorRank = getUserRank(actorRole);
+  const currRank = getUserRank(user.role);
+  const canManage = currRank >= actorRank;
 
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -92,7 +97,7 @@ function ManageUser({ user, trigger }: ManageUser.Props) {
 
   return (
     <Sheet.Root open={open} onOpenChange={setOpen}>
-      <Sheet.Trigger render={triggerButton} />
+      <Sheet.Trigger render={triggerButton} disabled={!canManage} />
       <Sheet.Content>
         <Sheet.Header>
           <Sheet.Title>Modify User</Sheet.Title>
@@ -115,7 +120,7 @@ function ManageUser({ user, trigger }: ManageUser.Props) {
                 render={({ field, fieldState }) => (
                   <Form.Field>
                     <Form.Label>Username</Form.Label>
-                    <Input {...field} aria-invalid={fieldState.invalid} />
+                    <Input {...field} aria-invalid={fieldState.invalid} disabled={!canManage} />
                     <Form.Error />
                   </Form.Field>
                 )}
@@ -126,7 +131,7 @@ function ManageUser({ user, trigger }: ManageUser.Props) {
                 render={({ field, fieldState }) => (
                   <Form.Field>
                     <Form.Label>Full name</Form.Label>
-                    <Input {...field} aria-invalid={fieldState.invalid} />
+                    <Input {...field} aria-invalid={fieldState.invalid} disabled={!canManage} />
                     <Form.Error />
                   </Form.Field>
                 )}
@@ -137,7 +142,12 @@ function ManageUser({ user, trigger }: ManageUser.Props) {
                 render={({ field, fieldState }) => (
                   <Form.Field>
                     <Form.Label>Email</Form.Label>
-                    <Input {...field} type="email" aria-invalid={fieldState.invalid} />
+                    <Input
+                      {...field}
+                      type="email"
+                      aria-invalid={fieldState.invalid}
+                      disabled={!canManage}
+                    />
                     <Form.Error />
                   </Form.Field>
                 )}
@@ -149,16 +159,20 @@ function ManageUser({ user, trigger }: ManageUser.Props) {
                   <Form.Field>
                     <Form.Label>Role</Form.Label>
                     <Select.Root
-                      value={field.value}
-                      onValueChange={(value) => field.onChange(value)}
-                      items={ROLE_OPTIONS}>
+                      {...field}
+                      onValueChange={field.onChange}
+                      items={ROLE_OPTIONS}
+                      disabled={!canManage || isOwnProfile}>
                       <Select.Trigger className="w-full">
                         <Select.Value />
                       </Select.Trigger>
                       <Select.Content>
                         <Select.Group>
                           {ROLE_OPTIONS.map((option) => (
-                            <Select.Item key={`role-item-${option.value}`} value={option.value}>
+                            <Select.Item
+                              key={`role-item-${option.value}`}
+                              value={option.value}
+                              disabled={getUserRank(option.value) < actorRank}>
                               {option.label}
                             </Select.Item>
                           ))}
@@ -175,9 +189,10 @@ function ManageUser({ user, trigger }: ManageUser.Props) {
                   <Form.Field>
                     <Form.Label>Status</Form.Label>
                     <Select.Root
-                      value={field.value}
-                      onValueChange={(value) => field.onChange(value)}
-                      items={STATUS_OPTIONS}>
+                      {...field}
+                      onValueChange={field.onChange}
+                      items={STATUS_OPTIONS}
+                      disabled={!canManage || isOwnProfile}>
                       <Select.Trigger className="w-full">
                         <Select.Value />
                       </Select.Trigger>
@@ -210,6 +225,7 @@ function ManageUser({ user, trigger }: ManageUser.Props) {
               type="button"
               className="-mx-1 mt-3 rounded-sm px-1 py-0.5 font-medium text-destructive link"
               onClick={RemoveUser.open}
+              disabled={!canManage || isOwnProfile}
               tabIndex={-1}>
               Delete user
             </button>
@@ -244,6 +260,8 @@ namespace ManageUser {
   export type Props = {
     user: UserRow;
     trigger?: Sheet.Trigger.Props["render"];
+    isOwnProfile?: boolean;
+    actorRole: UserRole;
   };
 }
 

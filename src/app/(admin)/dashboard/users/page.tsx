@@ -5,7 +5,7 @@ import { requireRole } from "@/modules/auth/guards";
 import { listUsers } from "@/modules/users/service";
 
 export default async function UsersPage() {
-  await requireRole(["super_admin", "admin"]);
+  const actor = await requireRole(["super_admin", "admin"]);
   const users = await listUsers();
 
   return (
@@ -26,6 +26,8 @@ export default async function UsersPage() {
         </Empty.Root>
       ) : (
         <UsersTable
+          actorId={actor.id}
+          actorRole={actor.role}
           users={users.map((user) => ({ ...user, createdAt: user.createdAt.toISOString() }))}
         />
       )}

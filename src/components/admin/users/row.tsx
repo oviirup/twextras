@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { Avatar } from "@/components/ui/avatar";
 import { Table } from "@/components/ui/table";
 import { cn, cva } from "@/lib/utils";
-import type { UserStatus } from "@/prisma/generated/enums";
+import type { UserRole, UserStatus } from "@/prisma/generated/enums";
 import { useUserRow } from "./context";
 import { ManageUser } from "./manage.modal";
 
@@ -15,7 +15,7 @@ function formatDate(date: string) {
   return format(new Date(date), "dd/MM/yyyy");
 }
 
-function UserTableRow() {
+function UserRow({ isOwnProfile, actorRole }: UserRow.Props) {
   const user = useUserRow();
 
   return (
@@ -42,10 +42,14 @@ function UserTableRow() {
       <Table.Cell className="tabular-nums">{formatDate(user.createdAt)}</Table.Cell>
       <Table.Cell className="sticky right-0 text-right">
         <div className="absolute inset-0 -left-4 bg-linear-to-l from-card from-80% to-transparent" />
-        <ManageUser user={user} />
+        <ManageUser {...{ user, isOwnProfile, actorRole }} />
       </Table.Cell>
     </Table.Row>
   );
+}
+
+namespace UserRow {
+  export type Props = { isOwnProfile: boolean; actorRole: UserRole };
 }
 
 // user-status-chip --->
@@ -75,4 +79,4 @@ namespace UserStatusChip {
 
 // exports --->
 
-export { UserTableRow };
+export { UserRow as UserTableRow };
